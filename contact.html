@@ -11,7 +11,6 @@
 
 <a href="#main" class="skip-link">Skip to content</a>
 
-<!-- HEADER -->
 <header class="site-header">
   <a href="index.html" class="wordmark">Whitney Masulis</a>
   <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">
@@ -36,10 +35,10 @@
       <p>I'm always up for conversations about service design, complex systems, and interesting problems. Whether you're exploring a new initiative, untangling an existing one, or just want to think out loud, I'd love to hear from you.</p>
       <p style="margin-top: var(--sp-3); color: var(--charcoal-mid); font-size: 14px;">Right now I'm particularly interested in work at the intersection of AI, caregiving, and employer benefits.</p>
 
-      <a href="mailto:whitney@example.com" class="contact-email">whitney@example.com</a>
+      <a href="mailto:whitney@whitneymasulis.com" class="contact-email">whitney@whitneymasulis.com</a>
 
       <div class="contact-links">
-        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/whitneymasulis/" target="_blank" rel="noopener">LinkedIn</a>
       </div>
     </div>
 
@@ -51,23 +50,21 @@
   </div>
 </section>
 
-<!-- spacer to give the page vertical presence -->
 <div style="padding-bottom: var(--sp-16);"></div>
 
 </main>
 
-<!-- FOOTER -->
 <footer class="site-footer">
   <div class="footer-bg" style="background-image: url('images/botanicals.png');"></div>
   <div class="footer-content">
     <div class="footer-left">
       <div class="footer-name">Whitney Masulis</div>
-      <div class="footer-title">Senior Service Designer</div>
-      <div class="footer-location">San Francisco, CA</div>
+      <div class="footer-title">Service Designer</div>
+      <div class="footer-location">Brooklyn, NY</div>
     </div>
     <div class="footer-right">
-      <a href="mailto:whitney@example.com">Email</a>
-      <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:whitney@whitneymasulis.com">Email</a>
+      <a href="https://www.linkedin.com/in/whitneymasulis/" target="_blank" rel="noopener">LinkedIn</a>
     </div>
   </div>
   <div class="footer-copy">&copy; 2026 Whitney Masulis</div>
@@ -76,16 +73,9 @@
 <script>
 const toggle = document.querySelector('.nav-toggle');
 const nav = document.querySelector('.site-header nav');
-if (toggle) {
-  toggle.addEventListener('click', () => {
-    const open = nav.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open);
-  });
-}
+if (toggle) { toggle.addEventListener('click', () => { const open = nav.classList.toggle('open'); toggle.setAttribute('aria-expanded', open); }); }
 const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-}, { threshold: 0.1 });
+const observer = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }); }, { threshold: 0.1 });
 reveals.forEach(el => observer.observe(el));
 </script>
 
