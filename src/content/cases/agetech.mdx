@@ -22,6 +22,7 @@ import BotanicalDivider from '../../components/BotanicalDivider.astro';
 import GPTConversation from '../../components/GPTConversation.astro';
 import InteractionModelComparison from '../../components/InteractionModelComparison.astro';
 import RulesObservations from '../../components/RulesObservations.astro';
+import SystemRulesExcerpt from '../../components/SystemRulesExcerpt.astro';
 
 <StatRow variant="dark" stats={[
   { value: '50M+', label: 'U.S. family caregivers' },
@@ -168,6 +169,10 @@ The forecast still existed, but it moved from being the destination of a long pi
 Five non-negotiable rules governed every mode, each one operationalized from a specific v1 observation.
 
 <RulesObservations />
+
+The conceptual rules above only mattered if they survived translation into language the GPT could actually run against. Excerpts from the v7 system prompt:
+
+<SystemRulesExcerpt />
 
 The compassionate language layer carried over. The condition-specific logic lived in the probes inside each mode rather than in a central questionnaire architecture. The system prompt got smaller, the behavioral rules got sharper, and the modular knowledge file structure shifted from "consult by phase" to "consult by mode."
 

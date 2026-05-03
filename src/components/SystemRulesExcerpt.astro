@@ -1,0 +1,203 @@
+---
+/**
+ * SystemRulesExcerpt.astro — V4
+ *
+ * Excerpt of the actual system prompt governing the v2 GPT, formatted
+ * like a working document. Specific to the agetech / Carestar case.
+ *
+ * Distinct from RulesObservations: that one shows conceptual design rules
+ * paired with v1 observations. This one shows the *encoded* rules — what
+ * those design decisions look like as executable language inside the system
+ * prompt the GPT actually runs against. The case argument is that design
+ * rules are only useful if you can translate them into machine-readable
+ * instructions. This is the receipt.
+ *
+ * Visual register: monospace eyebrow + serif rule body (real document feel),
+ * sans-serif annotations in a right-side gutter (editorial commentary).
+ * Mobile: annotations stack below each rule.
+ */
+---
+
+<figure class="v4-sre">
+  <header class="v4-sre-head">
+    <div class="v4-sre-filename">system-prompt-v7.md · 7,974 / 8,000 chars · 2026-03-14</div>
+    <p class="v4-sre-tagline">Three excerpts. Each one is the encoded form of a rule the v1 sessions surfaced.</p>
+  </header>
+
+  <ol class="v4-sre-list">
+    <li class="v4-sre-row">
+      <div class="v4-sre-rule">
+        <div class="v4-sre-section">§ 1 · Medical boundary <span class="v4-sre-section-note">(first instruction)</span></div>
+        <p>Never provide differential diagnoses, interpret symptoms, or suggest medical tests. If you find yourself listing possible causes of a symptom, <strong>STOP.</strong> Acknowledge briefly. Continue the work.</p>
+      </div>
+      <aside class="v4-sre-annot">
+        <span class="v4-sre-annot-label">Why first</span>
+        <p>During pre-cohort testing, the GPT started analyzing symptoms when a caregiver described them during setup. The fix that finally held was a script, not a prohibition: stop, acknowledge, continue. Made the opening line so the model can't get to anything else without crossing it.</p>
+      </aside>
+    </li>
+
+    <li class="v4-sre-row">
+      <div class="v4-sre-rule">
+        <div class="v4-sre-section">§ 2 · Voice and language</div>
+        <p>Never use first person (no <em>"I"</em>, no <em>"me"</em>). Banned vocabulary: <em>decline, worsening, severe, critical, stage, impaired, vulnerable, burnout.</em> Every output must contain something the user did not already know. If it could have been written by someone who Googled the condition, it fails.</p>
+      </div>
+      <aside class="v4-sre-annot">
+        <span class="v4-sre-annot-label">Why these words</span>
+        <p>One internal tester hit <em>"vulnerable"</em> and <em>"decline"</em> and stopped — they read as clinical and final, and made her feel worse about a parent who was actually doing fine. The Googled-it-already test came out of forecast sections that read like blog posts when modifier stacking didn't fire.</p>
+      </aside>
+    </li>
+
+    <li class="v4-sre-row">
+      <div class="v4-sre-rule">
+        <div class="v4-sre-section">§ 3 · Listening, not mirroring</div>
+        <p>Recognition is selective: acknowledge roughly one in four to five user inputs, not every one. Limit validation to a single sentence before continuing the work. Caregivers engage through problem-solving, not comfort. Never reorganize the user's information back to them as the deliverable.</p>
+      </div>
+      <aside class="v4-sre-annot">
+        <span class="v4-sre-annot-label">Why selective</span>
+        <p>An internal tester typed mid-session: <em>"Don't give me a full summary after every question."</em> Over-acknowledgment read as patronizing fast. The fix wasn't less warmth — it was less reflection. The work itself is the emotional container.</p>
+      </aside>
+    </li>
+  </ol>
+
+  <footer class="v4-sre-foot">
+    <p>Every character earned by a specific test failure. v7 was the final system prompt before cohort 2.</p>
+  </footer>
+</figure>
+
+<style>
+  .v4-sre {
+    margin: 3rem 0;
+    background: var(--warm-white, #FAF7F3);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    border-left: 3px solid var(--charcoal, #2A2520);
+    padding: 1.75rem 1.75rem 1.5rem;
+    border-radius: 4px;
+  }
+  .v4-sre-head {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--cream-deep, #EBE1D4);
+  }
+  .v4-sre-filename {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1.4;
+  }
+  .v4-sre-tagline {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 17px;
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+    margin: 8px 0 0 0;
+    line-height: 1.4;
+    max-width: none;
+  }
+
+  .v4-sre-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .v4-sre-row {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--cream-deep, #EBE1D4);
+    align-items: start;
+  }
+  .v4-sre-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .v4-sre-section {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--charcoal, #2A2520);
+    font-weight: 700;
+    margin-bottom: 10px;
+    line-height: 1.3;
+  }
+  .v4-sre-section-note {
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0.04em;
+    color: var(--charcoal-soft, #6B6560);
+    font-style: italic;
+  }
+  .v4-sre-rule p {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--charcoal, #2A2520);
+    margin: 0;
+    max-width: none;
+  }
+  .v4-sre-rule strong {
+    font-weight: 700;
+    color: var(--charcoal, #2A2520);
+  }
+  .v4-sre-rule em {
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+  }
+
+  .v4-sre-annot {
+    background: var(--cream, #F4EDE4);
+    border-left: 2px solid var(--gold, #C8943E);
+    padding: 14px 16px;
+    border-radius: 3px;
+  }
+  .v4-sre-annot-label {
+    display: block;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .v4-sre-annot p {
+    font-family: var(--font-body, 'DM Sans', system-ui, sans-serif);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--charcoal-mid, #4A443D);
+    margin: 0;
+    max-width: none;
+  }
+  .v4-sre-annot em {
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+  }
+
+  .v4-sre-foot {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cream-deep, #EBE1D4);
+  }
+  .v4-sre-foot p {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1.55;
+    margin: 0;
+    max-width: none;
+  }
+
+  @media (max-width: 720px) {
+    .v4-sre-row {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+</style>
