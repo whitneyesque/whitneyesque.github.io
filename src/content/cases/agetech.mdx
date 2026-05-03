@@ -24,6 +24,7 @@ import InteractionModelComparison from '../../components/InteractionModelCompari
 import RulesObservations from '../../components/RulesObservations.astro';
 import SystemRulesExcerpt from '../../components/SystemRulesExcerpt.astro';
 import ConversationStackFailure from '../../components/ConversationStackFailure.astro';
+import QuestionnaireTiers from '../../components/QuestionnaireTiers.astro';
 
 <StatRow variant="dark" stats={[
   { value: '50M+', label: 'U.S. family caregivers' },
@@ -85,7 +86,9 @@ A few iterations in I stopped. The custom GPT couldn't actually do that computat
 
 I cut the comorbidity layer and refocused on the questions themselves: what to ask, in what order, with what rules governing how the GPT asked them. That's where the leverage was for this prototype.
 
-I organized the question set into tiers because a flat question list couldn't do two things at once: collect enough to make the forecast feel real and respect the limits of someone already at their limit. The tiers separated those goals. Required fields every user would answer. High-value fields that would make the output meaningfully more useful. Enrichment fields for users willing to go deeper. Diagnosis-specific subsets fired only if dementia, cancer, Parkinson's, heart disease, or other Tier 1 conditions were involved, because putting clinical language in front of users whose loved one didn't have the condition would do more harm than good. A separate caregiver layer of personality and communication-style questions shaped how the chatbot would interact with them, sitting orthogonal to the forecast inputs because tone is a different problem than content. Geographic state mattered because care costs vary by 3x across regions and the forecast was unusable without it.
+I organized the question set into tiers because a flat question list couldn't do two things at once: collect enough to make the forecast feel real, and respect the limits of someone already at their limit.
+
+<QuestionnaireTiers />
 
 ### How to ask it
 
