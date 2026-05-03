@@ -21,6 +21,7 @@ import InsightCallout from '../../components/InsightCallout.astro';
 import BotanicalDivider from '../../components/BotanicalDivider.astro';
 import GPTConversation from '../../components/GPTConversation.astro';
 import InteractionModelComparison from '../../components/InteractionModelComparison.astro';
+import RulesObservations from '../../components/RulesObservations.astro';
 
 <StatRow variant="dark" stats={[
   { value: '50M+', label: 'U.S. family caregivers' },
@@ -164,17 +165,9 @@ The new version replaced the six-phase pipeline with eight task-shaped modes, ea
 
 The forecast still existed, but it moved from being the destination of a long pipeline to being a global action available at any point. A caregiver could complete two modes, type "forecast," and get the same comprehensive output the v1 system had built toward, but only after the system had earned the right to ask for the additional inputs it needed.
 
-Five non-negotiable rules governed every mode.
+Five non-negotiable rules governed every mode, each one operationalized from a specific v1 observation.
 
-**No Mirror.** Never reorganize a user's information and present it back as output. If the artifact doesn't contain something the user didn't already know, it has failed. This was the v1 frustration turned into a rule: reflection wasn't value.
-
-**No Pamphlet Content.** Nothing findable in 30 seconds online. Every piece of content had to demonstrate expertise the user lacked or produce an artifact they couldn't create alone.
-
-**Artifact-First.** The artifact was the deliverable, not the conversation. Every mode ended with a tangible output produced in full.
-
-**No Freeform.** Every interaction followed a structured path with probes and outputs. Structure was the value.
-
-**Invisible Emotional Support.** Never ask "How are you feeling?" or "Are you okay?" If a user shared something heavy, validate with one sentence, then continue the work. The work was the emotional container. The Pressure Valve mode was the only exception, designed specifically for moments when nothing else could move yet.
+<RulesObservations />
 
 The compassionate language layer carried over. The condition-specific logic lived in the probes inside each mode rather than in a central questionnaire architecture. The system prompt got smaller, the behavioral rules got sharper, and the modular knowledge file structure shifted from "consult by phase" to "consult by mode."
 
