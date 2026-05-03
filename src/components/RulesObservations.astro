@@ -1,0 +1,209 @@
+---
+/**
+ * RulesObservations.astro — V4
+ *
+ * A two-column layout pairing each v2 design rule with the specific v1
+ * observation that produced it. Specific to the agetech / Carestar case.
+ *
+ * Brief intent: the rules aren't generic design principles, they're
+ * operationalized from named v1 failure moments. The pairing structure
+ * is the methodological signal — observation → encoded rule, with receipts.
+ *
+ * Visual register: serif (display) for rules to signal editorial work;
+ * mono for observation labels; body sans for the observation text in
+ * field-notes voice. No color coding — the pairing carries meaning.
+ */
+---
+
+<section class="v4-rules">
+  <header class="v4-rules-head">
+    <span class="v4-rules-eyebrow">v2 design rules</span>
+    <p class="v4-rules-intro">Each one operationalized from a specific v1 observation.</p>
+  </header>
+
+  <ol class="v4-rules-list">
+    <li class="v4-rules-row">
+      <div class="v4-rules-rule">
+        <h4>No Mirror.</h4>
+        <p>Never reorganize a user's information and present it back as output. If the artifact doesn't contain something the user didn't already know, it has failed.</p>
+      </div>
+      <aside class="v4-rules-obs">
+        <span class="v4-rules-obs-label">v1 observation</span>
+        <p>At the end of the v1 questionnaire, before the forecast even rendered, a participant said out loud: <em>"I just gave you all that information."</em> The disappointment was already in the room.</p>
+      </aside>
+    </li>
+
+    <li class="v4-rules-row">
+      <div class="v4-rules-rule">
+        <h4>No Pamphlet Content.</h4>
+        <p>Nothing findable in 30 seconds online. Every piece of content has to demonstrate expertise the user lacks or produce an artifact they couldn't create alone.</p>
+      </div>
+      <aside class="v4-rules-obs">
+        <span class="v4-rules-obs-label">v1 observation</span>
+        <p>v1's situational guidance had a tendency to default to general advice when probes weren't tight enough. Generic advice failed the value test that <em>"I just gave you all that information"</em> had set.</p>
+      </aside>
+    </li>
+
+    <li class="v4-rules-row">
+      <div class="v4-rules-rule">
+        <h4>Artifact-First.</h4>
+        <p>The artifact is the deliverable, not the conversation. Every mode ends with a tangible output produced in full.</p>
+      </div>
+      <aside class="v4-rules-obs">
+        <span class="v4-rules-obs-label">v1 observation</span>
+        <p>v1 produced its outputs (profiles, forecast) only at the end of a long pipeline. By the time they appeared, expectations had inflated past what any output could meet.</p>
+      </aside>
+    </li>
+
+    <li class="v4-rules-row">
+      <div class="v4-rules-rule">
+        <h4>No Freeform.</h4>
+        <p>Every interaction follows a structured path with probes and outputs. Structure is the value.</p>
+      </div>
+      <aside class="v4-rules-obs">
+        <span class="v4-rules-obs-label">v1 observation</span>
+        <p>When v1 left interaction shape to the GPT, the conversation drifted. The numbered-list scrolling failure was one symptom of that drift — the user lost context the model didn't know was gone.</p>
+      </aside>
+    </li>
+
+    <li class="v4-rules-row">
+      <div class="v4-rules-rule">
+        <h4>Invisible Emotional Support.</h4>
+        <p>Never ask "How are you feeling?" If a user shares something heavy, validate with one sentence, then continue the work. The work is the emotional container.</p>
+      </div>
+      <aside class="v4-rules-obs">
+        <span class="v4-rules-obs-label">v1 observation</span>
+        <p>v1's mid-questionnaire check-ins felt patronizing fast. An internal tester typed mid-session: <em>"Don't give me a full summary after every question."</em> The reflection itself was the problem.</p>
+      </aside>
+    </li>
+  </ol>
+
+  <footer class="v4-rules-foot">
+    <p>These rules sit above all eight modes. Every probe, every artifact, every transition has to satisfy them.</p>
+  </footer>
+</section>
+
+<style>
+  .v4-rules {
+    margin: 3rem 0;
+    background: var(--cream, #F4EDE4);
+    border-left: 3px solid var(--gold, #C8943E);
+    padding: 2rem 1.75rem 1.75rem;
+    border-radius: 4px;
+  }
+  .v4-rules-head {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--cream-deep, #EBE1D4);
+  }
+  .v4-rules-eyebrow {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+  .v4-rules-intro {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+    margin: 6px 0 0 0;
+    max-width: none;
+    line-height: 1.4;
+  }
+
+  .v4-rules-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .v4-rules-row {
+    display: grid;
+    grid-template-columns: 1fr 1.25fr;
+    gap: 2.25rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--cream-deep, #EBE1D4);
+    align-items: start;
+  }
+  .v4-rules-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .v4-rules-rule h4 {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--charcoal, #2A2520);
+    margin: 0 0 6px 0;
+    line-height: 1.25;
+  }
+  .v4-rules-rule p {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--charcoal-mid, #4A443D);
+    margin: 0;
+    max-width: none;
+  }
+
+  .v4-rules-obs {
+    border-left: 2px solid var(--cream-deep, #EBE1D4);
+    padding-left: 1.25rem;
+  }
+  .v4-rules-obs-label {
+    display: block;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .v4-rules-obs p {
+    font-family: var(--font-body, 'DM Sans', system-ui, sans-serif);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--charcoal-mid, #4A443D);
+    margin: 0;
+    max-width: none;
+  }
+  .v4-rules-obs em {
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+  }
+
+  .v4-rules-foot {
+    margin-top: 1.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--cream-deep, #EBE1D4);
+  }
+  .v4-rules-foot p {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1.55;
+    margin: 0;
+    max-width: none;
+  }
+
+  @media (max-width: 720px) {
+    .v4-rules-row {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .v4-rules-obs {
+      border-left: none;
+      border-top: 1px solid var(--cream-deep, #EBE1D4);
+      padding-left: 0;
+      padding-top: 1rem;
+    }
+  }
+</style>

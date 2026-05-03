@@ -1,0 +1,335 @@
+---
+/**
+ * InteractionModelComparison.astro — V4
+ *
+ * Side-by-side architectural comparison of v1 (sequential interview pipeline)
+ * vs v2 (modal hub-and-spoke). Specific to the agetech / Carestar case.
+ *
+ * The accent move: the user is positioned at the END of the v1 pipeline
+ * (the destination of a delivery sequence) and at the CENTER of the v2 hub
+ * (the chooser of tools). That single visual inversion is the case's
+ * architectural argument.
+ *
+ * Mobile collapses both diagrams to vertical stacks; the user accent
+ * carries the meaning when geometry can't.
+ */
+---
+
+<figure class="v4-imc">
+  <div class="v4-imc-block v4-imc-v1">
+    <header class="v4-imc-head">
+      <span class="v4-imc-eyebrow">v1 · Sequential interview</span>
+      <p class="v4-imc-tagline">The user answers, the system reflects, the user answers again.</p>
+    </header>
+
+    <ol class="v4-imc-pipeline" aria-label="v1 phases">
+      <li>Welcome</li>
+      <li>Care receiver questionnaire</li>
+      <li>Caregiver questionnaire</li>
+      <li>Forecast generation</li>
+      <li>Situational guidance</li>
+      <li>Return</li>
+      <li class="v4-imc-user-pos">User</li>
+    </ol>
+
+    <p class="v4-imc-band">Knowledge files consulted by phase — condition trees, modifier stacking rules, compassionate language rules, forecast templates</p>
+  </div>
+
+  <div class="v4-imc-block v4-imc-v2">
+    <header class="v4-imc-head">
+      <span class="v4-imc-eyebrow">v2 · Modal tool</span>
+      <p class="v4-imc-tagline">The user picks a task. The system produces an artifact.</p>
+    </header>
+
+    <div class="v4-imc-hub" role="group" aria-label="v2 modes radiating from user">
+      <div class="v4-imc-mode v4-imc-pos-tl">
+        <div class="v4-imc-mode-name">The Dispatcher</div>
+        <div class="v4-imc-mode-artifact">Triage report</div>
+      </div>
+      <div class="v4-imc-mode v4-imc-pos-tc">
+        <div class="v4-imc-mode-name">The Checkup</div>
+        <div class="v4-imc-mode-artifact">Gap report by priority</div>
+      </div>
+      <div class="v4-imc-mode v4-imc-pos-tr">
+        <div class="v4-imc-mode-name">The Planner</div>
+        <div class="v4-imc-mode-artifact">Filled-in planning document</div>
+      </div>
+      <div class="v4-imc-mode v4-imc-pos-ml">
+        <div class="v4-imc-mode-name">The Pressure Valve</div>
+        <div class="v4-imc-mode-artifact">Sorted priority list</div>
+      </div>
+
+      <div class="v4-imc-user-center" aria-label="User at center of hub">
+        <span class="v4-imc-user-label">User</span>
+      </div>
+
+      <div class="v4-imc-mode v4-imc-pos-mr">
+        <div class="v4-imc-mode-name">The Money Map</div>
+        <div class="v4-imc-mode-artifact">Scenario cost summary</div>
+      </div>
+      <div class="v4-imc-mode v4-imc-pos-bl">
+        <div class="v4-imc-mode-name">The Family Sync</div>
+        <div class="v4-imc-mode-artifact">Family alignment document</div>
+      </div>
+      <div class="v4-imc-mode v4-imc-pos-bc">
+        <div class="v4-imc-mode-name">The Rehearsal Studio</div>
+        <div class="v4-imc-mode-artifact">Conversation prep sheet</div>
+      </div>
+      <div class="v4-imc-mode v4-imc-pos-br">
+        <div class="v4-imc-mode-name">The Translator</div>
+        <div class="v4-imc-mode-artifact">Doctor prep sheet</div>
+      </div>
+    </div>
+
+    <div class="v4-imc-floating">
+      <span class="v4-imc-floating-label">Forecast</span>
+      <span class="v4-imc-floating-note">Global action — available at any point, not the destination of a sequence</span>
+    </div>
+  </div>
+
+  <figcaption class="v4-imc-footer">
+    Five non-negotiable rules govern every v2 mode. Each one operationalized from a specific v1 observation — see <em>v2 design rules</em> below.
+  </figcaption>
+</figure>
+
+<style>
+  .v4-imc {
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+  .v4-imc-block {
+    background: var(--cream, #F4EDE4);
+    border-left: 3px solid var(--gold, #C8943E);
+    padding: 1.75rem 1.5rem 2rem;
+    border-radius: 4px;
+  }
+  .v4-imc-head {
+    margin-bottom: 1.25rem;
+  }
+  .v4-imc-eyebrow {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+  .v4-imc-tagline {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+    margin: 6px 0 0 0;
+    max-width: none;
+    line-height: 1.4;
+  }
+
+  /* ============ v1 pipeline ============ */
+  .v4-imc-pipeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .v4-imc-pipeline li {
+    flex: 1 1 110px;
+    background: var(--warm-white, #FAF7F3);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    padding: 12px 14px;
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 14px;
+    line-height: 1.3;
+    color: var(--charcoal, #2A2520);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 3px;
+    min-height: 56px;
+  }
+  .v4-imc-pipeline li:not(:last-child)::after {
+    content: '→';
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--charcoal-soft, #6B6560);
+    font-size: 14px;
+    line-height: 1;
+    z-index: 2;
+    pointer-events: none;
+  }
+  /* User accent — the case's architectural claim that v1 delivers TO the user */
+  .v4-imc-pipeline li.v4-imc-user-pos {
+    background: var(--gold-pale, #F0E4CC);
+    border-color: var(--gold, #C8943E);
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+    font-style: italic;
+    flex: 0 0 auto;
+    min-width: 90px;
+  }
+  .v4-imc-band {
+    margin-top: 14px;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1.5;
+    max-width: none;
+  }
+
+  /* ============ v2 hub-and-spoke ============ */
+  .v4-imc-hub {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 4px;
+  }
+  .v4-imc-mode {
+    background: var(--warm-white, #FAF7F3);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    padding: 12px 14px;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 78px;
+  }
+  .v4-imc-mode-name {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--charcoal, #2A2520);
+    line-height: 1.25;
+  }
+  .v4-imc-mode-artifact {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+    margin-top: 6px;
+    line-height: 1.3;
+  }
+  .v4-imc-pos-tl { grid-area: 1 / 1; }
+  .v4-imc-pos-tc { grid-area: 1 / 2; }
+  .v4-imc-pos-tr { grid-area: 1 / 3; }
+  .v4-imc-pos-ml { grid-area: 2 / 1; }
+  .v4-imc-pos-mr { grid-area: 2 / 3; }
+  .v4-imc-pos-bl { grid-area: 3 / 1; }
+  .v4-imc-pos-bc { grid-area: 3 / 2; }
+  .v4-imc-pos-br { grid-area: 3 / 3; }
+
+  /* User at the center — the architectural inversion */
+  .v4-imc-user-center {
+    grid-area: 2 / 2;
+    background: var(--gold-pale, #F0E4CC);
+    border: 2px solid var(--gold, #C8943E);
+    border-radius: 50%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    width: 110px;
+    height: 110px;
+  }
+  .v4-imc-user-label {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 18px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--gold-text, #8A6820);
+    letter-spacing: 0.01em;
+  }
+
+  .v4-imc-floating {
+    margin-top: 18px;
+    padding: 12px 16px;
+    border: 1px dashed var(--gold, #C8943E);
+    border-radius: 3px;
+    background: rgba(200, 148, 62, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-self: flex-start;
+    max-width: 480px;
+  }
+  .v4-imc-floating-label {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--gold-text, #8A6820);
+  }
+  .v4-imc-floating-note {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1.5;
+  }
+
+  .v4-imc-footer {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--charcoal-mid, #4A443D);
+    line-height: 1.5;
+    margin: -8px 0 0 0;
+    max-width: none;
+  }
+  .v4-imc-footer em {
+    font-style: italic;
+    color: var(--gold-text, #8A6820);
+  }
+
+  /* ============ Mobile ============ */
+  @media (max-width: 720px) {
+    .v4-imc-pipeline {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .v4-imc-pipeline li:not(:last-child)::after {
+      content: '↓';
+      right: 50%;
+      transform: translateX(50%);
+      top: auto;
+      bottom: -16px;
+    }
+    .v4-imc-pipeline li {
+      flex: 0 0 auto;
+    }
+    .v4-imc-pipeline li.v4-imc-user-pos {
+      align-self: stretch;
+    }
+
+    .v4-imc-hub {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+    }
+    /* Reset all mode positions and let them flow */
+    .v4-imc-pos-tl, .v4-imc-pos-tc, .v4-imc-pos-tr,
+    .v4-imc-pos-ml, .v4-imc-pos-mr,
+    .v4-imc-pos-bl, .v4-imc-pos-bc, .v4-imc-pos-br {
+      grid-area: auto;
+    }
+    .v4-imc-user-center {
+      grid-area: 1 / 1 / auto / -1; /* span full width on top */
+      width: auto;
+      height: auto;
+      aspect-ratio: auto;
+      border-radius: 4px;
+      padding: 16px 20px;
+    }
+  }
+</style>

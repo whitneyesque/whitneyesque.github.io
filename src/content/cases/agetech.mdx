@@ -20,38 +20,46 @@ import PullQuote from '../../components/PullQuote.astro';
 import InsightCallout from '../../components/InsightCallout.astro';
 import BotanicalDivider from '../../components/BotanicalDivider.astro';
 import GPTConversation from '../../components/GPTConversation.astro';
-import ExperimentCard from '../../components/ExperimentCard.astro';
+import InteractionModelComparison from '../../components/InteractionModelComparison.astro';
+import RulesObservations from '../../components/RulesObservations.astro';
+import SystemRulesExcerpt from '../../components/SystemRulesExcerpt.astro';
+import ConversationStackFailure from '../../components/ConversationStackFailure.astro';
+import QuestionnaireTiers from '../../components/QuestionnaireTiers.astro';
 
 <StatRow variant="dark" stats={[
   { value: '50M+', label: 'U.S. family caregivers' },
-  { value: '$7K', label: 'Avg annual out-of-pocket' },
-  { value: '12', label: 'Caregivers tested across 2 cohorts' },
+  { value: '$7K', label: 'Average annual out-of-pocket' },
+  { value: '12', label: 'Caregivers tested across two structurally different versions' },
   { value: '8 mo', label: 'Concept already in development when I joined' },
 ]} />
 
 ## A concept with eight months of work behind it, *and a real decision point ahead.*
 
-An innovation team inside a conservative Fortune 500 company had spent eight months developing a concept for an AI-powered caregiving service. The idea had legs. But a concept is not a product, and positive reactions in concept testing are not the same as signal from real users.
+An innovation team inside a conservative Fortune 500 company had spent eight months developing a concept for an AI-powered caregiving service. The idea had legs. But a concept is not a service, and positive reactions in concept testing are not the same as signal from real users.
 
-This case study covers one part of a months-long engagement: how I designed and tested a functional AI prototype of the service's core experience, and what that process revealed about how to prototype something when the medium itself is the hard part.
+This case study covers one part of a months-long engagement: how I designed and tested a functional AI prototype of the service's core experience, what failed in the first version, and how a mid-study redesign rebuilt the underlying interaction model rather than just the user flow.
 
-The team had a concept for a service aimed at employed family caregivers: people working full time while also managing the care of an aging parent or other elderly family member. At its center was an AI that could onboard a caregiver through a series of questions about their situation, generate a personalized multi-year forecast of care needs and costs, and serve as an always-available caregiving coach.
+The team had a concept for a service aimed at employed family caregivers: people working full time while also managing the care of an aging parent or other elderly family member. At its center was an AI that could onboard a caregiver, generate a personalized multi-year forecast of care needs and costs, and serve as an always-available caregiving coach.
 
-The concept had passed early viability checks. Foundational research was done. Archetypes existed. High-level concept testing had shown that caregivers responded positively to the idea. But the team was approaching a real decision point: was there enough signal to justify the next step, investing in the early technology needed to run a beta?
+Foundational research was done. Archetypes existed. High-level concept testing had shown that caregivers responded positively to the idea. But the team was approaching a real decision point: was there enough signal to justify the next step, investing in the early technology needed to run a beta?
 
-To answer that, we needed something closer to the actual experience. We needed to know whether people would engage with it, whether the AI interaction would feel useful rather than cold or overwhelming, and whether the output — a forward-looking care forecast — would mean anything to someone managing a parent's decline.
+To answer that, we needed something closer to the actual experience. We needed to know whether people would engage with the AI, whether the tone would feel useful rather than cold or overwhelming, and whether a forward-looking care forecast would mean anything to someone managing a parent's decline.
 
 ## I joined eight months in. *Scope was: build the thing, then learn from it.*
 
-I joined the project well after the foundational work was complete. For this experiment, my scope included designing and building a prototype functional enough to generate real signal, then testing it with caregivers and synthesizing what we learned.
+A note on where I was coming in. I'd been using AI tools heavily for a couple of years, both for client work and as a thinking partner across most of what I do. I had strong instincts for what these models do well, where they fail, and how to push them past surface-level output. What I hadn't done was build a custom GPT. Designing a system prompt, writing behavioral rules, structuring knowledge files, governing how a model interacts with users at scale: that was new. I was working at the edge of what I knew, with enough fluency in the underlying tools to know what questions to ask.
+
+I joined well after the foundational work was complete. For this experiment, my scope included designing and building a prototype functional enough to generate real signal, then testing it with caregivers and synthesizing what we learned.
 
 What I owned:
 
+- The interaction model: how the service should ask, listen, surface insight, and produce artifacts
 - The full questionnaire architecture: what to ask, in what order, with what branching logic, and why
-- The system prompt, behavioral rules, and knowledge files that governed how the GPT interacted with users
+- A modular knowledge file system: condition trees, modifier stacking rules, multi-condition routing, forecast specifications, and compassionate language rules, all consulted by the system prompt at the right phase
+- The system prompt, behavioral rules, crisis protocols, and knowledge file orchestration that governed how the GPT interacted with users
 - A compassionate language framework: what the AI could and couldn't say, how to handle emotionally charged moments, how to stay helpful without drifting clinical or patronizing
-- The design and facilitation of two rounds of moderated prototype testing with 12 caregivers
-- The mid-study redesign of the entire experience flow based on what the first cohort revealed
+- The design and facilitation of a moderated prototype testing study with 12 caregivers across two cohorts
+- The mid-study redesign that rebuilt the interaction model based on what the first cohort revealed
 - Research logistics and client management
 
 I didn't know I'd have to create all of these things when I started. I was developing my own deliverables and methods as I went.
@@ -64,29 +72,33 @@ Prototyping an AI service is different. The medium is the message in a way that'
 
 For this concept to be testable, the prototype had to actually behave like the service. It had to ask questions, adapt to answers, handle emotional content gracefully, and produce output that felt credible enough to react to. The forecast didn't need to be numerically accurate. The data science team would build the real model later. But it needed to feel real. Only then can you learn what's actually wrong with it.
 
-To do this I built a custom GPT using access to the client's enterprise OpenAI account.
+I built a custom GPT using access to the client's enterprise OpenAI account.
 
 ## Two intertwined problems: *what to ask, and how to ask it.*
 
-### Routing the build through expert personas
+### What to ask, and the rabbit hole I climbed out of
 
-Before I could write a question or a system prompt, I needed expertise across four disciplines (data science and questionnaire architecture, service design and testing protocols, geriatric care content and language, and competitive intelligence and business analysis) often within the same hour. I created four specialized AI projects, one per discipline, each with its own expert persona. Rather than maintaining one increasingly muddled conversation thread, I could route specific questions to the right kind of expertise at the right moment, compress expert review across all four disciplines, and keep track of which questions to bring back to the humans on the team. The company's data scientists and clinicians were available, but the cultural norm was not to interrupt them mid-build, so this approach also kept the work moving without doing that. The personas weren't a substitute for human expertise. They were a way to get further on my own and surface the questions worth bringing in.
+The forecast hadn't actually been defined when I joined. I led the working sessions that defined what a useful forecast should include: care trajectory, cost over time, signs to watch for in the care recipient, signs to watch for in the caregiver. Once we had a target output, I started reverse-engineering the inputs.
 
-### What to ask
+The first instinct was to go deep on medical conditions. People over 65 don't have one condition, they have combinations: diabetes and heart disease, hypertension and early cognitive change, cancer plus everything else. I started building a knowledge base around the most common combinations and their projected impact on care trajectory and cost.
 
-The forecast hadn't actually been defined when I joined. The team and I worked together to define what a useful forecast should include: care trajectory, cost over time, signs to watch for in the care recipient, signs to watch for in the caregiver. Once we had a target output, I used the data-science persona to reverse-engineer the inputs. If 10,000 average Americans matching our target audience signed up and each said they were caring for an aging parent, what were the 20 most common combinations of comorbidities? Of all possible inputs, which ones would have the largest effect on the forecast, so I'd know which questions were the highest value, the ones we really needed to get close?
+A few iterations in I stopped. The custom GPT couldn't actually do that computation. It was a predictive language model sitting on top of ChatGPT, not a statistical engine, and trying to encode that level of medical specificity was both technically wrong for the medium and unnecessary for what we were trying to learn. The forecast didn't need to be statistically precise. That's the data science team's job in the next phase. It needed to be close enough to be reactable: real enough that a caregiver could tell us whether the output meant something to them.
 
-I organized the result into tiers: required fields every user would answer, high-value fields that would make the output meaningfully more useful, and enrichment fields for users willing to go deeper. There were diagnosis-specific subsets (questions that only fired if dementia, cancer, or Parkinson's was involved) and a layer of personality and communication-style questions about the caregiver themselves, intended to shape how the chatbot would interact with them. Geographic state mattered because care costs vary dramatically by location. The architecture had to collect enough to make the forecast feel real, without exhausting someone who was already at their limit.
+I cut the comorbidity layer and refocused on the questions themselves: what to ask, in what order, with what rules governing how the GPT asked them. That's where the leverage was for this prototype.
+
+I organized the question set into tiers because a flat question list couldn't do two things at once: collect enough to make the forecast feel real, and respect the limits of someone already at their limit.
+
+<QuestionnaireTiers />
 
 ### How to ask it
 
-These are not easy questions. Describing a parent's cognitive decline, financial stress, what someone is most afraid of: that's a lot to hand to an interface you just met. The GPT needed adaptive skip logic so it wouldn't re-ask what it already knew, compassionate language rules so it never used words like "decline" or "impaired" or "vulnerable," and careful judgment about when to acknowledge an answer emotionally and when to simply move forward. Over-acknowledging after every response started to feel patronizing fast. We learned that by testing on each other and a handful of colleagues before we ever showed it to a caregiver.
+These are not easy questions. Describing a parent's cognitive decline, financial stress, what someone is most afraid of: that's a lot to hand to an interface you just met. The GPT needed adaptive skip logic so it wouldn't re-ask what it already knew, judgment about when to acknowledge an answer emotionally and when to simply move forward, and a tightly bounded vocabulary.
 
-<InsightCallout label="Design principle">
-**Never say "decline," "impaired," or "vulnerable." Always lead with what the care receiver can do.**
+The vocabulary work came out of testing with friends and colleagues before we ever showed the prototype to a caregiver. One colleague hit the words "vulnerable" and "decline" and stopped. She wasn't ready to hear them. They read as clinical and final, and the framing made her feel worse about a parent who was actually doing fine. Another tester didn't identify as a caregiver yet, even though she was managing her parent's finances and starting to oversee medical appointments. The word "caregiver" itself was a barrier.
 
-The system prompt enforced the questionnaire architecture and the compassionate language framework simultaneously. These aren't prompt-engineering decisions. They're service design decisions about how this service speaks to people in pain.
-</InsightCallout>
+Two boundaries got hard-coded into the system after that. The GPT could not give medical advice or try to diagnose anyone based on described behaviors, full stop. And it could not use clinical language that named what someone was afraid of before they were ready to name it themselves. I built a boundaries-and-guidelines document to govern tone and word choice, and I learned through restructuring that the GPT was more reliable when fed several short reference files rather than a few long ones.
+
+Over-acknowledging after every response also started to feel patronizing fast. We learned that by watching colleagues react to it. One internal tester, several questions in, typed mid-session: *"Don't give me a full summary after every question."* The system was reflecting too much, and the reflection itself was the problem.
 
 <GPTConversation
   header="Caregiving onboarding · prototype"
@@ -94,7 +106,7 @@ The system prompt enforced the questionnaire architecture and the compassionate 
     {
       role: 'Coach',
       speaker: 'ai',
-      text: "Got it — thanks. Before we go further, can you tell me a little about who you're caring for, and how this past week has been?"
+      text: "Got it, thanks. Before we go further, can you tell me a little about who you're caring for, and how this past week has been?"
     },
     {
       role: 'Caregiver',
@@ -114,96 +126,81 @@ The system prompt enforced the questionnaire architecture and the compassionate 
   ]}
 />
 
-The geriatric-care persona caught phrasing late in the build that I wished I'd had it review earlier: clinical staging language that had crept in, words that read as neutral to me but landed as judgment to a caregiver. Bring the harshest critical lens in at the start, not the end.
+## A constraint worth naming about the testing itself.
 
-The tone reviews caught the obvious problems. Testing caught subtler ones. One of the forecast intake questions asked what state the care recipient lives in — meaning geographic state, because care costs vary dramatically by location. A participant read it as emotional state. Was she anxious? Confused? Depressed? The question was unambiguous to us. It was genuinely confusing to someone in the middle of a caregiving situation where "what state is she in" is a question they ask themselves constantly, and it never means geography.
+Client privacy and security policies meant participants couldn't use the GPT directly. They watched the conversation on a shared screen and spoke their answers aloud while a facilitator typed them in. That changes the interaction. People dictating to another human edit themselves more and take fewer risks with what they share than they would typing into a private chat window alone at their kitchen table.
 
-That reframed how I thought about language in this context. It's not enough to check whether words are clinically appropriate or emotionally sensitive. You also have to check whether they collide with the language caregivers already use to describe their daily experience.
+The signal on flow, language, and engagement was strong enough to act on. But it's worth being honest about what that data was and wasn't, especially heading into a beta where real users will interact with the system on their own.
 
 <BotanicalDivider />
 
-## The first cohort showed us *we'd designed it backwards.*
+## Seven participants in, *I started building the next version after hours.*
 
-We ran two cohorts in March 2026: twelve caregivers total, recruited through an online research platform. All were employed full-time and actively caring for an aging family member.
+We ran twelve caregivers in March 2026, recruited through an online research platform. All were employed full-time and actively caring for an aging family member. The original plan was to run all twelve through a single version of the prototype. Several sessions in, it was clear that wasn't going to be a productive use of the remaining slots. The flow was failing in a way facilitation tweaks weren't going to fix. People were worn down by the time they got to the forecast, and the forecast was landing flat because it followed a long stretch of effort with no payoff in between.
 
-### Cohort 1: the experience in the wrong order
+I couldn't stop the study cleanly. The remaining cohort 1 sessions were already on the calendar and the v2 build wasn't ready, so seven participants finished on the original flow while I worked on the redesign in the off hours. The remaining five participants ran on v2. The split turned out to be useful: I had a clean comparison between two structurally different versions of the same concept, tested with comparable participants, in the same study.
 
-<ExperimentCard
-  number="Cohort 1"
-  question="Will caregivers stay engaged through deep intake questions if value is delivered after?"
-  method="Moderated remote test, six caregivers, March 2026. Original flow: intake first, profiles + forecast after, situational guidance last."
-  participants="Employed full-time, actively caring for an aging family member."
-  quote="I just gave you all that information. What did I get for it?"
-/>
+## What the first cohort showed
 
-The original flow front-loaded data collection so the team could take the outputs and manually load them into the wireframes. Participants answered questions one at a time and then, at the end, were shown a profile for their loved one and a profile for themselves. The profiles fell flat. After investing so much time in deeply personal questions, participants were shown summaries of information they already knew. The forecasts came next, as a static wireframe with only one tab open per time horizon, so they saw a fraction of the information. Reactions were tepid rather than excited. Then a dashboard, which they again read as a summary of what they'd told us. The feature they were most excited about — situational guidance where they could ask the chatbot about their specific caregiving challenges — came last.
+The v1 system was a sequential planning interview. It moved through six phases: welcome, care receiver questionnaire, caregiver questionnaire, forecast generation, situational guidance, return. The architecture was a linear pipeline. The user answered, the system reflected, the user answered again. After all of that, they were shown a profile for their loved one, then a profile for themselves, then the forecast, then a dashboard. The feature they were most excited about, situational guidance where they could ask the chatbot about their specific caregiving challenges, came last.
 
-<PullQuote attribution="Cohort 1 participant">
-I just gave you all that information. What did I get for it?
+The structure was wrong in two ways at once.
+
+**People were spent before they got to the value.** One of our explicit research goals was to understand how long an onboarding caregivers would tolerate. There's evidence from Noom and other health and fitness services that long onboarding flows aren't necessarily a barrier. We learned that ours was. By the time participants reached the forecast, they had given a lot and received nothing. One participant said it out loud at the end of the questionnaire, before the forecast even rendered: *"I just gave you all that information."* The disappointment was already in the room.
+
+<PullQuote attribution="v1 participant">
+I just gave you all that information.
 </PullQuote>
 
-Another session exposed a structural problem with the chat medium itself. During one mode, the GPT presented a numbered list of ten yes/no screening questions. The user worked through them, the conversation continued, and a second numbered list appeared further down the thread. By that point, the first list had scrolled off screen. When they typed "1," they were responding to the second list, but the GPT interpreted it against the first and pulled a condition that didn't apply to their situation at all. The conversation veered off on a false premise.
+**The conversational format had a structural problem.** During one mode, the GPT presented a numbered list of ten yes/no screening questions. The user worked through them. The conversation continued. A second numbered list appeared further down the thread. By that point the first list had scrolled off screen. When the user said "1," they were responding to the second list, but the GPT interpreted it against the first and pulled a condition that didn't apply.
 
-This wasn't a user error. The GPT had the full conversation history in memory; the user didn't. They could only see what was on screen. When you stack sequential numbered lists in a scrolling chat window, the user loses context of what's above the fold, and the model has no way to know that. The conversational format has real structural limitations for complex, multi-step interactions. The prototype was surfacing problems not just with the content or the tone, but with the container itself.
+<ConversationStackFailure />
 
-### The forecast-as-verdict problem
+Then the last cohort 1 session pointed at something deeper. The participant's mother was in the final stage of dementia and probably had only months to live. About fifteen minutes in, the system asked her to describe her mother's personality. She answered: *"Because she is end-stage it's hard to describe. She's not coherent and is muttering a lot to herself. She isn't herself."* The system absorbed it gracefully and continued. A question about what kinds of help her mother was getting. Another about who else was involved. Another about what had changed recently. Each one took her further from what she actually needed in that moment. We aborted the session and ran her through a hypothetical version where her mother was earlier-stage instead.
 
-The forecast revealed a harder design problem in a separate session: the line between useful projection and premature diagnosis. Our executive stakeholder — the person who would ultimately decide whether the concept justified further investment — tested the prototype using his own family's caregiving experience from several years earlier, working through it as the person he was at the time. His mother-in-law had been showing early signs of confusion around time and money, but the family hadn't known whether that was the beginning of cognitive decline or a temporary response to losing her husband. The forecast didn't make that distinction. It projected a five-year care trajectory that assumed progressive deterioration: escalating costs, increasing dependency, eventual facility care.
+The redesign decision had already been made by then. What this session showed was that the failure went beyond what we'd diagnosed. v1 had no graceful path for someone in the late stages of caregiving. The design assumed a user looking ahead at a journey, not a user already most of the way through one. That assumption needed to change before any version of this service shipped.
 
-His reaction was immediate. *This would have freaked us out at the time. It felt like the tool was making a big assumption about a diagnosis.* He was right. The forecast had taken ambiguous early signals and mapped them onto a single trajectory without acknowledging that grief, stress, and medical conditions can look identical at this stage.
+## The redesign: *from sequential interview to modal tool.*
 
-<InsightCallout label="Design problem">
-**A projection that assumes the worst without naming what it doesn't know doesn't feel like guidance. It feels like a verdict.**
+The v2 system wasn't a re-sequenced v1. It was a different interaction model.
 
-The forecast needed to present ranges and scenarios rather than a single path, and to be explicit about the limits of its own confidence.
-</InsightCallout>
+**v1 asked. v2 helped.**
 
-### The edge case that wasn't an edge case
+<InteractionModelComparison />
 
-One participant's parent was in the final stage of dementia, and probably had only months to live. I wasn't facilitating that session, but I was acting as the Wizard of Oz behind the scenes. Mid-session I sent a message to the facilitator: skip the rest of the questions, don't show the forecast. A five-year financial projection isn't something you put in front of someone whose parent has months or weeks left. We shifted gears in real time.
+The new version replaced the six-phase pipeline with eight task-shaped modes, each designed to deliver an actionable artifact within about ten minutes. The Dispatcher: triage what needs attention first. The Checkup: scan for gaps. The Planner: build a coordination system. The Money Map: model what care will cost. The Translator: build a doctor prep sheet or a hard message to a sibling. The Rehearsal Studio: practice a difficult conversation. The Family Sync: align everyone on the same picture. The Pressure Valve: process the emotional weight of a hard moment when nothing else can move yet.
 
-That moment clarified something important about the whole design. We needed to account for the full range of phases someone might be in when they first encounter this tool, including end-stages, and the tool needed to adapt quickly. This participant wasn't an outlier to route around. She exposed real gaps in our assumptions about who would arrive at the front door and in what condition.
+The forecast still existed, but it moved from being the destination of a long pipeline to being a global action available at any point. A caregiver could complete two modes, type "forecast," and get the same comprehensive output the v1 system had built toward, but only after the system had earned the right to ask for the additional inputs it needed.
 
-### The redesign
+Five non-negotiable rules governed every mode, each one operationalized from a specific v1 observation.
 
-Between cohorts, I redesigned the flow entirely. Instead of starting with intake, we started with guidance. The participant began with the chatbot, and the first message described eight modes — the Dispatcher, the Planner, the Money Map, the Pressure Valve, and others — each designed to deliver actionable output within about ten minutes. The intake questionnaire became a consolidated block afterward, and instead of adaptive one-question-at-a-time delivery, participants saw the full set of questions at once. If they had answered any of those questions during the conversation with the chatbot, the system folded those answers in and reduced the question set. Less elegant on the surface, but it gave people a sense of scope and control that the "smarter" version hadn't.
+<RulesObservations />
 
-<InsightCallout label="Strategic reframe">
-**Value has to come before effort.** Cohort 1 told us this in the most direct way possible. If you ask people to give a lot before they get anything back, you will lose them — especially if they're already stretched thin. The reframe wasn't just a UX fix. It changed the product's architecture.
-</InsightCallout>
+The conceptual rules above only mattered if they survived translation into language the GPT could actually run against. Excerpts from the v7 system prompt:
 
-## Cohort 2 leaned in. *One session in particular.*
+<SystemRulesExcerpt />
 
-<ExperimentCard
-  number="Cohort 2"
-  question="Will guidance-first delivery change how caregivers engage with the prototype?"
-  method="Same protocol, six new caregivers, March 2026. Redesigned flow: chatbot guidance modes first, intake consolidated and shown after."
-  participants="Employed full-time, actively caring for an aging family member. No overlap with cohort 1."
-  quote="We can't get him to stop. — Note from the session, after the executive sponsor stopped evaluating and started using it."
-/>
+The compassionate language layer carried over. The condition-specific logic lived in the probes inside each mode rather than in a central questionnaire architecture. The system prompt got smaller, the behavioral rules got sharper, and the modular knowledge file structure shifted from "consult by phase" to "consult by mode."
 
-The difference was immediate. Participants leaned in. In almost every session, we had to tell them we needed to move on because they kept wanting to ask the AI more questions. Several said they learned something they hadn't known before. Nobody asked what they were getting in exchange for sharing so much personal information. That last point mattered as much as anything else: the interaction felt worth it to them.
+## What the second cohort showed
 
-The most telling signal came from an unplanned session. The same executive stakeholder who had earlier flagged the forecast-as-verdict problem tested the redesigned prototype using his own family's real caregiving experience from several years earlier. He already knew how the story ended. He wasn't in crisis. But within minutes he stopped evaluating and started using it. He moved through the Dispatcher, asked for a forecast, then started asking follow-up questions the team hadn't anticipated: what doctors to look for, what to do if his mother-in-law wouldn't let anyone into her appointments, whether the tool could handle situations beyond memory loss. The team had to tell him they needed to move on.
+The difference was immediate. Participants leaned in. In almost every session, we had to tell them we needed to move on because they kept wanting to ask the AI more questions. Several said they learned something they hadn't known before. Nobody asked what they were getting in exchange for sharing so much personal information. That last point mattered as much as anything else: the interaction felt worth it to them, so the value exchange resolved itself.
+
+## The unplanned session that mattered most.
+
+After the study was over and we had presented our findings, the executive stakeholder, the person who would ultimately decide whether the concept justified further investment, asked to try the redesigned prototype. He used his own family's caregiving experience from several years earlier, working through it as the person he was at the time.
+
+Within minutes he stopped evaluating and started using it. He moved through one of the modes, asked for a forecast, then started asking follow-up questions: what kind of doctor to look for, what to do if his mother-in-law wouldn't let anyone into her appointments, whether the tool could handle situations beyond memory loss. We had to tell him we needed to wrap up.
 
 <PullQuote attribution="Note from the session">
 We can't get him to stop.
 </PullQuote>
 
-That moment mattered because of who he was in the project. A recruited participant engaging deeply is a good sign. The person who controls whether the concept gets funded engaging with it as a real user, pulling from his own experience, unable to disengage even after the scheduled session was over: that's a different kind of evidence. He wasn't reacting to a concept. He was experiencing a product that was solving a problem he'd actually had.
+A recruited participant engaging deeply is a good sign. The person who controls whether a concept gets funded engaging with it as a real user, unable to disengage even after the scheduled session was over: that's a different kind of evidence. He wasn't reacting to a concept. He was experiencing a service that was solving a problem he had actually had.
 
-### The moment the tool looked at the caregiver
+He also exposed the forecast's biggest content problem. His mother-in-law had been showing early signs of confusion around time and money, and at the time the family hadn't known whether that was the start of cognitive decline or a temporary response to losing her husband. The forecast didn't make that distinction. It took her ambiguous early signals and projected a five-year trajectory of progressive deterioration: escalating costs, increasing dependency, eventual facility care.
 
-Caring for the caregiver was a design principle from the start, not an afterthought. The forecast included a section on signs caregivers should watch for in themselves: mounting fatigue, coordination tasks that multiply, work distraction becoming more frequent, a low-grade resentment toward logistics, feeling less supported over time. The tool was built to acknowledge what the caregiver was carrying, not just what the care recipient needed.
-
-In one cohort 1 session, after the "Signs to Watch in Yourself" section appeared for the first time, the participant typed: "I'm okay. I need a minute. I'd like to stop for now." The facilitator noted the response and let her collect herself. She kept going. That exact response appeared three times across the session — once after the five-year forecast, once after the self-care section, once after a mid-session check-in. Each time she stopped, and each time she came back.
-
-The tool hadn't been asked to look at her. It did anyway. That was the principle proving itself.
-
-<figure>
-  <img src="/images/agetech-synthesis-board.png" alt="Redacted research synthesis board with rows of blurred participant photos and columns of post-test notes showing how cohort feedback was organized across the eight modes of the prototype." />
-  <figcaption>Synthesis board for the testing rounds. Identifying details blurred.</figcaption>
-</figure>
+His reaction was immediate. *This would have freaked us out at the time. It felt like the tool was making a big assumption about a diagnosis.* He was right. Forecasts have to acknowledge ambiguity in the inputs, not paper over it. I flagged it as a content problem the next phase has to solve at the model level.
 
 ## The client got the signal they needed. *The next phase has user testing built in.*
 
@@ -211,22 +208,16 @@ The testing gave them enough confidence in the concept's desirability and the in
 
 Three things came out of this work that weren't in the brief:
 
-- **Strategic direction.** Guidance-first is now a design principle for the service going forward, not a one-time fix to a flow.
-- **Production specification.** The guidance content and example outputs I created are serving as the experience specification for the production AI system.
+- **Strategic direction.** The interaction model from v2 (modal, artifact-first, value before intake) is now a design principle for the service going forward, not a one-time fix to a flow.
+- **Production specification.** The guidance content, mode definitions, and example outputs I created are serving as the experience specification for the production AI system.
 - **Testing methodology.** When the client suggested evaluating the next GPT internally rather than with users, I argued for continued user testing. The next phase has user testing built in.
-
-<figure>
-  <img src="/images/agetech-service-blueprint.png" alt="Redacted service blueprint showing the AI prototype's role across customer-facing actions, frontstage interactions, backstage processes, and supporting infrastructure. Specific text blurred." />
-  <figcaption>Excerpt from the service blueprint built around the prototype's outputs.</figcaption>
-</figure>
 
 ## Four things *that traveled with me out of this project.*
 
-**Prototype fidelity has to match what you're actually trying to learn.** If the service is AI-delivered, a static mockup won't tell you whether people trust it, engage with it, or find it useful. The prototype has to behave like the thing. That's more work, but it's the only way to get real signal.
+**Match the build to the question.** If the service is AI-delivered, a static mockup won't tell you whether people trust it, engage with it, or find it useful. The prototype has to behave like the thing. But fidelity has a ceiling, and chasing it past what the question requires is its own failure mode. The comorbidity rabbit hole I climbed out of cost time I could have spent on the parts that mattered.
 
-**Value has to come before effort.** If you ask people to give a lot before they get anything back, you'll lose them, especially if they're already stretched thin. This isn't a new principle. Watching it fail in real time with caregivers made it concrete.
+**Sometimes the structure is wrong, not the steps.** v2 wasn't a re-sequenced v1. The questions were mostly fine. The forecast structure was mostly fine. What was wrong was a layer underneath: the assumption that the right way to deliver an AI caregiving service was to interview the caregiver. Diagnosing the failure at that layer, not at the flow layer, is what made the redesign work. Re-sequencing v1 would have produced a slightly less frustrating version of the same wrong thing.
 
-**Design for the edges from the start.** The participant whose parent was dying wasn't an outlier to route around. That session exposed real gaps in the design's assumptions. The most important design problems often live at the edges of the user population, not in the middle.
+**Design for the edges from the start.** The participant whose mother was dying wasn't an outlier to route around. Her session showed that v1 had no graceful path for the late stages of caregiving, and that the design had assumed a user looking forward rather than a user already deep in. The most important design problems often live at the edges of the user population, not in the middle.
 
-**AI tools change the work; they don't replace the judgment.** I used AI extensively in this project, to build the prototype and to support the build process. It was genuinely useful. The decisions about what the experience should feel like, what to sacrifice and what to protect, what the data from testing actually meant: those stayed where they belong, with the designer.
-
+**Stop the study when the study is wrong.** The original plan was twelve participants on one version. After several sessions it was obvious we were burning slots on a flow that was going to keep failing the same way. Redesigning mid-study wasn't an easy call, but it was the right one. Five more sessions on a known-broken flow would have produced more confirmation, not more learning.
