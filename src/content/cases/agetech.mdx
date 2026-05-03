@@ -23,6 +23,7 @@ import GPTConversation from '../../components/GPTConversation.astro';
 import InteractionModelComparison from '../../components/InteractionModelComparison.astro';
 import RulesObservations from '../../components/RulesObservations.astro';
 import SystemRulesExcerpt from '../../components/SystemRulesExcerpt.astro';
+import ConversationStackFailure from '../../components/ConversationStackFailure.astro';
 
 <StatRow variant="dark" stats={[
   { value: '50M+', label: 'U.S. family caregivers' },
@@ -148,7 +149,9 @@ The structure was wrong in two ways at once.
 I just gave you all that information.
 </PullQuote>
 
-**The conversational format had a structural problem.** During one mode, the GPT presented a numbered list of ten yes/no screening questions. The user worked through them. The conversation continued. A second numbered list appeared further down the thread. By that point the first list had scrolled off screen. When the user said "1," they were responding to the second list, but the GPT interpreted it against the first and pulled a condition that didn't apply. The conversation veered off a false premise and we couldn't recover it cleanly. This wasn't a user error. The GPT had the full conversation in memory; the user only had what was on screen. Stack sequential numbered lists in a scrolling chat window and the user loses context the model doesn't know is gone.
+**The conversational format had a structural problem.** During one mode, the GPT presented a numbered list of ten yes/no screening questions. The user worked through them. The conversation continued. A second numbered list appeared further down the thread. By that point the first list had scrolled off screen. When the user said "1," they were responding to the second list, but the GPT interpreted it against the first and pulled a condition that didn't apply.
+
+<ConversationStackFailure />
 
 Then the last cohort 1 session pointed at something deeper. The participant's mother was in the final stage of dementia and probably had only months to live. About fifteen minutes in, the system asked her to describe her mother's personality. She answered: *"Because she is end-stage it's hard to describe. She's not coherent and is muttering a lot to herself. She isn't herself."* The system absorbed it gracefully and continued. A question about what kinds of help her mother was getting. Another about who else was involved. Another about what had changed recently. Each one took her further from what she actually needed in that moment. We aborted the session and ran her through a hypothetical version where her mother was earlier-stage instead.
 

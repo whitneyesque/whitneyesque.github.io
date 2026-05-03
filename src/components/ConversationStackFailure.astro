@@ -1,0 +1,270 @@
+---
+/**
+ * ConversationStackFailure.astro — V4
+ *
+ * Visualizes the v1 numbered-list failure mode specific to the agetech /
+ * Carestar case: the GPT held the full thread in memory, the user only
+ * saw what was on screen, and a single-character reply ("1") got matched
+ * against the wrong list. The fix wasn't a better list — it was an
+ * interaction model that didn't depend on lists in scrolling chat at all.
+ *
+ * Side-by-side framing makes the architectural problem visible: same
+ * input, two contexts, different (wrong) outcome. Mobile collapses to
+ * a vertical stack with the annotation underneath.
+ */
+---
+
+<figure class="v4-csf">
+  <header class="v4-csf-head">
+    <span class="v4-csf-eyebrow">Conversational stack failure · v1, cohort 1</span>
+    <p class="v4-csf-tagline">The GPT held the whole thread in memory. The user could only see what was on screen.</p>
+  </header>
+
+  <div class="v4-csf-grid">
+    <article class="v4-csf-pane v4-csf-memory">
+      <header class="v4-csf-pane-head">
+        <span class="v4-csf-pane-label">What the GPT had in memory</span>
+        <span class="v4-csf-pane-meta">First numbered list · earlier in thread</span>
+      </header>
+      <div class="v4-csf-thread">
+        <div class="v4-csf-msg v4-csf-msg-ai">
+          <div class="v4-csf-role">Coach</div>
+          <div class="v4-csf-bubble">
+            Quick screening — for each, just answer yes or no:<br />
+            <span class="v4-csf-list">
+              1. Diabetes (Type 2)<br />
+              2. Heart failure or coronary artery disease<br />
+              3. COPD or another chronic lung condition<br />
+              4. Cancer, current or in the past five years<br />
+              5. Stroke or significant cognitive decline<br />
+              <span class="v4-csf-ellipsis">… continues to 10</span>
+            </span>
+          </div>
+        </div>
+        <div class="v4-csf-msg v4-csf-msg-user">
+          <div class="v4-csf-role">Caregiver</div>
+          <div class="v4-csf-bubble">No, no, yes, no, no, yes, no, no, no, no.</div>
+        </div>
+      </div>
+      <div class="v4-csf-pane-foot">
+        <span class="v4-csf-foot-mono">… many turns of probes, follow-ups, and reflection in between …</span>
+      </div>
+    </article>
+
+    <article class="v4-csf-pane v4-csf-screen">
+      <header class="v4-csf-pane-head">
+        <span class="v4-csf-pane-label">What the user could see on screen</span>
+        <span class="v4-csf-pane-meta">Second numbered list · current view</span>
+      </header>
+      <div class="v4-csf-thread">
+        <div class="v4-csf-msg v4-csf-msg-ai">
+          <div class="v4-csf-role">Coach</div>
+          <div class="v4-csf-bubble">
+            A few more for the daily-living picture:<br />
+            <span class="v4-csf-list">
+              1. Has Robert had any falls in the past six months?<br />
+              2. Any new hospitalizations?<br />
+              3. Any new medications added recently?
+            </span>
+          </div>
+        </div>
+        <div class="v4-csf-msg v4-csf-msg-user">
+          <div class="v4-csf-role">Caregiver</div>
+          <div class="v4-csf-bubble v4-csf-bubble-flag">1</div>
+        </div>
+        <div class="v4-csf-msg v4-csf-msg-ai">
+          <div class="v4-csf-role">Coach</div>
+          <div class="v4-csf-bubble v4-csf-bubble-error">
+            Got it — confirming <strong>diabetes</strong>. A few follow-ups about Robert's blood sugar management…
+          </div>
+        </div>
+      </div>
+      <div class="v4-csf-pane-foot">
+        <span class="v4-csf-foot-mono">User answered the falls question. The GPT matched against the first list.</span>
+      </div>
+    </article>
+  </div>
+
+  <aside class="v4-csf-annot">
+    <span class="v4-csf-annot-label">What this taught us</span>
+    <p>This wasn't a user error. The GPT had the full conversation in memory; the user only had what was on screen. Stack sequential numbered lists in a scrolling chat window and you'll lose context the model doesn't know is gone. The v2 fix wasn't a better list — it was an interaction model where lists in chat were no longer the primary input shape.</p>
+  </aside>
+</figure>
+
+<style>
+  .v4-csf {
+    margin: 3rem 0;
+  }
+  .v4-csf-head {
+    margin-bottom: 1.25rem;
+  }
+  .v4-csf-eyebrow {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+  .v4-csf-tagline {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+    margin: 6px 0 0 0;
+    max-width: none;
+    line-height: 1.4;
+  }
+
+  .v4-csf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .v4-csf-pane {
+    background: var(--cream, #F4EDE4);
+    border-left: 3px solid var(--cream-deep, #EBE1D4);
+    border-radius: 4px;
+    padding: 1.25rem 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+  .v4-csf-pane.v4-csf-screen {
+    border-left-color: var(--gold, #C8943E);
+  }
+  .v4-csf-pane-head {
+    margin-bottom: 0.875rem;
+    padding-bottom: 0.625rem;
+    border-bottom: 1px solid var(--cream-deep, #EBE1D4);
+  }
+  .v4-csf-pane-label {
+    display: block;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--charcoal, #2A2520);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .v4-csf-pane-meta {
+    display: block;
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-style: italic;
+    font-size: 13px;
+    color: var(--charcoal-soft, #6B6560);
+    margin-top: 4px;
+  }
+
+  .v4-csf-thread {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    flex: 1;
+  }
+  .v4-csf-msg {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .v4-csf-msg-user {
+    align-items: flex-end;
+  }
+  .v4-csf-role {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+    font-weight: 700;
+  }
+  .v4-csf-bubble {
+    background: var(--warm-white, #FAF7F3);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-family: var(--font-body, 'DM Sans', system-ui, sans-serif);
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--charcoal, #2A2520);
+    max-width: 92%;
+  }
+  .v4-csf-msg-user .v4-csf-bubble {
+    background: var(--gold-pale, #F0E4CC);
+    border-color: var(--gold, #C8943E);
+    color: var(--charcoal, #2A2520);
+  }
+  .v4-csf-bubble-flag {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 14px;
+    font-weight: 700;
+    min-width: 36px;
+    text-align: center;
+  }
+  .v4-csf-bubble-error {
+    border-style: dashed;
+    border-color: #B85C3A;
+    background: #FBEEE6;
+  }
+  .v4-csf-bubble-error strong {
+    color: #B85C3A;
+    font-weight: 700;
+  }
+  .v4-csf-list {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--charcoal-mid, #4A443D);
+  }
+  .v4-csf-ellipsis {
+    color: var(--charcoal-soft, #6B6560);
+    font-style: italic;
+  }
+
+  .v4-csf-pane-foot {
+    margin-top: 0.875rem;
+    padding-top: 0.625rem;
+    border-top: 1px dashed var(--cream-deep, #EBE1D4);
+  }
+  .v4-csf-foot-mono {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1.5;
+  }
+
+  .v4-csf-annot {
+    margin-top: 1.25rem;
+    background: var(--cream, #F4EDE4);
+    border-left: 2px solid var(--gold, #C8943E);
+    padding: 1rem 1.25rem;
+    border-radius: 3px;
+  }
+  .v4-csf-annot-label {
+    display: block;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .v4-csf-annot p {
+    font-family: var(--font-body, 'DM Sans', system-ui, sans-serif);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--charcoal-mid, #4A443D);
+    margin: 0;
+    max-width: none;
+  }
+
+  @media (max-width: 720px) {
+    .v4-csf-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
