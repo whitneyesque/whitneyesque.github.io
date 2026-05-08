@@ -1,0 +1,116 @@
+---
+title: "Where pain lives <em>in our projects.</em>"
+client: 'Harmonic Design (internal)'
+year: 2026
+role: 'Service Designer & analysis lead (with Felisha [LAST NAME — TODO] on synthesis)'
+team: 'Whitney Masulis with Felisha [LAST NAME — TODO]; 25 studio members participating in the rating exercise'
+timeline: 'Spring 2026'
+tags:
+  - 'Service Design'
+  - 'Internal Operations'
+  - 'AI Prototyping'
+  - 'Synthesis'
+  - 'Data Visualization'
+summary: "An internal Harmonic retrospective synthesis where I used agentic AI as a working business analyst, feeding it the studio's own retro data and pushing it through enough rounds to produce a presentation leadership could actually act on."
+specimen: '/images/specimen-pomegranate-split.jpg'
+slug: 'data-viz'
+status: 'published'
+---
+import StatRow from '../../components/StatRow.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import InsightCallout from '../../components/InsightCallout.astro';
+import BotanicalDivider from '../../components/BotanicalDivider.astro';
+import DarkBand from '../../components/DarkBand.astro';
+
+<StatRow variant="dark" stats={[
+  { value: '821', label: 'Ratings collected from 25 studio members' },
+  { value: '40', label: 'Themes across 9 categories distilled from project retros' },
+  { value: '7', label: 'Critical themes surfaced as both severe and frequent' },
+  { value: '1', label: 'Service designer doing analysis a business analyst usually does' },
+]} />
+
+## A studio's worth of retros, <em>and nothing changing because of them.</em>
+
+Harmonic Design, the firm I work at, runs retros at the end of every engagement. The retros happen. The stickies get written. People say the right things in the room. Then the next project starts and the same problems show up again. The retros are not the problem; the gap between retro and change is.
+
+I worked with Felisha [LAST NAME — TODO] to close that gap. We combed through the Miro boards from across our project history, pulled in transcripts where we had them, and interviewed people about what specific stickies meant when the language was ambiguous. We grouped what we found into 40 themes across 9 categories of work. Then we asked the whole studio to rate every theme on two scales: severity (1–4) and frequency (1–7), with a "does not apply" option so people weren't forced to invent a number for a kind of pain they'd never encountered.
+
+That much was conventional service design synthesis: surfacing, clustering, getting the team to weigh in. The interesting part started after the votes were in.
+
+<BotanicalDivider />
+
+## What I did differently: <em>treating agentic AI as a working business analyst.</em>
+
+Twenty-five people times forty themes times two scales is 2,000 possible cells. We got 821 actual ratings back, with the rest being "does not apply" or themes a particular role never reached. That's a real dataset, uneven across roles and with missingness that means something. It deserved real statistical handling.
+
+I am not a statistician. The version of me from two years ago would have built a pivot table in Google Sheets, eyeballed the top of the list, and called it a workshop input. That would have answered the loudest question (what scored highest combined) and missed the more interesting ones (which themes are severe but rare, where do junior and senior staff disagree, which clusters of themes look like one underlying problem with different surface symptoms).
+
+So I gave the data to Claude Code in a project folder, briefed it like I'd brief an analyst, and asked it to produce an interactive HTML site rather than a static deck.
+
+<PullQuote attribution="from my brief to Claude">
+  Audience is leadership. Use whatever charts and structure best answer those questions. End with discussion questions, not conclusions. Don't fabricate data. Show me what you compute and where it comes from. When you pick a visualization, briefly explain why you chose it.
+</PullQuote>
+
+The last sentence was the one that mattered. Asking the model to justify each visualization gave me something to push back against. It also gave me a running tutorial on what shape of chart fits what shape of question, which I'm now better at than I was before this project.
+
+<InsightCallout>
+  The shift wasn't "AI made the charts." The shift was that I could ask the kind of questions a business analyst would ask of this data, and iterate on them at conversation speed, without having to learn the statistical scaffolding first. The judgment about what the patterns *meant* still sat with me.
+</InsightCallout>
+
+## Brief, draft, push back, repeat. <em>Six or seven rounds, not one.</em>
+
+The first draft had the right data and the wrong shape. The bubble chart of all 40 themes was readable, but the "critical few" cut was too tidy: it implied a cleaner threshold than the data supported. I asked Claude to look again at the items just outside the cutoff. It surfaced a theme ("methodology baked in by sales before assessment") with the dataset's highest severity score that had landed just under the frequency threshold. That theme became its own callout in the final deliverable, and one of the open questions for leadership at the end.
+
+A few of the rounds that mattered:
+
+- **Push on grouping.** The model proposed four clusters of themes. One of them ("lead capacity") didn't fit with the others, and the takeaway language papered over that fact. I asked it to either justify the cluster or treat the outlier honestly. It chose honesty: the final deck has three patterns plus one "stubborn outlier" called out as a structural decision rather than a process to redesign.
+- **Push on language.** Early drafts used the theme codes (RE3, CE2, TD1) in narrative copy, which read as insider shorthand. I asked Claude to spell each theme out in plain language wherever it appeared in prose, and to keep the codes only as visual tags on the cards. That's the kind of edit a copywriter would make on draft three; I made it on draft two by asking.
+- **Push on tone.** A pass through the recommendations section came back too prescriptive: too many "we will" statements aimed at a leadership audience that hadn't been in the room for the analysis. I asked Claude to convert the strongest claims into questions for discussion, and to preserve only the recommendations that the data actually supported. The final section is named "Open questions for leadership," not "Recommended next steps."
+
+I also asked the model to add views I hadn't initially briefed it to produce: a category × role heatmap that shows where junior and senior staff diverge, a "frequent papercuts" cut for the low-severity-high-frequency zone, and a sortable rank of borderline themes. Each of those took about one prompt and one round of refinement. None of them would have made it into a version of the deck I built by hand inside the time we had.
+
+<DarkBand label="Before · After">
+  <h2>From tagged stickies <em>to a deck leadership can read in one sitting.</em></h2>
+  <p class="case-darkband-intro">On the left, the Miro board where the 40 themes were tagged by category, severity, and frequency: the raw material we handed to the analyst. On the right, two of the cleanest views from the final interactive HTML — the bubble chart of all 40 themes, and the category × role heatmap that surfaced where junior and senior staff diverged.</p>
+
+  <div class="case-darkband-figures">
+    <figure class="case-darkband-figure">
+      <img src="/images/data-viz/miro-before.jpg" alt="Miro board with 40 themed stickies tagged by category, severity rating, and frequency rating: the 'before' state of the synthesis." />
+      <figcaption class="case-darkband-figure-caption">Fig. 01 · Tagged Miro board, pre-analysis</figcaption>
+    </figure>
+    <figure class="case-darkband-figure">
+      <img src="/images/data-viz/final-charts.jpg" alt="Two views from the final interactive HTML deliverable: a bubble chart of all 40 themes plotted by severity and frequency, and a category-by-role heatmap." />
+      <figcaption class="case-darkband-figure-caption">Fig. 02 · Final HTML, bubble + heatmap</figcaption>
+    </figure>
+  </div>
+</DarkBand>
+
+## What the final piece looks like
+
+The output is an interactive HTML site titled *Where Pain Lives*. It is structured the way a leadership presentation should be structured: the landscape first (all 40 themes plotted), then the critical few (filtered to severe and frequent), then patterns (the clusters that read as the same underlying problem), then cuts by seniority and by category, then what we're explicitly not chasing, then a recommendations section honestly named as three streams plus one structural decision, and finally open questions for leadership rather than a hard close.
+
+It is in Harmonic's brand colors and typefaces. It has hoverable bubbles, sortable lists, and visual signals (the "Fix Now" zone is shaded; outliers are flagged in their own cards). It opens with a panel that explains the rating scales and what blanks mean, because half of leadership wasn't in the room when the scales were set.
+
+I did not write the HTML. I wrote the brief, made the synthesis judgments, sharpened the language, and decided what to cut. The model did the analysis, the visualization choices, and the layout. That division of labor is the point.
+
+<PullQuote attribution="What this case is actually about">
+  Senior service designers don't have to choose between "do the synthesis myself with the tools I know" and "hand it to an analyst." There's a third option now, and the craft is in knowing how to brief it and where to push back.
+</PullQuote>
+
+## What I'm taking from this
+
+A few things I want to do differently the next time I run this kind of synthesis with a working analyst in the loop:
+
+- **Brief the questions, not the chart types.** Every time I specified a visualization upfront, I got a worse output than when I described what I wanted to learn and let the model pick. The shapes of charts I'd never reached for (a category × role heatmap, in particular) outperformed the shapes I would have defaulted to.
+- **Verify the math when something surprises you.** When the model said something I didn't expect, I asked to see the calculation. Twice it caught its own arithmetic; once I caught a pattern that was real but more nuanced than the takeaway implied.
+- **Stop when it tells the story, not when it's perfect.** I could have iterated on the deck for another week. The marginal return after round six was very small. The version we presented was the version where leadership could read it once and have an opinion.
+
+## What I'm still thinking about
+
+The retro process at Harmonic was not broken. The synthesis-to-action gap was. This deliverable is one half of closing that gap; whether anything actually changes depends on what leadership does with the open questions at the end. I'll know in a quarter or two whether the streams of work named in the recommendations get owned by anyone, or whether the deck joins the stack of well-made artifacts that don't move the studio. That's the honest version of an outcome statement for an internal piece. TODO: report the follow-up once we have one.
+
+The other thing I'm still thinking about: how much of what I just did is portable to client work. The same rough pattern (a tagged synthesis deliverable feeding an agentic-AI analyst that produces an interactive output) could shorten the back half of a research engagement substantially. The constraints there are different (client data, NDA, audience appetite for "an AI made the charts"), but the underlying move scales.
+
+<InsightCallout label="Outcome update — pending">
+  TODO: outcome update once leadership has acted on (or quietly ignored) the open questions. Honest result either way.
+</InsightCallout>
