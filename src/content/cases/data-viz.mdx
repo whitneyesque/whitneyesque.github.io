@@ -21,6 +21,7 @@ import PullQuote from '../../components/PullQuote.astro';
 import InsightCallout from '../../components/InsightCallout.astro';
 import BotanicalDivider from '../../components/BotanicalDivider.astro';
 import DarkBand from '../../components/DarkBand.astro';
+import Placeholder from '../../components/Placeholder.astro';
 
 <StatRow variant="dark" stats={[
   { value: '821', label: 'Ratings collected from 25 studio members' },
@@ -29,11 +30,35 @@ import DarkBand from '../../components/DarkBand.astro';
   { value: '1', label: 'Service designer doing analysis a business analyst usually does' },
 ]} />
 
+<Placeholder
+  kind="section"
+  size="block"
+  ask="One sentence (or short InsightCallout) acknowledging that the numbers and theme labels above are synthetic; the method and the iteration story are the real thing"
+  why="Critic flagged: the StatRow, the seven critical themes, and the outlier story are presented as real findings. If a hiring manager realizes mid-read (or in interview) that they're synthetic, credibility erodes. Disclosed up front, the rigor reads as method rather than headline numbers."
+  alternatives={[
+    "Place the disclosure at the head of 'What the final piece looks like' instead of here",
+    "Caption-only mention on the DarkBand figures (Critic specifically said this is too quiet)"
+  ]}
+  source="critic-flag"
+/>
+
 ## A studio's worth of retros, <em>and nothing changing because of them.</em>
 
 Harmonic Design, the firm I work at, runs retros at the end of every engagement. The retros happen. The stickies get written. People say the right things in the room. Then the next project starts and the same problems show up again. The retros are not the problem; the gap between retro and change is.
 
 I worked with Felisha [LAST NAME — TODO] to close that gap. We combed through the Miro boards from across our project history, pulled in transcripts where we had them, and interviewed people about what specific stickies meant when the language was ambiguous. We grouped what we found into 40 themes across 9 categories of work. Then we asked the whole studio to rate every theme on two scales: severity (1–4) and frequency (1–7), with a "does not apply" option so people weren't forced to invent a number for a kind of pain they'd never encountered.
+
+<Placeholder
+  kind="section"
+  size="block"
+  ask="One or two concrete lines distinguishing what Felisha specifically did upstream from what Whitney specifically did, before the Claude work began"
+  why="Critic flagged: Felisha appears in role/team and one body sentence, then disappears. As written, a reader can't tell whether Whitney led the qualitative synthesis with Felisha as partner or vice versa — which undersells Whitney's distinct upstream contribution. The case-interviewer round the composer requested is the right vehicle for surfacing this."
+  alternatives={[
+    "A single sentence naming Felisha's specific contribution if a full reshape of the paragraph isn't in scope",
+    "Resolve via Felisha's last name + role tightening in frontmatter only, leaving body as is (weakest option)"
+  ]}
+  source="critic-flag"
+/>
 
 That much was conventional service design synthesis: surfacing, clustering, getting the team to weigh in. The interesting part started after the votes were in.
 
@@ -97,6 +122,18 @@ I did not write the HTML. I wrote the brief, made the synthesis judgments, sharp
   Senior service designers don't have to choose between "do the synthesis myself with the tools I know" and "hand it to an analyst." There's a third option now, and the craft is in knowing how to brief it and where to push back.
 </PullQuote>
 
+<Placeholder
+  kind="section"
+  size="block"
+  ask="A short paragraph naming the internal politics and the act of moving the firm into agentic AI: how partners feel about 'AI did the analysis,' the rough economics (what a billable analyst would have cost / hours saved), and who at Harmonic owns whether the open questions become a workstream"
+  why="Critic flagged: this is an internal piece at a service-design firm where one designer is bringing agentic AI into synthesis for the first time. As written, the case reads as methodology. With the organizational layer, it becomes a leadership-of-change-inside-a-firm case — the senior-level claim Whitney is positioning for."
+  alternatives={[
+    "A tighter version: one sentence naming the political stakes without the economics",
+    "Two sentences: one on the politics, one on whose call the open-questions workstream is"
+  ]}
+  source="critic-flag"
+/>
+
 ## What I'm taking from this
 
 A few things I want to do differently the next time I run this kind of synthesis with a working analyst in the loop:
@@ -114,3 +151,30 @@ The other thing I'm still thinking about: how much of what I just did is portabl
 <InsightCallout label="Outcome update — pending">
   TODO: outcome update once leadership has acted on (or quietly ignored) the open questions. Honest result either way.
 </InsightCallout>
+
+## What I need from you
+
+This section is scaffolding from the visual-director agent. Delete it before publishing.
+
+### Images (3)
+
+- **Cover specimen** — `/images/specimen-pomegranate-split.jpg`. Referenced in frontmatter; doesn't exist yet. *Where:* `CaseLayout.astro` reads it from frontmatter for the case header. *Source:* human-capture (or pull from the V4 mockups, where the pomegranate-split lives as the "Minimal" sample's watermark). *Alternative:* remove the `specimen:` line to fall back to no specimen, or swap to a thistle/tangle motif (composer flagged "data-knot framing" as a viable alternate).
+- **DarkBand left figure** — `/images/data-viz/miro-before.jpg`. The tagged Miro board (40 stickies categorized + severity/frequency tagged): the "before" state of the synthesis. *Where:* the existing `<DarkBand>` block already references this path; will 404 in preview until uploaded. *Source:* `raw-case-material/Data-Viz/` per the applier handoff (a Miro screenshot is in the raw folder but not yet a JPG). *Alternative:* a blurred/cropped Miro export to anonymize specific theme labels if the synthetic-data disclosure (see Sections below) doesn't make full visibility comfortable.
+- **DarkBand right figure** — `/images/data-viz/final-charts.jpg`. Two views from the final HTML deliverable: bubble chart of all 40 themes plus the category × role heatmap. *Where:* same DarkBand block, right slot. *Source:* screenshot the live `retrospective-synth.html` and combine. *Alternative:* split into two separate figures inside the DarkBand if a single composite reads cluttered; or substitute a short looping screen recording of the interactive HTML in use (hovering bubbles, sorting the rank list).
+
+### Pull quotes (1)
+
+- **Felisha line to replace the second PullQuote** — the existing PullQuote at the close of "What the final piece looks like" ("Senior service designers don't have to choose...") is the writer stating the moral. Critic flagged it as a tell; Copywriter agreed the call is structural. *Where:* same slot, replacing the current quote. *Source:* a line from Felisha about what the AI-assisted method changed for her, or a moment from the interview round where Claude got something wrong and Whitney caught it. *Alternative:* cut the PullQuote entirely and let the body land the point — the "I did not write the HTML / The model did the analysis" passage two paragraphs above is already doing that work.
+
+### Sections to add (per critic) (3)
+
+- **Synthetic-data disclosure** — *(Placeholder inserted under the StatRow.)* Critic: "Numbers and theme labels here are synthetic; the method and the iteration story are real." One sentence is enough; lift it out of caption-only territory into body. *Where:* under the StatRow, or at the head of "What the final piece looks like."
+- **Felisha's contribution distinguished from Whitney's** — *(Placeholder inserted in the "A studio's worth of retros" section.)* Critic: "one or two concrete lines on what Felisha specifically did and what Whitney specifically did upstream of the Claude work." *Where:* the second paragraph of "A studio's worth of retros..." where Felisha is currently named once.
+- **Organizational stakes** — *(Placeholder inserted after the second PullQuote.)* Critic: "a short paragraph after the 'third option now' pull quote naming the internal politics and the act of moving the firm." Should land the political stakes, rough economics (cost/time of a billable analyst), and who has decision rights on the open-questions workstream.
+
+### Other content TODOs (not gaps I can placeholder, but flag for the same pass)
+
+- **Felisha [LAST NAME — TODO]** appears three times: `role`, `team`, and the second body paragraph. Replace before merge.
+- **Closing `<InsightCallout label="Outcome update — pending">`** — Critic recommended cutting on the grounds the prose paragraph just above it already does this work; Copywriter agreed but left it as a structural call. Keep, replace with a real outcome line once leadership has acted, or delete.
+- **Doubled thesis** (Critic issue #1, High) — synthesis-to-action gap vs. new-shape-of-senior-synthesis-with-an-agentic-analyst. This is a structural rewrite for the next composer round, not something a placeholder fixes; flagging here so it doesn't get lost.
+- **`status: 'published'`** is set in frontmatter while live TODOs remain. Flip back to `'draft'` until they're filled, or push through if shipping immediately.
