@@ -142,17 +142,17 @@ The opening exchange in round two looked like this — directives, not menu walk
   ]}
 />
 
-<figure>
-  <DataVizBubbleChart />
-  <figcaption style="font-size: 13px; color: #4A443D; line-height: 1.5; margin-top: 12px; font-style: italic;">The new chart is interactive — hover any bubble to see the theme description, the rating buckets each average falls between, and how many people rated it. Try the cluster in the top-right.</figcaption>
-</figure>
-
 Then I iterated. Some prompts that show what this mode actually felt like:
 
 - *"The role-average bars aren't telling me anything useful. Show me what categories each role rated highest, and whether those overlap."* It rebuilt the section as a category-by-role grid with each role's top three marked. That grid was an answer to a question I hadn't quite articulated.
 - *"Add a section showing every theme rated severe, even the rare ones, so we can talk about the 'severe but infrequent' kind of fix separately from the everyday ones."* Done, with each theme badged appropriately.
 - *"The frequency scale is bucketed labels, not a continuous line. An average of 3.5 doesn't mean 'daily friction,' it means 'between most projects and once per project.' Make the prose reflect that."* Re-anchored the language across the whole site in one pass.
 - *"Don't use theme codes in the narrative copy, spell them out in plain language."* Done across nine sections in seconds. In round one, that single edit would have been an afternoon of opening Slides and rewriting nine slides by hand.
+
+<figure>
+  <DataVizBubbleChart />
+  <figcaption style="font-size: 13px; color: #4A443D; line-height: 1.5; margin-top: 12px; margin-bottom: 48px; font-style: italic;">The new chart is interactive — hover any bubble to see the theme description, the rating buckets each average falls between, and how many people rated it. Try the cluster in the top-right.</figcaption>
+</figure>
 
 <InsightCallout>
   The shift wasn't "AI made the charts." The shift was that I could ask the kind of questions a business analyst would ask of this data, and iterate on them at conversation speed, without having to learn the statistical scaffolding first. The judgment about what the patterns *meant* still sat with me.
@@ -189,8 +189,10 @@ The output is an interactive HTML site titled *[Service designers look at their 
 It is in Harmonic's brand colors and typefaces, with hoverable bubbles, sortable lists, and visual signals (the "Fix Now" zone is shaded; outliers are flagged in their own cards). The site opens with a panel that explains the rating scales and what blanks mean, because half of leadership wasn't in the room when the scales were set. A persistent banner at the top names the data as synthetic, so no one mistakes the example for the underlying engagement.
 
 <figure>
-  <img src="/images/data-viz-deliverable-hero.png" alt="A long screenshot of the deployed synthetic deliverable, showing the synthetic-sample banner, hero, stats row, scales panel, the bubble chart with its shaded Fix Now zone, and the start of the critical-seven cards." />
-  <figcaption>The deployed deliverable, top-of-site through critical seven — synthetic banner, scales panel, bubble chart with the shaded Fix Now zone, and the critical themes. <a href="https://royal-night-e624.whitney-masulis.workers.dev">Open the live version</a> to scroll the rest.</figcaption>
+  <div style="border: 1px solid #EBE1D4; border-radius: 8px; overflow: hidden; background: #FAF7F3;">
+    <iframe src="https://royal-night-e624.whitney-masulis.workers.dev" style="width: 100%; height: 600px; border: none;" title="Interactive retro synthesis deliverable"></iframe>
+  </div>
+  <figcaption style="font-size: 13px; color: #4A443D; line-height: 1.5; margin-top: 12px; margin-bottom: 48px; font-style: italic;">The deployed deliverable is fully interactive — all 40 themes plotted, filterable by severity and frequency, with role and category breakdowns. <a href="https://royal-night-e624.whitney-masulis.workers.dev">Open full-screen.</a></figcaption>
 </figure>
 
 ## What I'm taking from this
