@@ -91,7 +91,7 @@ A few moments from that round are worth naming, because they show what this mode
 
 <figure>
   <img src="/images/data-viz-bubble-v1.png" alt="A scatter-style bubble chart in Google Sheets plotting retro themes by severity and frequency. Several bubbles overlap; one (CR2) is hidden behind another and not visible." />
-  <figcaption>Can you see the dark blue CR2 bubble? Can you??</figcaption>
+  <figcaption class="case-figure-caption">Can you see the dark blue CR2 bubble? Can you??</figcaption>
 </figure>
 
 What I came out with at the end of round one: a crummy bubble chart that wasn't really telling a story, two heatmaps in a Google Sheet, and a text document outlining what a ten-slide deck might look like. It felt like having a patient helpdesk person on the other end of a chat window who could answer any question about Sheets but who couldn't actually open Sheets.
@@ -144,7 +144,7 @@ The opening exchange in round two looked like this — directives, not menu walk
 
 <figure>
   <DataVizBubbleChart />
-  <figcaption>The new chart is interactive — hover any bubble to see the theme description, the rating buckets each average falls between, and how many people rated it. Try the cluster in the top-right.</figcaption>
+  <figcaption class="case-figure-caption">The new chart is interactive — hover any bubble to see the theme description, the rating buckets each average falls between, and how many people rated it. Try the cluster in the top-right.</figcaption>
 </figure>
 
 Then I iterated. Some prompts that show what this mode actually felt like:
@@ -206,3 +206,13 @@ A few things I want to do differently the next time I run this kind of synthesis
 The retro process at Harmonic was not broken. The synthesis-to-action gap was. This deliverable is one half of closing that gap; whether anything actually changes depends on what leadership does with the open questions at the end. I'll know in a quarter or two whether the streams of work named in the recommendations get owned by anyone, or whether the deck joins the stack of well-made artifacts that don't move the studio.
 
 The other thing I'm still thinking about: how much of what I just did is portable. The same rough pattern (a tagged synthesis deliverable feeding an agentic-AI analyst that produces an interactive output) could shorten the back half of a research engagement substantially. The constraints on client work are different (data sensitivity, NDA, audience appetite for "an AI made the charts"), but the underlying move scales. And inside Harmonic, the move I most want my colleagues to make is the one from round one to round two: stop ferrying things back and forth between a chat tab and your work, and let the agent share the environment with you. The gap between "I have read about agents" and "I am using them in my actual work" is much smaller than it looks. The thing that gets you across is not technical skill. It is a willingness to describe what good looks like, in your own words, and to keep pushing until you get there.
+
+<style>
+  .case-figure-caption {
+    font-size: 13px;
+    color: var(--charcoal-mid, #4A443D);
+    line-height: 1.5;
+    margin-top: 12px;
+    font-style: italic;
+  }
+</style>
