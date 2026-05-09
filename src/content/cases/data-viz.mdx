@@ -150,8 +150,8 @@ Then I iterated. Some prompts that show what this mode actually felt like:
 - *"Don't use theme codes in the narrative copy, spell them out in plain language."* Done across nine sections in seconds. In round one, that single edit would have been an afternoon of opening Slides and rewriting nine slides by hand.
 
 <figure>
-  <img src="/images/data-viz-bubble-v1.png" alt="A scatter-style bubble chart in Google Sheets plotting retro themes by severity and frequency. Several bubbles overlap; one (CR2) is hidden behind another and not visible." />
-  <figcaption style="font-size: 13px; color: #4A443D; line-height: 1.5; margin-top: 12px; margin-bottom: 48px; font-style: italic;">Can you see the dark blue CR2 bubble? Can you??</figcaption>
+  <DataVizBubbleChart />
+  <figcaption style="font-size: 13px; color: #4A443D; line-height: 1.5; margin-top: 12px; margin-bottom: 48px; font-style: italic;">The new chart is interactive — hover any bubble to see the theme description, the rating buckets each average falls between, and how many people rated it. Try the cluster in the top-right.</figcaption>
 </figure>
 
 <InsightCallout>
@@ -189,9 +189,11 @@ The output is an interactive HTML site titled *[Service designers look at their 
 It is in Harmonic's brand colors and typefaces, with hoverable bubbles, sortable lists, and visual signals (the "Fix Now" zone is shaded; outliers are flagged in their own cards). The site opens with a panel that explains the rating scales and what blanks mean, because half of leadership wasn't in the room when the scales were set. A persistent banner at the top names the data as synthetic, so no one mistakes the example for the underlying engagement.
 
 <figure style="margin-top: 48px;">
-  <p style="font-size: 12px; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; text-transform: uppercase; color: #6B6560; margin-bottom: 12px;">Scroll to explore all themes</p>
-  <DataVizBubbleChart />
-  <figcaption style="font-size: 13px; color: #4A443D; line-height: 1.5; margin-top: 12px; margin-bottom: 48px; font-style: italic;">The chart is interactive — hover any bubble to see the theme description, the rating buckets each average falls between, and how many people rated it.</figcaption>
+  <p style="font-size: 12px; font-family: 'DM Mono', monospace; letter-spacing: 0.04em; text-transform: uppercase; color: #6B6560; margin-bottom: 12px;">Scroll to explore the live deliverable</p>
+  <div style="border: 1px solid #EBE1D4; border-radius: 8px; overflow: hidden; background: #FAF7F3;">
+    <iframe src="https://royal-night-e624.whitney-masulis.workers.dev" style="width: 100%; height: 600px; border: none;" title="Interactive retro synthesis deliverable"></iframe>
+  </div>
+  <figcaption style="font-size: 13px; color: #4A443D; line-height: 1.5; margin-top: 12px; margin-bottom: 48px; font-style: italic;">The deployed deliverable, embedded here. <a href="https://royal-night-e624.whitney-masulis.workers.dev">Open full-screen.</a></figcaption>
 </figure>
 
 ## What I'm taking from this

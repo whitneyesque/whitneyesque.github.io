@@ -325,7 +325,6 @@
     const tooltip = document.getElementById("dvbc-tooltip");
     svg.querySelectorAll(".dvbc-bubble").forEach(b => {
       b.addEventListener("mouseenter", () => {
-        svg.appendChild(b);
         if (!tooltip) return;
         const sev = parseFloat(b.getAttribute("data-sev"));
         const freq = parseFloat(b.getAttribute("data-freq"));
