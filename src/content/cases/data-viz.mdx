@@ -21,6 +21,7 @@ import PullQuote from '../../components/PullQuote.astro';
 import InsightCallout from '../../components/InsightCallout.astro';
 import BotanicalDivider from '../../components/BotanicalDivider.astro';
 import Placeholder from '../../components/Placeholder.astro';
+import GPTConversation from '../../components/GPTConversation.astro';
 
 <StatRow variant="dark" stats={[
   { value: '821', label: 'Ratings collected from 25 studio members' },
@@ -53,19 +54,44 @@ I wanted to do something different, and I wanted it to be useful to my colleague
 
 I started the way most people I know start. A chat tab open, my spreadsheet open, and me copy-pasting back and forth, screenshotting charts, asking what was wrong with them. Within a couple of hours I had a bubble chart, two heatmaps, a filtered list of the seven critical themes, a pattern analysis grouping those seven into three underlying causes, and a markdown outline for a ten-slide deck. Useful. Entirely produced by my keystrokes.
 
+The opening exchange looked like this — friendly, structured, and entirely about handing me a plan I would still have to execute.
+
+<GPTConversation
+  header="Round one · ChatGPT in a sidebar"
+  messages={[
+    {
+      role: 'Whitney',
+      speaker: 'user',
+      text: "I have a spreadsheet of retro ratings — 25 people across 40 themes. Can you turn it into a presentation?"
+    },
+    {
+      role: 'ChatGPT',
+      speaker: 'ai',
+      text: "Happy to help! A few things would help me give you something useful: <strong>What columns does the spreadsheet have? Who's the audience? What format are you imagining</strong> — slides, HTML, a doc?"
+    },
+    {
+      role: 'Whitney',
+      speaker: 'user',
+      text: "Columns: theme code, category, rater ID, role, severity (1–4), frequency (1–7). Audience is internal leadership. HTML, measured tone."
+    },
+    {
+      role: 'ChatGPT',
+      speaker: 'ai',
+      text: "Great context. I'd recommend a structure with framing, the full landscape, the critical few, patterns, by-role cuts, recommendations, and open questions. For the chart, a bubble plot works well: severity on Y, frequency on X, bubble size for vote count. <strong>Want me to draft the section copy?</strong>"
+    }
+  ]}
+/>
+
 A few moments from that round are worth naming, because they show what this mode is actually like.
 
 - **The bubble chart was wrong, and I had to fix it by hand.** Sheets was reading the vote-count column as a separate data series instead of as the size dimension. The chatbot talked me through the menu changes; I clicked them. It said "go to Customize → Series → set Size to Vote Count." I did. It worked. Useful, slow.
 - **A bubble was hidden behind another bubble, and nothing the chatbot suggested could fix it.** Reorder source rows. Reorder series. Reduce opacity. Rebuild in Figma. None of it brought CR2 back into view. The chatbot couldn't reach into my chart. I moved on without ever fully fixing it.
 - **The chatbot started building a story I had to stop.** Halfway through, it had a heatmap based on count of mentions and was framing it around Leads "absorbing all the pain." I stopped and asked why we were showing count instead of average. Count was going to be biased by who participated more, and I didn't want a participation artifact dressed up as a finding. The chatbot agreed, we rebuilt with averages, and the "Leads absorb everything" pattern dissolved on contact. That catch wasn't AI. That catch was my own critical reasoning.
 
-<Placeholder
-  kind="image"
-  size="in-body-figure"
-  ask="The bubble-v1.png screenshot from raw-case-material/Data-Viz/ — the messy Sheets bubble chart with the missing CR2 bubble. Caption should keep Whitney's line: 'Can you see the dark blue CR2 bubble? Can you??'"
-  why="Round one's argument is that everything the chatbot produced lived in its window and couldn't reach into mine. The visual proof of that is a chart I could not fix. Pairs with the round-two bubble chart later in the case to show the shift."
-  source="composer-recommendation"
-/>
+<figure>
+  <img src="/images/data-viz-bubble-v1.png" alt="A scatter-style bubble chart in Google Sheets plotting retro themes by severity and frequency. Several bubbles overlap; one (CR2) is hidden behind another and not visible." />
+  <figcaption>Can you see the dark blue CR2 bubble? Can you??</figcaption>
+</figure>
 
 What I came out with at the end of round one: a crummy bubble chart that wasn't really telling a story, two heatmaps in a Google Sheet, and a text document outlining what a ten-slide deck might look like. It felt like having a patient helpdesk person on the other end of a chat window who could answer any question about Sheets but who couldn't actually open Sheets.
 
@@ -98,13 +124,10 @@ I never opened a spreadsheet. I never wrote a formula. I have still never opened
   ]}
 />
 
-<Placeholder
-  kind="image"
-  size="in-body-figure"
-  ask="The bubble-v2.png screenshot from raw-case-material/Data-Viz/ — the agent-built bubble chart of all 40 themes, with the on-hover tooltip showing RE3 detail (severity 3.19, frequency 3.62, n=21, 4 did not apply). Caption: 'New bubble chart displays information about the data point when you hover over it.'"
-  why="Set against the round-one bubble image earlier in the case, this is the visual proof of the thesis: the agent didn't just answer my questions, it built the artifact. The hover detail is the part the chatbot literally couldn't deliver because its output lived in its window."
-  source="composer-recommendation"
-/>
+<figure>
+  <img src="/images/data-viz-bubble-v2.png" alt="The agent-built bubble chart of all 40 themes plotted by severity and frequency, with a hover tooltip showing detail for one theme — code, description, severity 3.19, frequency 3.62, vote count, and how many participants marked 'does not apply.'" />
+  <figcaption>New bubble chart displays information about the data point when you hover over it.</figcaption>
+</figure>
 
 Then I iterated. Some prompts that show what this mode actually felt like:
 
@@ -155,7 +178,7 @@ Three places I pushed back hardest:
 
 ## What the final piece looks like
 
-The output is an interactive HTML site titled *Where Pain Lives*, deployed to a public URL the studio can open in a meeting. It is structured the way a leadership presentation should be: the landscape first (all 40 themes plotted), then the critical few (filtered to severe and frequent), then patterns (the clusters that read as the same underlying problem), then cuts by seniority and by category, then what we're explicitly not chasing, then a recommendations section honestly named as three streams plus one structural decision, and finally open questions for leadership rather than a hard close.
+The output is an interactive HTML site titled *[Service designers look at their own journey](https://royal-night-e624.whitney-masulis.workers.dev)*, deployed to a public URL the studio can open in a meeting. It is structured the way a leadership presentation should be: the landscape first (all 40 themes plotted), then the critical few (filtered to severe and frequent), then patterns (the clusters that read as the same underlying problem), then cuts by seniority and by category, then what we're explicitly not chasing, then a recommendations section honestly named as three streams plus one structural decision, and finally open questions for leadership rather than a hard close.
 
 It is in Harmonic's brand colors and typefaces, with hoverable bubbles, sortable lists, and visual signals (the "Fix Now" zone is shaded; outliers are flagged in their own cards). The site opens with a panel that explains the rating scales and what blanks mean, because half of leadership wasn't in the room when the scales were set. A persistent banner at the top names the data as synthetic, so no one mistakes the example for the underlying engagement.
 
