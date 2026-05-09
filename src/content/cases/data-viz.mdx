@@ -200,18 +200,10 @@ The output is an interactive HTML site titled *[Service designers look at their 
 
 It is in Harmonic's brand colors and typefaces, with hoverable bubbles, sortable lists, and visual signals (the "Fix Now" zone is shaded; outliers are flagged in their own cards). The site opens with a panel that explains the rating scales and what blanks mean, because half of leadership wasn't in the room when the scales were set. A persistent banner at the top names the data as synthetic, so no one mistakes the example for the underlying engagement.
 
-<Placeholder
-  kind="image"
-  size="darkband-figure"
-  ask="Wide screenshot (or scrolling capture) of the deployed retrospective-synth.html landing view at royal-night-e624.whitney-masulis.workers.dev — must include three things in one frame if possible: (1) the persistent synthetic-data banner, (2) the shaded 'Fix Now' zone, and (3) the 'Open questions for leadership' close. If a single frame can't hold all three, do a two-up: top-of-site (banner + Fix Now) above bottom-of-site (open questions)."
-  why="Critic Issue #2 (the case's biggest gap): the prose names brand-colored, hoverable, leadership-grade interactive deliverable but the only visual evidence is two bubble charts. Without a wide shot of the deployed site, this section reads as 'Whitney made charts and wrote about it' instead of 'Whitney shipped a working studio deliverable.' Composer + applier handoff both flag this as the strongest possible 'show, don't tell' move."
-  alternatives={[
-    "Iframe-embed the live deliverable instead of a static screenshot — needs frontend-dev sign-off on iframe-safe sandboxing, but lets the reader interact with the artifact (composer's first-choice recommendation)",
-    "Three smaller in-body-figure shots — one per element (synthetic-data banner / Fix Now zone / Open questions close) — placed sequentially through this section instead of one wide hero",
-    "If the live URL is taken down before capture, recreate from raw-case-material/Data-Viz/retrospective-synth.html locally — same artifact, served from disk"
-  ]}
-  source="critic-flag"
-/>
+<figure>
+  <img src="/images/data-viz-deliverable-hero.png" alt="A long screenshot of the deployed synthetic deliverable, showing the synthetic-sample banner, hero, stats row, scales panel, the bubble chart with its shaded Fix Now zone, and the start of the critical-seven cards." />
+  <figcaption>The deployed deliverable, top-of-site through critical seven — synthetic banner, scales panel, bubble chart with the shaded Fix Now zone, and the critical themes. <a href="https://royal-night-e624.whitney-masulis.workers.dev">Open the live version</a> to scroll the rest.</figcaption>
+</figure>
 
 ## What I'm taking from this
 
