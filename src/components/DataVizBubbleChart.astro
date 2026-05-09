@@ -1,0 +1,369 @@
+---
+/**
+ * DataVizBubbleChart.astro — V4 design system
+ *
+ * Interactive bubble chart of all 40 retro themes by severity × frequency.
+ * Same data and shape as the deployed synthetic deliverable, restyled in
+ * portfolio brand tokens (cream / gold / sage / rust) so it fits inside
+ * the case study reading column rather than reading as an embedded foreign
+ * brand.
+ *
+ * Each bubble is colored by category; bubble size = vote count (n);
+ * hovering surfaces the theme description, named-bucket interpretations of
+ * the average severity and frequency, and how many people rated vs. marked
+ * "does not apply."
+ */
+---
+
+<div class="dvbc">
+  <div class="dvbc-head">
+    <span class="dvbc-dot" aria-hidden="true"></span>
+    <span>All 40 themes — severity × frequency</span>
+  </div>
+  <div class="dvbc-frame">
+    <div class="dvbc-svg-wrap">
+      <svg id="dvbc-svg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid meet" aria-label="Interactive bubble chart of 40 retro themes by severity and frequency"></svg>
+    </div>
+    <div class="dvbc-legend" id="dvbc-legend"></div>
+  </div>
+</div>
+
+<div class="dvbc-tooltip" id="dvbc-tooltip" role="tooltip" aria-hidden="true"></div>
+
+<style>
+  .dvbc {
+    margin: 2.5rem 0;
+    background: var(--warm-white, #FAF7F3);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .dvbc-head {
+    background: var(--ink, #1A1714);
+    color: var(--cream, #F4EDE4);
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .dvbc-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold-light, #D4A85A);
+    flex-shrink: 0;
+  }
+  .dvbc-frame {
+    padding: 22px 22px 24px;
+  }
+  .dvbc-svg-wrap {
+    position: relative;
+    width: 100%;
+    padding-bottom: 65%;
+  }
+  .dvbc-svg-wrap svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .dvbc :global(.dvbc-bubble) {
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.2s;
+    transform-origin: center;
+    transform-box: fill-box;
+  }
+  .dvbc :global(.dvbc-bubble:hover) {
+    opacity: 1 !important;
+    transform: scale(1.15);
+  }
+  .dvbc :global(.dvbc-label) {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9px;
+    font-weight: 500;
+    fill: var(--cream, #F4EDE4);
+    text-anchor: middle;
+    pointer-events: none;
+    dominant-baseline: middle;
+    letter-spacing: 0.05em;
+  }
+  .dvbc :global(.dvbc-axis-line) { stroke: rgba(42,37,32,0.1); stroke-width: 1; stroke-dasharray: 3,3; }
+  .dvbc :global(.dvbc-axis-edge) { stroke: rgba(42,37,32,0.3); stroke-width: 1; }
+  .dvbc :global(.dvbc-axis-label) {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    fill: var(--charcoal-soft, #6B6560);
+  }
+  .dvbc :global(.dvbc-axis-tick) {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10px;
+    fill: var(--charcoal-soft, #6B6560);
+  }
+  .dvbc :global(.dvbc-quadrant-label) {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    fill: var(--gold-text, #8A6820);
+  }
+
+  .dvbc-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-top: 18px;
+    padding-top: 16px;
+    border-top: 1px solid var(--cream-deep, #EBE1D4);
+    font-size: 12px;
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+    color: var(--charcoal-mid, #4A443D);
+  }
+  .dvbc-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dvbc-legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .dvbc-tooltip {
+    position: fixed;
+    background: var(--ink, #1A1714);
+    color: var(--cream, #F4EDE4);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    max-width: 320px;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 1000;
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+    box-shadow: 0 8px 24px rgba(26,23,20,0.18);
+  }
+  .dvbc-tooltip.is-active { opacity: 1; }
+  .dvbc-tooltip-code {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-weight: 500;
+    color: var(--gold-light, #D4A85A);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .dvbc-tooltip-desc {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--cream, #F4EDE4);
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+  .dvbc-tooltip-stats {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(244,237,228,0.18);
+    font-size: 11.5px;
+    color: rgba(244,237,228,0.78);
+  }
+  .dvbc-tooltip-stats em {
+    color: var(--gold-light, #D4A85A);
+    font-style: italic;
+  }
+</style>
+
+<script is:inline>
+(function () {
+  if (window.__dvbcInit) return;
+  window.__dvbcInit = true;
+
+  const themes = [
+    {code:"RE3", category:"Research",          description:"Participant no-shows or attrition mid-study", sev:3.19, freq:3.62, n:21},
+    {code:"CE2", category:"Client Engagement", description:"Stakeholders disengage after kickoff energy fades", sev:2.89, freq:3.53, n:19},
+    {code:"TD1", category:"Team Dynamics",     description:"Project leads stretched across too many engagements", sev:3.11, freq:3.11, n:18},
+    {code:"WM3", category:"Work Management",   description:"Async updates noisy, important things get buried", sev:2.0,  freq:4.71, n:21},
+    {code:"SC3", category:"Scoping",           description:"Methodology baked in by sales before assessment", sev:3.46, freq:2.71, n:24},
+    {code:"PT2", category:"Project Timing",    description:"Synthesis phase always feels rushed", sev:2.96, freq:3.13, n:23},
+    {code:"SC2", category:"Scoping",           description:"Scope creep midway through engagement", sev:2.85, freq:3.2,  n:20},
+    {code:"CE3", category:"Client Engagement", description:"Junior client team can't make decisions independently", sev:2.9,  freq:3.1,  n:20},
+    {code:"RE2", category:"Research",          description:"Wrong participants slip past screening", sev:2.86, freq:3.09, n:22},
+    {code:"WM1", category:"Work Management",   description:"Hard to estimate effort for novel work", sev:2.45, freq:3.45, n:22},
+    {code:"TL1", category:"Tools",             description:"Tools don't share data, manual transfer required", sev:2.0,  freq:4.1,  n:20},
+    {code:"RE5", category:"Research",          description:"Synthesis feels like a black box to the client", sev:2.86, freq:2.82, n:22},
+    {code:"ST1", category:"Staffing",          description:"Hiring lags behind engagement demand", sev:2.9,  freq:2.65, n:20},
+    {code:"PT1", category:"Project Timing",    description:"Kickoff delays compress the rest of the timeline", sev:2.79, freq:2.68, n:19},
+    {code:"CE6", category:"Client Engagement", description:"We're brought in too late to influence direction", sev:2.82, freq:2.65, n:17},
+    {code:"TD2", category:"Team Dynamics",     description:"Junior staff feel out of depth on critical engagements", sev:2.45, freq:2.91, n:22},
+    {code:"TL2", category:"Tools",             description:"Client systems lock us out at random", sev:2.6,  freq:2.7,  n:20},
+    {code:"WM2", category:"Work Management",   description:"Status visibility breaks down across phases", sev:2.57, freq:2.71, n:21},
+    {code:"WS3", category:"Workshops",         description:"Output capture inconsistent between facilitators", sev:2.1,  freq:3.33, n:21},
+    {code:"PT3", category:"Project Timing",    description:"Reviews scheduled too late to course-correct", sev:2.48, freq:2.76, n:21},
+    {code:"WS2", category:"Workshops",         description:"Workshop framing assumes context attendees lack", sev:2.44, freq:2.75, n:16},
+    {code:"CE5", category:"Client Engagement", description:"Client team can't articulate what they actually want", sev:3.26, freq:2.04, n:23},
+    {code:"WS4", category:"Workshops",         description:"Hard to get the right cross-functional mix", sev:2.67, freq:2.48, n:21},
+    {code:"TD4", category:"Team Dynamics",     description:"Internal disagreement on engagement direction", sev:3.1,  freq:2.1,  n:21},
+    {code:"TL3", category:"Tools",             description:"New tool adoption stalls without clear owner", sev:2.52, freq:2.52, n:23},
+    {code:"SC1", category:"Scoping",           description:"Initial scope written before stakeholder needs clear", sev:2.76, freq:2.29, n:17},
+    {code:"RE4", category:"Research",          description:"Stakeholders push for less research than scope needs", sev:2.53, freq:2.37, n:19},
+    {code:"CE1", category:"Client Engagement", description:"Client team turns over mid-engagement", sev:2.32, freq:2.58, n:19},
+    {code:"WS1", category:"Workshops",         description:"Workshops scheduled too far apart, momentum dies", sev:2.5,  freq:2.35, n:20},
+    {code:"ST2", category:"Staffing",          description:"Junior staff promoted before ready", sev:2.7,  freq:2.15, n:20},
+    {code:"CE4", category:"Client Engagement", description:"Client uses us for political cover, not real change", sev:2.79, freq:2.05, n:19},
+    {code:"RE1", category:"Research",          description:"Recruiter ghosts mid-project", sev:2.63, freq:2.16, n:19},
+    {code:"TD3", category:"Team Dynamics",     description:"Hand-offs between team phases lose context", sev:2.45, freq:2.25, n:20},
+    {code:"WS5", category:"Workshops",         description:"Activities mismatched to participant comfort", sev:2.25, freq:2.38, n:24},
+    {code:"SC5", category:"Scoping",           description:"Budget reset mid-project without scope reset", sev:3.0,  freq:1.77, n:22},
+    {code:"SC4", category:"Scoping",           description:"Deliverable formats negotiated late", sev:2.36, freq:2.14, n:22},
+    {code:"PT5", category:"Project Timing",    description:"Workshop windows squeeze adjacent activities", sev:2.19, freq:2.29, n:21},
+    {code:"TL4", category:"Tools",             description:"License management consumes admin time", sev:2.16, freq:2.21, n:19},
+    {code:"PT4", category:"Project Timing",    description:"Holiday/PTO timing not accounted for in plans", sev:1.83, freq:2.5,  n:24},
+    {code:"ST3", category:"Staffing",          description:"Specialists underutilized between engagements", sev:1.84, freq:1.74, n:19}
+  ];
+
+  // Portfolio-brand earth-tone palette: 9 categories, distinguishable, harmonious with cream.
+  const categoryColors = {
+    "Research":          "#8B9A7E", // sage
+    "Client Engagement": "#B85C3A", // rust
+    "Team Dynamics":     "#C8943E", // gold
+    "Project Timing":    "#B57F5F", // terracotta
+    "Scoping":           "#4A5C3F", // deep sage
+    "Staffing":          "#5B7585", // slate
+    "Tools":             "#1A1714", // ink
+    "Work Management":   "#7A5462", // plum
+    "Workshops":         "#6B6560"  // charcoal-soft
+  };
+
+  const TOTAL = 25;
+  const critical7 = new Set(["RE3","CE2","TD1","PT2","SC2","CE3","RE2"]);
+
+  const freqLabels = ["", "Every few years", "Some projects", "Most projects", "Once per project", "Multiple times per project", "Weekly", "Daily"];
+  const sevLabels  = ["", "Not a big deal", "Solve someday", "Solve soon", "Must solve immediately"];
+
+  function bucketLabel(value, labels) {
+    const lo = Math.floor(value), hi = Math.ceil(value);
+    if (lo === hi) return labels[lo] || "";
+    return 'between "' + labels[lo] + '" and "' + labels[hi] + '"';
+  }
+
+  function buildChart() {
+    const svg = document.getElementById("dvbc-svg");
+    const legend = document.getElementById("dvbc-legend");
+    if (!svg || !legend) return;
+
+    const W = 800, H = 520;
+    const margin = { top: 28, right: 80, bottom: 60, left: 60 };
+    const plotW = W - margin.left - margin.right;
+    const plotH = H - margin.top - margin.bottom;
+
+    const xMin = 1.3, xMax = 5.0;
+    const yMin = 1.5, yMax = 3.8;
+
+    const xScale = v => margin.left + ((v - xMin) / (xMax - xMin)) * plotW;
+    const yScale = v => margin.top + plotH - ((v - yMin) / (yMax - yMin)) * plotH;
+    const rScale = v => 6 + (v / 24) * 11;
+
+    let html = "";
+    const cutX = xScale(3.0);
+    const cutY = yScale(2.8);
+    html += '<rect x="' + cutX + '" y="' + margin.top + '" width="' + (margin.left + plotW - cutX) + '" height="' + (cutY - margin.top) + '" fill="#C8943E" opacity="0.07"/>';
+
+    for (let v = 1.5; v <= 5.0; v += 0.5) {
+      html += '<line class="dvbc-axis-line" x1="' + xScale(v) + '" y1="' + margin.top + '" x2="' + xScale(v) + '" y2="' + (margin.top + plotH) + '"/>';
+    }
+    for (let v = 1.5; v <= 3.5; v += 0.5) {
+      html += '<line class="dvbc-axis-line" x1="' + margin.left + '" y1="' + yScale(v) + '" x2="' + (margin.left + plotW) + '" y2="' + yScale(v) + '"/>';
+    }
+
+    html += '<line x1="' + cutX + '" y1="' + margin.top + '" x2="' + cutX + '" y2="' + (margin.top + plotH) + '" stroke="#C8943E" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.55"/>';
+    html += '<line x1="' + margin.left + '" y1="' + cutY + '" x2="' + (margin.left + plotW) + '" y2="' + cutY + '" stroke="#C8943E" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.55"/>';
+    html += '<text class="dvbc-quadrant-label" x="' + (margin.left + plotW - 8) + '" y="' + (margin.top + 16) + '" text-anchor="end">FIX NOW →</text>';
+
+    html += '<line class="dvbc-axis-edge" x1="' + margin.left + '" y1="' + (margin.top + plotH) + '" x2="' + (margin.left + plotW) + '" y2="' + (margin.top + plotH) + '"/>';
+    for (let v = 1.5; v <= 5.0; v += 0.5) {
+      html += '<text class="dvbc-axis-tick" x="' + xScale(v) + '" y="' + (margin.top + plotH + 18) + '" text-anchor="middle">' + v.toFixed(1) + '</text>';
+    }
+    html += '<text class="dvbc-axis-label" x="' + (margin.left + plotW / 2) + '" y="' + (margin.top + plotH + 45) + '" text-anchor="middle">FREQUENCY (HOW OFTEN) →</text>';
+
+    html += '<line class="dvbc-axis-edge" x1="' + margin.left + '" y1="' + margin.top + '" x2="' + margin.left + '" y2="' + (margin.top + plotH) + '"/>';
+    for (let v = 1.5; v <= 3.5; v += 0.5) {
+      html += '<text class="dvbc-axis-tick" x="' + (margin.left - 10) + '" y="' + (yScale(v) + 4) + '" text-anchor="end">' + v.toFixed(1) + '</text>';
+    }
+    html += '<text class="dvbc-axis-label" x="' + (margin.left - 35) + '" y="' + (margin.top + plotH / 2) + '" text-anchor="middle" transform="rotate(-90 ' + (margin.left - 35) + ' ' + (margin.top + plotH / 2) + ')">SEVERITY →</text>';
+
+    themes.forEach(t => {
+      const cx = xScale(t.freq);
+      const cy = yScale(t.sev);
+      const r  = rScale(t.n);
+      const color = categoryColors[t.category] || "#999";
+      const isCritical = critical7.has(t.code);
+      const opacity = isCritical ? 0.95 : 0.55;
+      const desc = String(t.description).replace(/"/g, "&quot;");
+      html += '<circle class="dvbc-bubble" cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="' + color + '" opacity="' + opacity + '"' +
+              ' data-code="' + t.code + '" data-cat="' + t.category + '" data-desc="' + desc + '"' +
+              ' data-sev="' + t.sev + '" data-freq="' + t.freq + '" data-n="' + t.n + '"' +
+              ' stroke="#FAF7F3" stroke-width="1.5"/>';
+      if (r > 9) {
+        html += '<text class="dvbc-label" x="' + cx + '" y="' + cy + '">' + t.code + '</text>';
+      }
+    });
+
+    svg.innerHTML = html;
+
+    const tooltip = document.getElementById("dvbc-tooltip");
+    svg.querySelectorAll(".dvbc-bubble").forEach(b => {
+      b.addEventListener("mouseenter", () => {
+        if (!tooltip) return;
+        const sev = parseFloat(b.getAttribute("data-sev"));
+        const freq = parseFloat(b.getAttribute("data-freq"));
+        const n = parseInt(b.getAttribute("data-n"), 10);
+        const dna = TOTAL - n;
+        tooltip.innerHTML =
+          '<div class="dvbc-tooltip-code">' + b.getAttribute("data-code") + ' · ' + b.getAttribute("data-cat") + '</div>' +
+          '<div class="dvbc-tooltip-desc">' + b.getAttribute("data-desc") + '</div>' +
+          '<div class="dvbc-tooltip-stats">' +
+            'Severity ' + sev.toFixed(2) + ' <em>(' + bucketLabel(sev, sevLabels) + ')</em><br>' +
+            'Frequency ' + freq.toFixed(2) + ' <em>(' + bucketLabel(freq, freqLabels) + ')</em><br>' +
+            'n=' + n + ' (' + dna + ' did not apply)' +
+          '</div>';
+        tooltip.classList.add("is-active");
+        tooltip.setAttribute("aria-hidden", "false");
+      });
+      b.addEventListener("mousemove", e => {
+        if (!tooltip) return;
+        const left = Math.min(e.clientX + 14, window.innerWidth - 340);
+        const top  = e.clientY + 14;
+        tooltip.style.left = left + "px";
+        tooltip.style.top  = top + "px";
+      });
+      b.addEventListener("mouseleave", () => {
+        if (!tooltip) return;
+        tooltip.classList.remove("is-active");
+        tooltip.setAttribute("aria-hidden", "true");
+      });
+    });
+
+    legend.innerHTML = Object.keys(categoryColors).map(cat =>
+      '<div class="dvbc-legend-item"><div class="dvbc-legend-dot" style="background:' + categoryColors[cat] + '"></div><span>' + cat + '</span></div>'
+    ).join("");
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", buildChart);
+  } else {
+    buildChart();
+  }
+})();
+</script>
