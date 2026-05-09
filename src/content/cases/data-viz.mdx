@@ -1,5 +1,5 @@
 ---
-title: 'Where pain lives <em>in our projects.</em>'
+title: 'Teaching my studio about <em>agentic AI.</em>'
 client: 'Harmonic Design (internal)'
 year: 2026
 role: 'Service Designer & analysis lead (with Felisha [LAST NAME — TODO] on the upstream synthesis)'
@@ -22,6 +22,7 @@ import InsightCallout from '../../components/InsightCallout.astro';
 import BotanicalDivider from '../../components/BotanicalDivider.astro';
 import Placeholder from '../../components/Placeholder.astro';
 import GPTConversation from '../../components/GPTConversation.astro';
+import DataVizBubbleChart from '../../components/DataVizBubbleChart.astro';
 
 <StatRow variant="dark" stats={[
   { value: '821', label: 'Ratings collected from 25 studio members' },
@@ -113,20 +114,37 @@ The agent read the CSV directly, computed the aggregations in Python, picked its
 
 I never opened a spreadsheet. I never wrote a formula. I have still never opened a Python file. I do not know what Python is.
 
-<Placeholder
-  kind="quote"
-  size="block"
-  ask="Elevate the line 'I have still never opened a Python file. I do not know what Python is.' from the prose immediately above into a margin pull quote at this break."
-  why="Copywriter flagged this as the sharpest single voice line in the case — the punchline ('I do not know what Python is.') is what earns the pull. Currently buried inside a four-sentence paragraph; lifting the second half gives Round Two its definitional Whitney moment."
-  alternatives={[
-    "Leave inline — the paragraph is already doing the work and a third pull quote may overweight the case",
-    "Pull the whole four-sentence sequence ('I never opened a spreadsheet...') as a longer block quote instead"
+The opening exchange in round two looked like this — directives, not menu walkthroughs.
+
+<GPTConversation
+  header="Round two · Claude Code in my terminal"
+  messages={[
+    {
+      role: 'Whitney',
+      speaker: 'user',
+      text: "Take this CSV — 25 raters, 40 themes, severity 1–4 and frequency 1–7 with blanks meaning 'does not apply.' Build me an interactive site that helps leadership prioritize."
+    },
+    {
+      role: 'Claude Code',
+      speaker: 'ai',
+      text: "<strong>Reading retro-data.csv</strong> — 821 ratings across 25 raters and 40 themes. Computing averages with blanks as 'does not apply.' Identifying the 7 themes scoring above 2.8 on severity AND above 3.0 on frequency. Generating retrospective.html with a bubble chart, critical-7 cards, role × category grid, and discussion questions. Preview at the link."
+    },
+    {
+      role: 'Whitney',
+      speaker: 'user',
+      text: "The role-average bars aren't telling me anything. Show me what categories each role rated highest, and whether those overlap."
+    },
+    {
+      role: 'Claude Code',
+      speaker: 'ai',
+      text: "Rebuilt the section as a category × role grid, each role's top 3 marked. <strong>Front-line staff cluster around Scoping. Leads put Team Dynamics first. Principals see Workshops and Work Management most severely</strong> — none of those overlap. Posted the divergence as an insight callout next to the grid."
+    }
   ]}
 />
 
 <figure>
-  <img src="/images/data-viz-bubble-v2.png" alt="The agent-built bubble chart of all 40 themes plotted by severity and frequency, with a hover tooltip showing detail for one theme — code, description, severity 3.19, frequency 3.62, vote count, and how many participants marked 'does not apply.'" />
-  <figcaption>New bubble chart displays information about the data point when you hover over it.</figcaption>
+  <DataVizBubbleChart />
+  <figcaption>The new chart is interactive — hover any bubble to see the theme description, the rating buckets each average falls between, and how many people rated it. Try the cluster in the top-right.</figcaption>
 </figure>
 
 Then I iterated. Some prompts that show what this mode actually felt like:
