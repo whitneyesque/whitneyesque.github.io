@@ -183,18 +183,20 @@ function normalizeCell(c: string | Cell): Cell {
     line-height: 1.4;
     vertical-align: top;
   }
-  /* Highlight variant — gold tint on the row label, "NEW" tag inline */
+  /* Highlight variant — sage-green tint on the row label, "NEW" tag inline.
+     Tuned to stand out more than the original gold-on-tan since the chips
+     themselves are now in the tan/warm-neutral family. */
   .v4-bp tr.highlight th {
-    background: rgba(200, 148, 62, 0.08);
-    color: var(--gold-text, #8A6820);
+    background: rgba(139, 154, 126, 0.18);
+    color: var(--sage-text, #4A5C3F);
   }
   .v4-bp tr.highlight td {
-    background: rgba(200, 148, 62, 0.04);
+    background: rgba(139, 154, 126, 0.10);
   }
   .v4-bp-newtag {
     display: inline-block;
-    background: var(--gold, #C8943E);
-    color: var(--charcoal, #2A2520);
+    background: var(--sage, #8B9A7E);
+    color: var(--cream, #F4EDE4);
     font-size: 8px;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -266,10 +268,15 @@ function normalizeCell(c: string | Cell): Cell {
     line-height: 1;
     white-space: nowrap;
   }
-  .v4-bp .chip-sage { background: var(--sage-light, #D4DEC9); color: var(--sage-text, #4A5C3F); }
-  .v4-bp .chip-gold { background: var(--gold, #C8943E); color: var(--charcoal, #2A2520); }
-  .v4-bp .chip-ink  { background: var(--ink, #1A1714); color: var(--cream, #F4EDE4); }
-  .v4-bp .chip-deep { background: var(--sage, #8B9A7E); color: var(--cream, #F4EDE4); }
+  /* Chip palette — tan/warm-neutral family. Names kept stable so existing
+     case MDX (allied, ai-lx, ferguson-data) doesn't need changes; semantic
+     ordering preserved (light → mid → deep → dark) so the chip choice
+     still reads as a stage signal. The unified palette lets the
+     sage-green highlight rows above stand out more by contrast. */
+  .v4-bp .chip-sage { background: var(--cream-deep, #EBE1D4); color: var(--charcoal-mid, #4A443D); }
+  .v4-bp .chip-gold { background: var(--gold-pale, #F0E4CC); color: var(--gold-text, #8A6820); }
+  .v4-bp .chip-deep { background: var(--gold-light, #D4A85A); color: var(--charcoal, #2A2520); }
+  .v4-bp .chip-ink  { background: var(--charcoal-mid, #4A443D); color: var(--cream, #F4EDE4); }
   .v4-bp .chip-rust { background: var(--rust, #B85C3A); color: var(--cream, #F4EDE4); }
 
   .v4-bp-caption {
