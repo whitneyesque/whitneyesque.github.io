@@ -25,6 +25,7 @@ import RulesObservations from '../../components/RulesObservations.astro';
 import SystemRulesExcerpt from '../../components/SystemRulesExcerpt.astro';
 import ConversationStackFailure from '../../components/ConversationStackFailure.astro';
 import QuestionnaireTiers from '../../components/QuestionnaireTiers.astro';
+import PrototypePivotExperience from '../../components/PrototypePivotExperience.astro';
 
 <StatRow variant="dark" stats={[
   { value: '50M+', label: 'U.S. family caregivers' },
@@ -151,6 +152,8 @@ The structure was wrong in two ways at once.
 <PullQuote attribution="v1 participant">
 I just gave you all that information.
 </PullQuote>
+
+<PrototypePivotExperience />
 
 **The conversational format had a structural problem.** During one mode, the GPT presented a numbered list of ten yes/no screening questions. The user worked through them. The conversation continued. A second numbered list appeared further down the thread. By that point the first list had scrolled off screen. When the user said "1," they were responding to the second list, but the GPT interpreted it against the first and pulled a condition that didn't apply.
 
