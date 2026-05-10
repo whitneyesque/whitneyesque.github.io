@@ -24,6 +24,21 @@ interface Props {
   alternatives?: string[];
   /** Where this recommendation came from */
   source?: 'critic-flag' | 'visual-director-recommendation';
+  /** Optional: candidate assets for low-confidence matches. When present,
+   *  renders inline thumbnails inside the placeholder so Whitney can pick
+   *  in the deployed Cloudflare preview rather than a separate UI. Used by
+   *  the Wave 1 backfill agent and any future auto-fill logic.
+   *  - src: path to a /public/-served image
+   *  - alt: alt text for the thumbnail
+   *  - score: optional 0-1 match confidence; if provided, renders the
+   *    score below the thumb and bolds the highest scorer
+   *  - label: optional caption ("from raw-case-material/<slug>/foo.png") */
+  candidates?: Array<{
+    src: string;
+    alt: string;
+    score?: number;
+    label?: string;
+  }>;
 }
 
 const {
@@ -34,7 +49,13 @@ const {
   why,
   alternatives = [],
   source = 'visual-director-recommendation',
+  candidates = [],
 } = Astro.props;
+
+// Sort candidates by score descending (if scores provided) so the strongest
+// match shows leftmost. Stable for ties.
+const sortedCandidates = [...candidates].sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+const topScore = sortedCandidates[0]?.score;
 
 // Accept either `ask` or `note`. If neither is provided, render a generic
 // "needs content" marker so bare <Placeholder /> calls still build.
@@ -75,6 +96,35 @@ const kindClass = (() => {
           {alternatives.map((alt) => <li>{alt}</li>)}
         </ul>
       </details>
+    )}
+    {sortedCandidates.length > 0 && (
+      <div class="placeholder-candidates">
+        <p class="placeholder-candidates-heading">
+          {sortedCandidates.length === 1
+            ? 'Candidate from raw materials'
+            : `${sortedCandidates.length} candidates from raw materials — pick one`}
+        </p>
+        <ul class="placeholder-candidates-list">
+          {sortedCandidates.map((c) => (
+            <li
+              class:list={[
+                'placeholder-candidate',
+                c.score !== undefined && c.score === topScore && sortedCandidates.length > 1 && 'placeholder-candidate--top',
+              ]}
+            >
+              <a href={c.src} target="_blank" rel="noopener" title={`Open ${c.alt} full size`}>
+                <img src={c.src} alt={c.alt} loading="lazy" />
+              </a>
+              {c.label && <span class="placeholder-candidate-label">{c.label}</span>}
+              {c.score !== undefined && (
+                <span class="placeholder-candidate-score">
+                  match {(c.score * 100).toFixed(0)}%
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
     )}
   </div>
 </div>
@@ -218,5 +268,110 @@ const kindClass = (() => {
 
   .placeholder--section .placeholder-kind {
     background: var(--rust, #B85C3A);
+  }
+
+  /* Candidate thumbnails — shown when an auto-fill agent found possible
+     matches in raw-case-material/ but the confidence wasn't high enough to
+     place automatically. Renders inside the placeholder so Whitney can see
+     them in the Cloudflare preview without a separate review surface. */
+  .placeholder-candidates {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px dashed rgba(200, 148, 62, 0.4);
+  }
+
+  .placeholder-candidates-heading {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    margin: 0 0 0.75rem 0;
+    color: var(--charcoal-mid, #4A443D);
+  }
+
+  .placeholder--size-darkband-figure .placeholder-candidates-heading {
+    color: var(--cream, #F4EDE4);
+    opacity: 0.8;
+  }
+
+  .placeholder-candidates-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
+    max-width: 100%;
+  }
+
+  .placeholder-candidate {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .placeholder-candidate a {
+    display: block;
+    border: 1px solid rgba(200, 148, 62, 0.3);
+    background: var(--warm-white, #FAF7F3);
+    border-radius: 2px;
+    overflow: hidden;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+
+  .placeholder-candidate a:hover {
+    border-color: var(--gold, #C8943E);
+    transform: translateY(-1px);
+  }
+
+  .placeholder-candidate img {
+    display: block;
+    width: 100%;
+    height: 140px;
+    object-fit: contain;
+    background: var(--cream, #F4EDE4);
+  }
+
+  .placeholder-candidate--top a {
+    border-color: var(--gold, #C8943E);
+    border-width: 2px;
+  }
+
+  .placeholder-candidate--top::before {
+    content: 'top match';
+    align-self: flex-start;
+    background: var(--gold, #C8943E);
+    color: var(--warm-white, #FAF7F3);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+  }
+
+  .placeholder-candidate-label {
+    font-size: 11px;
+    color: var(--charcoal-mid, #4A443D);
+    line-height: 1.3;
+    word-break: break-word;
+  }
+
+  .placeholder--size-darkband-figure .placeholder-candidate-label {
+    color: var(--cream, #F4EDE4);
+    opacity: 0.85;
+  }
+
+  .placeholder-candidate-score {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--charcoal-soft, #6B6560);
+    font-weight: 700;
+  }
+
+  .placeholder--size-darkband-figure .placeholder-candidate-score {
+    color: var(--cream, #F4EDE4);
+    opacity: 0.7;
   }
 </style>
