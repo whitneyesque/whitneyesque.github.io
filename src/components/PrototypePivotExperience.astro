@@ -1,0 +1,467 @@
+---
+/**
+ * PrototypePivotExperience.astro — V4
+ *
+ * Companion to InteractionModelComparison. That component answers
+ * "what changed structurally" (v1 sequential pipeline → v2 modal hub).
+ * This one answers "what changed for the person inside the prototype":
+ * how long they had to wait for value, and how often value arrived.
+ *
+ * Shape: a shared 30-minute horizontal timeline with two rows.
+ *
+ * v1 row — one long block of "answering questions" (~25 min) and a
+ * thin "forecast generated" sliver at the end. The disappointment
+ * quote ("I just gave you all that information") lives on the seam
+ * between them, where it landed in the room.
+ *
+ * v2 row — alternating short pick / get blocks (~5–10 min each), each
+ * delivering an artifact in roughly ten minutes. A thin gold band runs
+ * the full length to show that forecast is now a global action,
+ * not a destination.
+ *
+ * Both rows share one time axis along the bottom, so the geometry of
+ * "when value arrives" carries the argument: v1's value-delivered
+ * point sits at the far right; v2's first one sits near minute 5
+ * and recurs.
+ *
+ * Mobile collapses each row to a vertical stack; the alternating
+ * pick/get cadence and the late-arriving v1 value still read.
+ *
+ * No JS. Pure HTML + scoped CSS.
+ */
+---
+
+<figure class="v4-ppe" aria-label="Prototype experience comparison: v1 versus v2 over thirty minutes">
+  <header class="v4-ppe-head">
+    <span class="v4-ppe-eyebrow">Inside the prototype · 30 minutes</span>
+    <p class="v4-ppe-tagline">v1 made you wait and earn. v2 gave you something quickly and let you keep going.</p>
+  </header>
+
+  <div class="v4-ppe-grid">
+    <!-- ================= v1 ROW ================= -->
+    <div class="v4-ppe-row v4-ppe-row-v1">
+      <div class="v4-ppe-row-label">
+        <span class="v4-ppe-row-eyebrow">v1 · Sequential</span>
+        <span class="v4-ppe-row-action">give → give → give → finally see something</span>
+      </div>
+
+      <div class="v4-ppe-track" role="group" aria-label="v1 timeline">
+        <div class="v4-ppe-block v4-ppe-block-give" style="--start: 0; --span: 25;">
+          <span class="v4-ppe-block-kind">Give</span>
+          <span class="v4-ppe-block-name">Answering questions</span>
+          <span class="v4-ppe-block-meta">~25 min before any output</span>
+        </div>
+
+        <div class="v4-ppe-block v4-ppe-block-get v4-ppe-block-late" style="--start: 25; --span: 5;">
+          <span class="v4-ppe-block-kind">Get</span>
+          <span class="v4-ppe-block-name">Forecast</span>
+        </div>
+
+        <div class="v4-ppe-quote" style="--at: 25;" aria-hidden="false">
+          <span class="v4-ppe-quote-mark">&ldquo;</span>
+          <span class="v4-ppe-quote-text">I just gave you all that information.</span>
+          <span class="v4-ppe-quote-attr">v1 participant — said before the forecast rendered</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= v2 ROW ================= -->
+    <div class="v4-ppe-row v4-ppe-row-v2">
+      <div class="v4-ppe-row-label">
+        <span class="v4-ppe-row-eyebrow">v2 · Modal</span>
+        <span class="v4-ppe-row-action">pick → get → pick → get</span>
+      </div>
+
+      <div class="v4-ppe-track" role="group" aria-label="v2 timeline">
+        <div class="v4-ppe-floating-band" aria-label="Forecast available throughout">
+          <span class="v4-ppe-floating-label">Forecast — global action, available anytime</span>
+        </div>
+
+        <div class="v4-ppe-block v4-ppe-block-pick" style="--start: 0; --span: 2;">
+          <span class="v4-ppe-block-kind">Pick</span>
+          <span class="v4-ppe-block-name">A mode</span>
+        </div>
+        <div class="v4-ppe-block v4-ppe-block-get" style="--start: 2; --span: 8;">
+          <span class="v4-ppe-block-kind">Get</span>
+          <span class="v4-ppe-block-name">Triage report</span>
+          <span class="v4-ppe-block-meta">first artifact ~min 10</span>
+        </div>
+
+        <div class="v4-ppe-block v4-ppe-block-pick" style="--start: 10; --span: 2;">
+          <span class="v4-ppe-block-kind">Pick</span>
+          <span class="v4-ppe-block-name">A mode</span>
+        </div>
+        <div class="v4-ppe-block v4-ppe-block-get" style="--start: 12; --span: 7;">
+          <span class="v4-ppe-block-kind">Get</span>
+          <span class="v4-ppe-block-name">Filled-in plan</span>
+        </div>
+
+        <div class="v4-ppe-block v4-ppe-block-pick" style="--start: 19; --span: 2;">
+          <span class="v4-ppe-block-kind">Pick</span>
+          <span class="v4-ppe-block-name">A mode</span>
+        </div>
+        <div class="v4-ppe-block v4-ppe-block-get" style="--start: 21; --span: 9;">
+          <span class="v4-ppe-block-kind">Get</span>
+          <span class="v4-ppe-block-name">Conversation prep sheet</span>
+          <span class="v4-ppe-block-meta">"kept wanting to ask more"</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= shared axis ================= -->
+    <div class="v4-ppe-axis" aria-hidden="true">
+      <div class="v4-ppe-axis-line"></div>
+      <div class="v4-ppe-axis-tick" style="--at: 0;"><span>0</span></div>
+      <div class="v4-ppe-axis-tick" style="--at: 5;"><span>5</span></div>
+      <div class="v4-ppe-axis-tick" style="--at: 10;"><span>10</span></div>
+      <div class="v4-ppe-axis-tick" style="--at: 15;"><span>15</span></div>
+      <div class="v4-ppe-axis-tick" style="--at: 20;"><span>20</span></div>
+      <div class="v4-ppe-axis-tick" style="--at: 25;"><span>25</span></div>
+      <div class="v4-ppe-axis-tick" style="--at: 30;"><span>30 min</span></div>
+    </div>
+  </div>
+
+  <figcaption class="v4-ppe-footer">
+    Same thirty minutes. In v1 the user is still giving when the clock runs out; in v2 they have already received an artifact by minute ten and another by minute twenty.
+  </figcaption>
+</figure>
+
+<style>
+  .v4-ppe {
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .v4-ppe-head {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .v4-ppe-eyebrow {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+  .v4-ppe-tagline {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+    margin: 0;
+    line-height: 1.4;
+    max-width: none;
+  }
+
+  .v4-ppe-grid {
+    background: var(--cream, #F4EDE4);
+    border-left: 3px solid var(--gold, #C8943E);
+    padding: 1.75rem 1.5rem 1.5rem;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  /* ============ Row scaffolding ============ */
+  .v4-ppe-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 16px;
+    align-items: stretch;
+  }
+  .v4-ppe-row-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 8px;
+    border-right: 1px dashed var(--cream-deep, #EBE1D4);
+  }
+  .v4-ppe-row-eyebrow {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+  .v4-ppe-row-action {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--charcoal-mid, #4A443D);
+    line-height: 1.35;
+    margin-top: 4px;
+  }
+
+  /* ============ Track ============ */
+  /* The track is a 30-column grid; each block sets --start and --span
+     in "minutes" and we translate that to grid columns. */
+  .v4-ppe-track {
+    --cols: 30;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(var(--cols), 1fr);
+    grid-auto-rows: minmax(72px, auto);
+    gap: 4px;
+    min-height: 96px;
+    background:
+      linear-gradient(to right,
+        rgba(107, 101, 96, 0.08) 0,
+        rgba(107, 101, 96, 0.08) 1px,
+        transparent 1px,
+        transparent calc(100% / 6)
+      ) 0 0 / calc(100% / 6) 100% repeat-x;
+    padding: 6px 0;
+  }
+
+  .v4-ppe-block {
+    grid-column: calc(var(--start) + 1) / span var(--span);
+    background: var(--warm-white, #FAF7F3);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    border-radius: 3px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .v4-ppe-block-kind {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+  }
+  .v4-ppe-block-name {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--charcoal, #2A2520);
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .v4-ppe-block-meta {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1.3;
+  }
+
+  /* v1 — give is long and muted; get is gold but tiny and at the very end */
+  .v4-ppe-block-give {
+    background: rgba(107, 101, 96, 0.08);
+    border-color: var(--cream-deep, #EBE1D4);
+  }
+  .v4-ppe-block-give .v4-ppe-block-name {
+    font-style: italic;
+    color: var(--charcoal-mid, #4A443D);
+  }
+  .v4-ppe-block-late {
+    background: var(--gold-pale, #F0E4CC);
+    border-color: var(--gold, #C8943E);
+  }
+  .v4-ppe-block-late .v4-ppe-block-name {
+    color: var(--gold-text, #8A6820);
+  }
+
+  /* v2 — pick is small/quiet; get is gold, recurring */
+  .v4-ppe-block-pick {
+    background: var(--warm-white, #FAF7F3);
+    border-color: var(--cream-deep, #EBE1D4);
+  }
+  .v4-ppe-block-pick .v4-ppe-block-name {
+    font-style: italic;
+    color: var(--charcoal-mid, #4A443D);
+    font-weight: 400;
+  }
+  .v4-ppe-block-get {
+    background: var(--gold-pale, #F0E4CC);
+    border-color: var(--gold, #C8943E);
+  }
+  .v4-ppe-block-get .v4-ppe-block-name {
+    color: var(--gold-text, #8A6820);
+  }
+
+  /* The disappointment quote, geometrically anchored on the seam where it landed */
+  .v4-ppe-quote {
+    grid-column: calc(var(--at) - 11) / span 12;
+    grid-row: 2;
+    align-self: end;
+    margin-top: 8px;
+    padding: 10px 14px 10px 16px;
+    border-left: 2px solid var(--gold, #C8943E);
+    background: rgba(200, 148, 62, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+  }
+  .v4-ppe-quote-mark {
+    position: absolute;
+    top: 0;
+    left: 6px;
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 28px;
+    line-height: 1;
+    color: var(--gold, #C8943E);
+    opacity: 0.55;
+  }
+  .v4-ppe-quote-text {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 15px;
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+    line-height: 1.4;
+    padding-left: 14px;
+  }
+  .v4-ppe-quote-attr {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+    padding-left: 14px;
+  }
+
+  /* v2 forecast band — runs the full track length, behind the blocks visually */
+  .v4-ppe-floating-band {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 8px;
+    border: 1px dashed var(--gold, #C8943E);
+    border-radius: 3px;
+    background: rgba(200, 148, 62, 0.04);
+    padding: 8px 14px;
+    align-self: end;
+  }
+  .v4-ppe-floating-label {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+
+  /* ============ Shared axis ============ */
+  .v4-ppe-axis {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 16px;
+    margin-top: -4px;
+  }
+  .v4-ppe-axis::before { content: ""; }
+  .v4-ppe-axis-line {
+    grid-column: 2;
+    position: relative;
+    height: 22px;
+    border-top: 1px solid var(--cream-deep, #EBE1D4);
+  }
+  .v4-ppe-axis-tick {
+    grid-column: 2;
+    position: relative;
+    height: 0;
+  }
+  .v4-ppe-axis-tick > span {
+    position: absolute;
+    top: 4px;
+    left: calc(var(--at) / 30 * 100%);
+    transform: translateX(-50%);
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+    white-space: nowrap;
+  }
+  /* Anchor first/last labels so they don't clip the track edges */
+  .v4-ppe-axis-tick:first-of-type > span { transform: translateX(0); }
+  .v4-ppe-axis-tick:last-of-type > span { transform: translateX(-100%); }
+
+  .v4-ppe-footer {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--charcoal-mid, #4A443D);
+    line-height: 1.5;
+    margin: 0;
+    max-width: none;
+  }
+
+  /* ============ Mobile ============ */
+  @media (max-width: 720px) {
+    .v4-ppe-row {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .v4-ppe-row-label {
+      border-right: none;
+      border-bottom: 1px dashed var(--cream-deep, #EBE1D4);
+      padding: 0 0 8px 0;
+    }
+
+    /* Collapse the track to a vertical stack; preserve cadence and accents */
+    .v4-ppe-track {
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+      gap: 6px;
+      min-height: 0;
+      background: none;
+      padding: 0;
+    }
+    .v4-ppe-block {
+      grid-column: 1 / -1 !important;
+      min-height: 56px;
+    }
+    /* Visual cue that the v1 give-block is long: extra padding */
+    .v4-ppe-block-give {
+      padding: 22px 12px;
+    }
+    .v4-ppe-block-late {
+      padding: 8px 12px;
+    }
+    /* Quote and floating band drop into normal flow */
+    .v4-ppe-quote {
+      grid-column: 1 / -1 !important;
+      grid-row: auto !important;
+      margin-top: 4px;
+    }
+    .v4-ppe-floating-band {
+      grid-column: 1 / -1 !important;
+      grid-row: auto !important;
+      order: 99;  /* push to end of track on mobile */
+      margin-top: 4px;
+    }
+
+    /* Axis collapses to a simple caption row aligned to the new stack */
+    .v4-ppe-axis {
+      grid-template-columns: 1fr;
+    }
+    .v4-ppe-axis-line {
+      grid-column: 1;
+      display: none;
+    }
+    .v4-ppe-axis-tick { display: none; }
+    .v4-ppe-axis::after {
+      content: "0 → 30 min";
+      grid-column: 1;
+      font-family: var(--font-mono, 'DM Mono', monospace);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--charcoal-soft, #6B6560);
+      text-align: center;
+      padding-top: 4px;
+    }
+  }
+</style>
