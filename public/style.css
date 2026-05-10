@@ -222,9 +222,9 @@ p + p { margin-top: var(--sp-2); }
 }
 .btn:hover,
 .btn:focus-visible {
-  background: var(--rust);
-  border-color: var(--rust);
-  color: var(--cream);
+  background: var(--sage-light);
+  border-color: var(--sage-light);
+  color: var(--sage-text);
 }
 
 /* ----- HEROES ----- */
