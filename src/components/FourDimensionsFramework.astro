@@ -1,0 +1,547 @@
+---
+/**
+ * FourDimensionsFramework.astro — V4
+ *
+ * Overview / index diagram for the Four Dimensions of AI in Services
+ * framework — Whitney's original IP authored for the ai-lx case.
+ *
+ * Sits at the top of the "Four Dimensions framework" section, ABOVE the
+ * deep-dive subsections. Two sibling diagrams (InteractionTypesDiagram and
+ * CollaborationModelsDiagram) elaborate Interface and Collaboration inside
+ * their respective subsections; this component is the family eyebrow.
+ *
+ * Visual register: editorial, restrained, portfolio palette.
+ * 2x2 grid on desktop, single column on mobile.
+ *
+ * Each of the four panels uses a different mini-pattern that previews the
+ * shape of the dimension:
+ *   01 Actors        — two-column list (human side / AI side)
+ *   02 Interface     — three pills with a hairline track (spectrum)
+ *   03 Collaboration — four chips with mini-glyphs (typology)
+ *   04 Control       — five pills with a hairline track (graduated spectrum)
+ */
+---
+
+<figure class="v4-fdf" aria-label="The Four Dimensions of AI in Services framework">
+  <header class="v4-fdf-head">
+    <span class="v4-fdf-eyebrow">Framework · Four Dimensions</span>
+    <p class="v4-fdf-tagline">Four levers a service designer can turn on any AI choice. Each dimension is a separate decision; together they describe the shape of the AI in a service.</p>
+  </header>
+
+  <div class="v4-fdf-grid">
+    {/* 01 — Actors */}
+    <section class="v4-fdf-panel v4-fdf-actors">
+      <span class="v4-fdf-num">01 / 04</span>
+      <h3 class="v4-fdf-name">Actors <span class="v4-fdf-q">— who is participating?</span></h3>
+
+      <div class="v4-fdf-actors-cols">
+        <div class="v4-fdf-actors-col">
+          <span class="v4-fdf-col-label">Human side</span>
+          <ul>
+            <li>Customer</li>
+            <li>Front-stage associate</li>
+            <li>Back-stage associate</li>
+            <li>Supplier</li>
+          </ul>
+        </div>
+        <div class="v4-fdf-actors-col v4-fdf-actors-ai">
+          <span class="v4-fdf-col-label">AI side</span>
+          <ul>
+            <li>Customer's personal agent</li>
+            <li>Customer-facing AI</li>
+            <li>Employee-facing AI</li>
+            <li>Supplier's tools</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    {/* 02 — Interface */}
+    <section class="v4-fdf-panel v4-fdf-interface">
+      <span class="v4-fdf-num">02 / 04</span>
+      <h3 class="v4-fdf-name">Interface <span class="v4-fdf-q">— what is the point of connection?</span></h3>
+
+      <div class="v4-fdf-spectrum" role="list" aria-label="Interface modes">
+        <div class="v4-fdf-track" aria-hidden="true"></div>
+        <div class="v4-fdf-pill" role="listitem">
+          <span class="v4-fdf-pill-name">Explicit</span>
+          <span class="v4-fdf-pill-note">Chatbot · dashboard</span>
+        </div>
+        <div class="v4-fdf-pill v4-fdf-pill-mid" role="listitem">
+          <span class="v4-fdf-pill-name">Mix</span>
+          <span class="v4-fdf-pill-note">Both at once</span>
+        </div>
+        <div class="v4-fdf-pill" role="listitem">
+          <span class="v4-fdf-pill-name">Ambient</span>
+          <span class="v4-fdf-pill-note">Presence-based</span>
+        </div>
+      </div>
+      <p class="v4-fdf-foot">The user knows they're in it — to the system reacting without an explicit prompt.</p>
+    </section>
+
+    {/* 03 — Collaboration */}
+    <section class="v4-fdf-panel v4-fdf-collab">
+      <span class="v4-fdf-num">03 / 04</span>
+      <h3 class="v4-fdf-name">Collaboration <span class="v4-fdf-q">— how does the work get done?</span></h3>
+
+      <div class="v4-fdf-chips" role="list" aria-label="Collaboration patterns">
+        <div class="v4-fdf-chip" role="listitem">
+          <span class="v4-fdf-glyph" aria-hidden="true">
+            <span class="v4-fdf-dot"></span>
+            <span class="v4-fdf-arrow">→</span>
+            <span class="v4-fdf-dot v4-fdf-dot-ai"></span>
+          </span>
+          <span class="v4-fdf-chip-name">Sequential</span>
+          <span class="v4-fdf-chip-note">I ask, it answers, I work on the answer.</span>
+        </div>
+        <div class="v4-fdf-chip" role="listitem">
+          <span class="v4-fdf-glyph v4-fdf-glyph-parallel" aria-hidden="true">
+            <span class="v4-fdf-bar"></span>
+            <span class="v4-fdf-bar v4-fdf-bar-ai"></span>
+          </span>
+          <span class="v4-fdf-chip-name">Parallel</span>
+          <span class="v4-fdf-chip-note">Same job, different complexity. The John Henry pattern.</span>
+        </div>
+        <div class="v4-fdf-chip" role="listitem">
+          <span class="v4-fdf-glyph" aria-hidden="true">
+            <span class="v4-fdf-dot v4-fdf-dot-ai v4-fdf-dot-solo"></span>
+          </span>
+          <span class="v4-fdf-chip-name">Independent</span>
+          <span class="v4-fdf-chip-note">AI does the job alone.</span>
+        </div>
+        <div class="v4-fdf-chip" role="listitem">
+          <span class="v4-fdf-glyph v4-fdf-glyph-orchestrated" aria-hidden="true">
+            <span class="v4-fdf-dot"></span>
+            <span class="v4-fdf-dot v4-fdf-dot-ai"></span>
+            <span class="v4-fdf-dot"></span>
+            <span class="v4-fdf-dot v4-fdf-dot-ai"></span>
+          </span>
+          <span class="v4-fdf-chip-name">Orchestrated</span>
+          <span class="v4-fdf-chip-note">Multiple actors coordinated across a journey.</span>
+        </div>
+      </div>
+    </section>
+
+    {/* 04 — Control */}
+    <section class="v4-fdf-panel v4-fdf-control">
+      <span class="v4-fdf-num">04 / 04</span>
+      <h3 class="v4-fdf-name">Control <span class="v4-fdf-q">— how much autonomy does the AI have?</span></h3>
+
+      <div class="v4-fdf-ladder" role="list" aria-label="Control spectrum">
+        <div class="v4-fdf-track v4-fdf-track-graduated" aria-hidden="true"></div>
+        <div class="v4-fdf-step" role="listitem">
+          <span class="v4-fdf-step-rung"></span>
+          <span class="v4-fdf-step-name">Manual</span>
+          <span class="v4-fdf-step-note">Human does everything.</span>
+        </div>
+        <div class="v4-fdf-step" role="listitem">
+          <span class="v4-fdf-step-rung"></span>
+          <span class="v4-fdf-step-name">Assisted</span>
+          <span class="v4-fdf-step-note">AI drafts; human reviews every output.</span>
+        </div>
+        <div class="v4-fdf-step" role="listitem">
+          <span class="v4-fdf-step-rung"></span>
+          <span class="v4-fdf-step-name">Monitored</span>
+          <span class="v4-fdf-step-note">AI acts; human reviews on a schedule.</span>
+        </div>
+        <div class="v4-fdf-step" role="listitem">
+          <span class="v4-fdf-step-rung"></span>
+          <span class="v4-fdf-step-name">Automated</span>
+          <span class="v4-fdf-step-note">Human pulled in on exceptions.</span>
+        </div>
+        <div class="v4-fdf-step" role="listitem">
+          <span class="v4-fdf-step-rung"></span>
+          <span class="v4-fdf-step-name">Autonomous</span>
+          <span class="v4-fdf-step-note">Human intervenes only on severe failure.</span>
+        </div>
+      </div>
+      <p class="v4-fdf-foot">"Use AI" is never a binary. Every choice is a position on this scale.</p>
+    </section>
+  </div>
+
+  <figcaption class="v4-fdf-footer">
+    Each dimension is independent. A single AI choice lives at one position on each of the four — and the combination is what the team can argue about.
+  </figcaption>
+</figure>
+
+<style>
+  .v4-fdf {
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .v4-fdf-head {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .v4-fdf-eyebrow {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+  .v4-fdf-tagline {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+    margin: 0;
+    max-width: 60ch;
+    line-height: 1.45;
+  }
+
+  /* ============ Grid ============ */
+  .v4-fdf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .v4-fdf-panel {
+    background: var(--cream, #F4EDE4);
+    border-left: 3px solid var(--gold, #C8943E);
+    padding: 1.5rem 1.5rem 1.75rem;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .v4-fdf-num {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+  .v4-fdf-name {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--charcoal, #2A2520);
+    line-height: 1.25;
+    margin: 0;
+  }
+  .v4-fdf-q {
+    font-weight: 400;
+    font-style: italic;
+    color: var(--charcoal-mid, #4A443D);
+    font-size: 19px;
+  }
+
+  .v4-fdf-foot {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1.55;
+    margin: 4px 0 0 0;
+    max-width: none;
+  }
+
+  /* ============ 01 Actors ============ */
+  .v4-fdf-actors-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .v4-fdf-actors-col {
+    background: var(--warm-white, #FAF7F3);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    border-radius: 3px;
+    padding: 12px 14px;
+  }
+  .v4-fdf-actors-ai {
+    border-color: var(--gold, #C8943E);
+    background: rgba(200, 148, 62, 0.06);
+  }
+  .v4-fdf-col-label {
+    display: block;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .v4-fdf-actors-ai .v4-fdf-col-label {
+    color: var(--gold-text, #8A6820);
+  }
+  .v4-fdf-actors-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .v4-fdf-actors-col li {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 14.5px;
+    line-height: 1.35;
+    color: var(--charcoal, #2A2520);
+  }
+
+  /* ============ 02 Interface — spectrum ============ */
+  .v4-fdf-spectrum {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    padding-top: 6px;
+  }
+  .v4-fdf-track {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 18px;
+    height: 1px;
+    background: var(--cream-deep, #EBE1D4);
+    z-index: 0;
+  }
+  .v4-fdf-pill {
+    position: relative;
+    background: var(--warm-white, #FAF7F3);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    border-radius: 3px;
+    padding: 12px 12px 10px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    text-align: center;
+  }
+  .v4-fdf-pill-mid {
+    border-color: var(--gold, #C8943E);
+    background: rgba(200, 148, 62, 0.06);
+  }
+  .v4-fdf-pill-name {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--charcoal, #2A2520);
+    line-height: 1.2;
+  }
+  .v4-fdf-pill-mid .v4-fdf-pill-name {
+    color: var(--gold-text, #8A6820);
+  }
+  .v4-fdf-pill-note {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1.3;
+  }
+
+  /* ============ 03 Collaboration — chips with glyphs ============ */
+  .v4-fdf-chips {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .v4-fdf-chip {
+    background: var(--warm-white, #FAF7F3);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    border-radius: 3px;
+    padding: 12px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .v4-fdf-glyph {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 14px;
+    margin-bottom: 2px;
+  }
+  .v4-fdf-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--charcoal-soft, #6B6560);
+    flex: 0 0 auto;
+    display: inline-block;
+  }
+  .v4-fdf-dot-ai {
+    background: var(--gold, #C8943E);
+  }
+  .v4-fdf-dot-solo {
+    width: 11px;
+    height: 11px;
+  }
+  .v4-fdf-arrow {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1;
+  }
+  .v4-fdf-glyph-parallel {
+    flex-direction: column;
+    gap: 2px;
+    align-items: stretch;
+    height: auto;
+    width: 36px;
+  }
+  .v4-fdf-bar {
+    height: 3px;
+    background: var(--charcoal-soft, #6B6560);
+    border-radius: 1px;
+    width: 100%;
+  }
+  .v4-fdf-bar-ai {
+    background: var(--gold, #C8943E);
+    width: 70%;
+  }
+  .v4-fdf-glyph-orchestrated {
+    gap: 3px;
+  }
+  .v4-fdf-chip-name {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--charcoal, #2A2520);
+    line-height: 1.2;
+  }
+  .v4-fdf-chip-note {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1.4;
+  }
+
+  /* ============ 04 Control — five-step ladder ============ */
+  .v4-fdf-ladder {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+    padding-top: 4px;
+  }
+  .v4-fdf-track-graduated {
+    background: linear-gradient(
+      to right,
+      var(--cream-deep, #EBE1D4) 0%,
+      var(--gold, #C8943E) 100%
+    );
+    height: 2px;
+    top: 14px;
+    left: 12px;
+    right: 12px;
+    opacity: 0.45;
+  }
+  .v4-fdf-step {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 6px;
+    padding: 0 2px;
+  }
+  .v4-fdf-step-rung {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--warm-white, #FAF7F3);
+    border: 1.5px solid var(--charcoal-soft, #6B6560);
+    flex: 0 0 auto;
+  }
+  .v4-fdf-step:nth-child(2) .v4-fdf-step-rung { border-color: var(--charcoal-soft, #6B6560); }
+  .v4-fdf-step:nth-child(3) .v4-fdf-step-rung { border-color: var(--charcoal-mid, #4A443D); }
+  .v4-fdf-step:nth-child(4) .v4-fdf-step-rung {
+    border-color: var(--gold, #C8943E);
+    background: var(--gold-pale, #F0E4CC);
+  }
+  .v4-fdf-step:nth-child(5) .v4-fdf-step-rung {
+    border-color: var(--gold, #C8943E);
+    background: var(--gold-pale, #F0E4CC);
+  }
+  .v4-fdf-step:nth-child(6) .v4-fdf-step-rung {
+    border-color: var(--gold, #C8943E);
+    background: var(--gold, #C8943E);
+  }
+  .v4-fdf-step-name {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--charcoal, #2A2520);
+    line-height: 1.2;
+  }
+  .v4-fdf-step-note {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--charcoal-soft, #6B6560);
+    line-height: 1.35;
+  }
+
+  /* ============ Footer ============ */
+  .v4-fdf-footer {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--charcoal-mid, #4A443D);
+    line-height: 1.55;
+    margin: 0;
+    max-width: 64ch;
+  }
+
+  /* ============ Mobile ============ */
+  @media (max-width: 760px) {
+    .v4-fdf-grid {
+      grid-template-columns: 1fr;
+    }
+    .v4-fdf-chips {
+      grid-template-columns: 1fr;
+    }
+    .v4-fdf-ladder {
+      grid-template-columns: 1fr;
+      gap: 10px;
+      padding-top: 0;
+    }
+    .v4-fdf-track-graduated {
+      display: none;
+    }
+    .v4-fdf-step {
+      flex-direction: row;
+      align-items: flex-start;
+      text-align: left;
+      gap: 12px;
+      background: var(--warm-white, #FAF7F3);
+      border: 1px solid var(--cream-deep, #EBE1D4);
+      border-radius: 3px;
+      padding: 10px 12px;
+    }
+    .v4-fdf-step-rung {
+      margin-top: 3px;
+    }
+    .v4-fdf-step-name {
+      flex: 0 0 auto;
+      min-width: 92px;
+    }
+    .v4-fdf-step > :last-child {
+      flex: 1 1 auto;
+    }
+    /* Stack the interface spectrum vertically too, but keep the spectrum feel */
+    .v4-fdf-spectrum {
+      grid-template-columns: 1fr;
+    }
+    .v4-fdf-track {
+      display: none;
+    }
+  }
+</style>
