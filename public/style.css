@@ -1106,7 +1106,7 @@ p + p { margin-top: var(--sp-2); }
 }
 .case-nav-inner {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--sp-6);
   align-items: start;
 }
