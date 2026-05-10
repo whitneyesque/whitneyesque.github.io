@@ -458,7 +458,7 @@ p + p { margin-top: var(--sp-2); }
 /* Kangaroo paw is naturally darker than the other specimens — give it
    a brighter filter so it reads at the same visual weight. */
 .project-thumb-specimen--light[src*="kangaroo-paw"] {
-  filter: brightness(1.15) saturate(1.05);
+  filter: brightness(1.0) saturate(1.0);
 }
 
 /* Quote block in the card body (replaces summary paragraph) */
@@ -912,8 +912,8 @@ p + p { margin-top: var(--sp-2); }
 /* Kangaroo paw is naturally darker than the other specimens — boost
    opacity and brightness so it reads against the dark hero background. */
 .case-hero-specimen[src*="kangaroo-paw"] {
-  opacity: .7;
-  filter: brightness(1.3) saturate(1.1);
+  opacity: .6;
+  filter: brightness(1.15) saturate(1.05);
 }
 @media (max-width: 900px) {
   .case-hero-specimen { width: 180px; right: var(--sp-3); opacity: .28; }

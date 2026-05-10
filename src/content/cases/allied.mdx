@@ -23,6 +23,7 @@ import DarkBand from '../../components/DarkBand.astro';
 import Placeholder from '../../components/Placeholder.astro';
 import BlueprintSlice from '../../components/BlueprintSlice.astro';
 import PullQuote from '../../components/PullQuote.astro';
+import Figure from '../../components/Figure.astro';
 
 <StatRow variant="dark" stats={[
   { value: '9 months', label: 'Engagement length' },
@@ -248,10 +249,11 @@ I joined the RefundPlus engagement in Phase 2, after the inside-out and outside-
 
 Allied accepted the future state vision and moved into the activation phase. The B2B-facing work — the lender dashboard, dealer portal, electronic payment options, and consultative support layer — was approved as the foundation for the next phase of build. The borrower-facing layer was deliberately scoped out as outside the immediate roadmap.
 
-<figure>
-  <img src="/images/allied-storyboard-funds-status.png" alt="Future-state storyboard slide titled 'RefundPlus + Storyboard — Automated product cancellation routing system,' showing a wireframed Funds Status screen that reads 'Funds Received by Allied $1500.00 / Payment In-progress,' with annotations explaining how the system automatically reconciles the account, schedules an electronic funds transfer from Allied to a lender, and updates case status." />
-  <figcaption style="font-size: 13px; color: #4A443D; line-height: 1.5; margin-top: 12px; margin-bottom: 48px; font-style: italic;">One slice of the recommended future state — automated reconciliation and electronic payments visible to lenders in real time.</figcaption>
-</figure>
+<Figure
+  src="/images/allied-storyboard-funds-status.png"
+  alt="Future-state storyboard slide titled 'RefundPlus + Storyboard — Automated product cancellation routing system,' showing a wireframed Funds Status screen that reads 'Funds Received by Allied $1500.00 / Payment In-progress,' with annotations explaining how the system automatically reconciles the account, schedules an electronic funds transfer from Allied to a lender, and updates case status."
+  caption="One slice of the recommended future state — automated reconciliation and electronic payments visible to lenders in real time."
+/>
 
 A second Allied engagement was commissioned later in the year, building on the methods this project established.
 

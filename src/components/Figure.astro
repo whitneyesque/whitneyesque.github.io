@@ -1,0 +1,75 @@
+---
+/**
+ * Figure.astro — image + optional title + optional caption.
+ *
+ * Replaces the inline `<figure><img/><figcaption style="…italic…"/></figure>`
+ * pattern that was duplicated across cases. Single source of truth for:
+ *   - vertical rhythm (48px above and below)
+ *   - title register (mono uppercase, gold-text)
+ *   - caption register (DM Sans italic, charcoal-mid)
+ *
+ * For figures whose body is *not* a plain <img> (e.g. an iframe, a custom
+ * chart component), keep the inline `<figure>` markup; this component is
+ * intentionally narrow.
+ *
+ * Usage:
+ *   <Figure
+ *     src="/images/foo.jpg"
+ *     alt="A descriptive alt sentence."
+ *     title="Fig. 01 · Methodology overview"
+ *     caption="Pulled from the synthesis poster — three streams plus one outlier."
+ *   />
+ */
+interface Props {
+  src: string;
+  alt: string;
+  title?: string;
+  caption?: string;
+}
+const { src, alt, title, caption } = Astro.props;
+---
+<figure class="case-figure">
+  <img src={src} alt={alt} loading="lazy" decoding="async" />
+  {(title || caption) && (
+    <figcaption class="case-figure-caption">
+      {title && <span class="case-figure-title">{title}</span>}
+      {caption && <span class="case-figure-text">{caption}</span>}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .case-figure {
+    margin: 48px 0;
+  }
+  .case-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .case-figure-caption {
+    display: block;
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+  .case-figure-title {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold-text);
+    margin-bottom: 6px;
+  }
+  .case-figure-text {
+    display: block;
+    font-size: 13px;
+    color: var(--charcoal-mid);
+    font-style: italic;
+  }
+  /* When the figure is the first child of a section, drop the top margin
+     so it doesn't double up on the section's own padding. */
+  .case-figure:first-child {
+    margin-top: 0;
+  }
+</style>

@@ -23,6 +23,7 @@ import BotanicalDivider from '../../components/BotanicalDivider.astro';
 import Placeholder from '../../components/Placeholder.astro';
 import GPTConversation from '../../components/GPTConversation.astro';
 import DataVizBubbleChart from '../../components/DataVizBubbleChart.astro';
+import Figure from '../../components/Figure.astro';
 
 <StatRow variant="dark" stats={[
   { value: '821', label: 'Ratings collected from 25 studio members' },
@@ -89,10 +90,11 @@ A few moments from that round are worth naming, because they show what this mode
 - **A bubble was hidden behind another bubble, and nothing the chatbot suggested could fix it.** Reorder source rows. Reorder series. Reduce opacity. Rebuild in Figma. None of it brought CR2 back into view. The chatbot couldn't reach into my chart. I moved on without ever fully fixing it.
 - **The chatbot started building a story I had to stop.** Halfway through, it had a heatmap based on count of mentions and was framing it around Leads "absorbing all the pain." I stopped and asked why we were showing count instead of average. Count was going to be biased by who participated more, and I didn't want a participation artifact dressed up as a finding. The chatbot agreed, we rebuilt with averages, and the "Leads absorb everything" pattern dissolved on contact. That catch wasn't AI. That catch was my own critical reasoning.
 
-<figure>
-  <img src="/images/data-viz-bubble-v1.png" alt="A scatter-style bubble chart in Google Sheets plotting retro themes by severity and frequency. Several bubbles overlap; one (CR2) is hidden behind another and not visible." />
-  <figcaption style="font-size: 13px; color: #4A443D; line-height: 1.5; margin-top: 12px; margin-bottom: 48px; font-style: italic;">Can you see the dark blue CR2 bubble? Can you??</figcaption>
-</figure>
+<Figure
+  src="/images/data-viz-bubble-v1.png"
+  alt="A scatter-style bubble chart in Google Sheets plotting retro themes by severity and frequency. Several bubbles overlap; one (CR2) is hidden behind another and not visible."
+  caption="Can you see the dark blue CR2 bubble? Can you??"
+/>
 
 What I came out with at the end of round one: a crummy bubble chart that wasn't really telling a story, two heatmaps in a Google Sheet, and a text document outlining what a ten-slide deck might look like. It felt like having a patient helpdesk person on the other end of a chat window who could answer any question about Sheets but who couldn't actually open Sheets.
 
