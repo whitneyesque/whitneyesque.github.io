@@ -1,0 +1,321 @@
+---
+/**
+ * CollaborationModelsDiagram.astro — V4
+ *
+ * Visualizes the four collaboration models — the third dimension of the
+ * Four Dimensions of AI in Services framework Whitney authored for the
+ * ai-lx (CarMax) workshop.
+ *
+ *   01 Sequential   — I ask, it answers, I work on the answer
+ *   02 Parallel     — both doing the same job at different complexity
+ *                     levels (the John Henry pattern)
+ *   03 Independent  — AI does the job alone
+ *   04 Orchestrated — multiple actors and systems coordinated across a journey
+ *
+ * A 2x2 grid of mini-diagrams. Each cell pairs a small abstract SVG glyph
+ * with an eyebrow / headline / one-sentence description. The Parallel card
+ * carries Whitney's John Henry pull-out inline because that's the dimension's
+ * most quotable moment.
+ *
+ * Sibling to FourDimensionsFramework (overview) and InteractionTypesDiagram
+ * (Interface dimension). Visual register mirrors InteractionModelComparison.astro.
+ *
+ * No JS. Pure HTML + scoped CSS. Inline SVG glyphs.
+ */
+---
+
+<figure class="v4-cmd">
+  <header class="v4-cmd-head">
+    <span class="v4-cmd-section-eyebrow">Collaboration model · the four patterns</span>
+    <p class="v4-cmd-section-tagline">Most teams describe AI work as sequential by default. Naming the other three opens the design space.</p>
+  </header>
+
+  <div class="v4-cmd-grid">
+
+    <!-- 01 SEQUENTIAL -->
+    <article class="v4-cmd-cell">
+      <span class="v4-cmd-eyebrow">01 · Sequential</span>
+
+      <div class="v4-cmd-glyph" aria-hidden="true">
+        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" role="img">
+          <!-- Two-lane zigzag — human ↔ AI alternation. Same structural
+               vocabulary as the Parallel card (human top / AI bottom lanes)
+               but the arrow zigzags between lanes instead of running both
+               in parallel toward a shared goal. -->
+          <text x="10" y="22" font-family="DM Mono, monospace" font-size="8" fill="var(--charcoal-soft)" letter-spacing="0.1em">HUMAN</text>
+          <line x1="44" y1="20" x2="170" y2="20" stroke="var(--cream-deep)" stroke-width="1"/>
+
+          <text x="10" y="62" font-family="DM Mono, monospace" font-size="8" fill="var(--gold-text)" letter-spacing="0.1em">AI</text>
+          <line x1="44" y1="60" x2="170" y2="60" stroke="var(--gold-pale)" stroke-width="1"/>
+
+          <!-- Zigzag path: HUMAN ask → AI answer → HUMAN work → AI answer → HUMAN -->
+          <circle cx="56" cy="20" r="3.5" fill="var(--charcoal-mid)"/>
+          <line x1="58" y1="22" x2="85" y2="58" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+          <polygon points="83,54 87,60 81,60" fill="var(--charcoal-mid)"/>
+
+          <circle cx="88" cy="60" r="3.5" fill="var(--gold)"/>
+          <line x1="90" y1="58" x2="117" y2="22" stroke="var(--gold)" stroke-width="1.5"/>
+          <polygon points="119,26 115,20 121,20" fill="var(--gold)"/>
+
+          <circle cx="120" cy="20" r="3.5" fill="var(--charcoal-mid)"/>
+          <line x1="122" y1="22" x2="149" y2="58" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+          <polygon points="147,54 151,60 145,60" fill="var(--charcoal-mid)"/>
+
+          <circle cx="152" cy="60" r="3.5" fill="var(--gold)"/>
+          <line x1="154" y1="58" x2="166" y2="42" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="2 2"/>
+        </svg>
+      </div>
+
+      <h4 class="v4-cmd-headline">Sequential</h4>
+      <p class="v4-cmd-desc">I ask, it answers, I work on the answer, I ask again. The work alternates between human and AI in turns. Most teams default here because it's the chatbot metaphor scaled up.</p>
+    </article>
+
+    <!-- 02 PARALLEL -->
+    <article class="v4-cmd-cell v4-cmd-cell--featured">
+      <span class="v4-cmd-eyebrow">02 · Parallel</span>
+
+      <div class="v4-cmd-glyph" aria-hidden="true">
+        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" role="img">
+          <!-- Two stacked tracks toward a shared goal — the John Henry pattern -->
+          <text x="10" y="22" font-family="DM Mono, monospace" font-size="8" fill="var(--charcoal-soft)" letter-spacing="0.1em">HUMAN</text>
+          <line x1="44" y1="20" x2="150" y2="20" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+          <circle cx="60" cy="20" r="3" fill="var(--charcoal-mid)"/>
+          <circle cx="90" cy="20" r="3" fill="var(--charcoal-mid)"/>
+          <circle cx="120" cy="20" r="3" fill="var(--charcoal-mid)"/>
+          <polygon points="150,16 158,20 150,24" fill="var(--charcoal-mid)"/>
+
+          <text x="10" y="62" font-family="DM Mono, monospace" font-size="8" fill="var(--gold-text)" letter-spacing="0.1em">AI</text>
+          <line x1="44" y1="60" x2="150" y2="60" stroke="var(--gold)" stroke-width="1.5"/>
+          <circle cx="60" cy="60" r="3" fill="var(--gold)"/>
+          <circle cx="90" cy="60" r="3" fill="var(--gold)"/>
+          <circle cx="120" cy="60" r="3" fill="var(--gold)"/>
+          <polygon points="150,56 158,60 150,64" fill="var(--gold)"/>
+
+          <!-- Shared goal -->
+          <circle cx="174" cy="40" r="12" fill="var(--gold-pale)" stroke="var(--gold)" stroke-width="1.5"/>
+          <text x="174" y="43" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" fill="var(--gold-text)" letter-spacing="0.04em">GOAL</text>
+        </svg>
+      </div>
+
+      <h4 class="v4-cmd-headline">Parallel</h4>
+      <p class="v4-cmd-desc">Both doing the same job at different complexity levels. AI handles the routine cases; the human handles the hard ones.</p>
+
+      <aside class="v4-cmd-note">
+        <span class="v4-cmd-note-label">Note:</span>
+        <span class="v4-cmd-note-text">This is sort of like the John Henry. Human versus machine. We're both doing the same thing, but maybe they're doing the very routine, simple ones, and I'm doing the more complex, difficult ones.</span>
+      </aside>
+    </article>
+
+    <!-- 03 INDEPENDENT -->
+    <article class="v4-cmd-cell">
+      <span class="v4-cmd-eyebrow">03 · Independent</span>
+
+      <div class="v4-cmd-glyph" aria-hidden="true">
+        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" role="img">
+          <!-- Solo AI in a closed loop; no human in the diagram -->
+          <circle cx="100" cy="40" r="28" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="3 3"/>
+          <rect x="86" y="26" width="28" height="28" rx="3" fill="var(--gold-pale)" stroke="var(--gold)" stroke-width="1.5"/>
+          <text x="100" y="44" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="var(--gold-text)" letter-spacing="0.06em">AI</text>
+          <!-- Loop arrow tail -->
+          <path d="M 128 40 A 28 28 0 0 1 100 68" fill="none" stroke="var(--gold)" stroke-width="1.5"/>
+          <polygon points="96,64 100,72 104,64" fill="var(--gold)"/>
+        </svg>
+      </div>
+
+      <h4 class="v4-cmd-headline">Independent</h4>
+      <p class="v4-cmd-desc">The AI does the job alone. The design question moves from interaction to oversight, fallback, and exception handling.</p>
+    </article>
+
+    <!-- 04 ORCHESTRATED -->
+    <article class="v4-cmd-cell">
+      <span class="v4-cmd-eyebrow">04 · Orchestrated</span>
+
+      <div class="v4-cmd-glyph" aria-hidden="true">
+        <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" role="img">
+          <!-- Constellation of human + AI + system nodes connected by arcs -->
+          <!-- Arcs first (so nodes sit on top) -->
+          <path d="M 40 40 Q 70 10 100 24" fill="none" stroke="var(--charcoal-soft)" stroke-width="1.2"/>
+          <path d="M 100 24 Q 140 14 160 40" fill="none" stroke="var(--charcoal-soft)" stroke-width="1.2"/>
+          <path d="M 40 40 Q 70 70 100 56" fill="none" stroke="var(--charcoal-soft)" stroke-width="1.2"/>
+          <path d="M 100 56 Q 140 66 160 40" fill="none" stroke="var(--charcoal-soft)" stroke-width="1.2"/>
+          <path d="M 100 24 L 100 56" stroke="var(--charcoal-soft)" stroke-width="1.2" stroke-dasharray="2 2"/>
+
+          <!-- Human (left) -->
+          <circle cx="40" cy="40" r="10" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+          <text x="40" y="43" text-anchor="middle" font-family="DM Mono, monospace" font-size="7" fill="var(--charcoal-mid)" letter-spacing="0.06em">YOU</text>
+
+          <!-- AI (top center) -->
+          <rect x="88" y="14" width="24" height="20" rx="3" fill="var(--gold-pale)" stroke="var(--gold)" stroke-width="1.5"/>
+          <text x="100" y="28" text-anchor="middle" font-family="DM Mono, monospace" font-size="7" fill="var(--gold-text)" letter-spacing="0.06em">AI</text>
+
+          <!-- System (bottom center) -->
+          <polygon points="100,46 112,56 100,66 88,56" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+          <text x="100" y="59" text-anchor="middle" font-family="DM Mono, monospace" font-size="7" fill="var(--charcoal-mid)" letter-spacing="0.04em">SYS</text>
+
+          <!-- Other actor (right) -->
+          <circle cx="160" cy="40" r="10" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+          <text x="160" y="43" text-anchor="middle" font-family="DM Mono, monospace" font-size="7" fill="var(--charcoal-mid)" letter-spacing="0.06em">2ND</text>
+        </svg>
+      </div>
+
+      <h4 class="v4-cmd-headline">Orchestrated</h4>
+      <p class="v4-cmd-desc">Multiple actors and systems coordinated across a journey. The most service-design-shaped pattern of the four.</p>
+    </article>
+
+  </div>
+
+  <figcaption class="v4-cmd-footer">
+    Four patterns, one dimension. The choice between them is a design decision, not a default.
+  </figcaption>
+</figure>
+
+<style>
+  .v4-cmd {
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .v4-cmd-head {
+    margin-bottom: 0.25rem;
+  }
+  .v4-cmd-section-eyebrow {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+  .v4-cmd-section-tagline {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+    margin: 6px 0 0 0;
+    max-width: none;
+    line-height: 1.4;
+  }
+
+  .v4-cmd-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+
+  .v4-cmd-cell {
+    background: var(--cream, #F4EDE4);
+    border-left: 3px solid var(--gold, #C8943E);
+    padding: 1.5rem 1.5rem 1.75rem;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .v4-cmd-cell--featured {
+    background: var(--warm-white, #FAF7F3);
+    border-left-color: var(--gold, #C8943E);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    border-left: 3px solid var(--gold, #C8943E);
+  }
+
+  .v4-cmd-eyebrow {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+
+  .v4-cmd-glyph {
+    background: var(--warm-white, #FAF7F3);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    border-radius: 3px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2px 0 4px 0;
+  }
+  .v4-cmd-cell--featured .v4-cmd-glyph {
+    background: var(--cream, #F4EDE4);
+  }
+  .v4-cmd-glyph svg {
+    width: 100%;
+    height: auto;
+    max-height: 88px;
+    display: block;
+  }
+
+  .v4-cmd-headline {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--charcoal, #2A2520);
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .v4-cmd-desc {
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+    font-size: 14.5px;
+    color: var(--charcoal-mid, #4A443D);
+    line-height: 1.55;
+    margin: 0;
+    max-width: none;
+  }
+
+  /* Note block on the Parallel card — replaces the previous pull-quote
+     treatment. Reads as an inline aside, not a quotation. "Note:" prefix
+     in mono uppercase, body text plain (no italic, no quote marks). */
+  .v4-cmd-note {
+    margin: 6px 0 0 0;
+    padding: 12px 14px;
+    border-left: 2px solid var(--gold, #C8943E);
+    background: rgba(200, 148, 62, 0.06);
+    border-radius: 0 3px 3px 0;
+    display: block;
+  }
+  .v4-cmd-note-label {
+    display: inline;
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+    margin-right: 8px;
+  }
+  .v4-cmd-note-text {
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--charcoal, #2A2520);
+  }
+
+  .v4-cmd-footer {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--charcoal-mid, #4A443D);
+    line-height: 1.5;
+    margin: 4px 0 0 0;
+    max-width: none;
+  }
+
+  /* ============ Mobile ============ */
+  @media (max-width: 720px) {
+    .v4-cmd-grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .v4-cmd-headline {
+      font-size: 20px;
+    }
+    .v4-cmd-cell {
+      padding: 1.25rem 1.25rem 1.5rem;
+    }
+  }
+</style>
