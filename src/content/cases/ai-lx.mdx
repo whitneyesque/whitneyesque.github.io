@@ -24,6 +24,7 @@ import Placeholder from '../../components/Placeholder.astro';
 import BlueprintSlice from '../../components/BlueprintSlice.astro';
 import Figure from '../../components/Figure.astro';
 import InteractionTypesDiagram from '../../components/InteractionTypesDiagram.astro';
+import CollaborationModelsDiagram from '../../components/CollaborationModelsDiagram.astro';
 
 <StatRow stats={[
   { value: '50', label: 'Designers, researchers, executives' },
@@ -129,6 +130,8 @@ Three modes: **explicit** (chatbot, dashboard, the user knows they are interacti
 
 Four patterns: **sequential** (I ask, it answers, I work on the answer), **parallel** (we're both doing the same job; AI handles the routine cases, I handle the complex ones, the John Henry pattern), **independent** (it does the job alone), and **orchestrated** (multiple actors and systems coordinated across a journey). Most teams describe AI work as sequential by default. Naming the other three opens the design space.
 
+<CollaborationModelsDiagram />
+
 ### Control model: how much autonomy does the AI have?
 
 This dimension is adapted from the U.S. military's human-in-the-loop / on-the-loop / out-of-the-loop taxonomy, translated into a five-step service design vocabulary:
@@ -140,10 +143,6 @@ This dimension is adapted from the U.S. military's human-in-the-loop / on-the-lo
 - **Autonomous.** AI acts; humans intervene only on severe failure.
 
 The point of laying control out as a spectrum is to surface that "use AI" is never a binary. Every AI choice in a service is a position on this scale, and the position has consequences for trust, liability, recovery, and brand.
-
-<PullQuote attribution="Whitney Masulis, on translating military doctrine into service design vocabulary">
-This is sort of like the John Henry. Human versus machine. We're both doing the same thing, but maybe they're doing the very routine, simple ones, and I'm doing the more complex, difficult ones.
-</PullQuote>
 
 ## A new canvas: putting AI in the corner
 
