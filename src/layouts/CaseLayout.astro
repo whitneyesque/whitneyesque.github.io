@@ -22,7 +22,7 @@ const {
   hero_image, specimen, slug,
 } = Astro.props;
 
-const canonicalURL = `https://whitneyesque.github.io/cases/${slug}.html`;
+const canonicalURL = `https://whitneymasulis.com/cases/${slug}.html`;
 const pageTitle = `${title} — Whitney Masulis`;
 
 const allPublished = await getCollection('cases', entry => entry.data.status === 'published');
