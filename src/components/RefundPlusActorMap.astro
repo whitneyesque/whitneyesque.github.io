@@ -24,6 +24,11 @@
 ---
 
 <figure class="v4-rpam" aria-label="The four actor types in RefundPlus and the data and money flows between them">
+  <header class="v4-rpam-scenario">
+    <span class="v4-rpam-scenario-label">The trigger</span>
+    <p>A customer cancels a GAP product or another ancillary auto-loan add-on before the loan term ends. That cancellation owes the customer a refund — which has to move across all four actors below: requested by the lender, sourced from the provider, coordinated by Allied, and ultimately paid back through the lender.</p>
+  </header>
+
   <div class="v4-rpam-diagram" role="img"
        aria-label="Allied sits at the center coordinating between lender, dealer, and provider. Data flows from lender and dealer into Allied; Allied passes data to the provider. Money flows from the provider through Allied back to the lender, who pays the customer. A status portal makes the process visible to the lender.">
 
@@ -31,6 +36,7 @@
     <div class="v4-rpam-node v4-rpam-node-customer v4-rpam-pos-customer">
       <span class="v4-rpam-node-eyebrow">Triggers</span>
       <span class="v4-rpam-node-label">Customer</span>
+      <span class="v4-rpam-node-sub">Cancels their GAP product mid-loan</span>
     </div>
 
     <!-- Lender (top-left of the cluster) -->
@@ -200,6 +206,33 @@
     display: flex;
     flex-direction: column;
     gap: 1.1rem;
+  }
+
+  /* ============ Scenario header (the trigger context) ============ */
+  .v4-rpam-scenario {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+    border-left: 2px solid var(--gold-pale, #F0E4CC);
+    background: rgba(200, 148, 62, 0.04);
+    border-radius: 0 3px 3px 0;
+  }
+  .v4-rpam-scenario-label {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+  .v4-rpam-scenario p {
+    margin: 0;
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--charcoal-mid, #4A443D);
+    max-width: 72ch;
   }
 
   /* ============ Desktop diagram surface ============ */
