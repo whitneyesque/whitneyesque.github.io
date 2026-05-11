@@ -1,0 +1,519 @@
+---
+/**
+ * FourDimensionsFramework.astro — V4
+ *
+ * Overview diagram for the Four Dimensions of AI in Services framework
+ * Whitney authored for the ai-lx (CarMax) workshop. This is the family
+ * head — it sits above the per-dimension deep-dive components
+ * (InteractionTypesDiagram / InteractionModelComparison and
+ * CollaborationModelsDiagram) and gives the reader an immediate sense
+ * of the framework's shape before they read the prose.
+ *
+ *   01 Actors         — relationship/network across two zones (Human / AI)
+ *   02 Interface      — continuous horizontal spectrum (Explicit ↔ Ambient)
+ *   03 Collaboration  — a set of four distinct structural shapes
+ *   04 Control        — ordered five-step scale (Manual ↔ Autonomous)
+ *
+ * Layout: vertical stack of four full-width blocks. Each block has a
+ * wide left rail (eyebrow + dimension name in Petrona display) and a
+ * generous right area for a substantial inline-SVG graphic that
+ * suggests the dimension's structural shape. Values are listed compactly
+ * beneath each graphic in DM Sans body / DM Mono labels.
+ *
+ * Design rules: portfolio palette only (cream / warm-white / charcoal
+ * family / gold family / sage family). Monochrome inline SVG, restrained
+ * editorial register, no JS. Sibling visual vocabulary to
+ * InteractionModelComparison.astro and CollaborationModelsDiagram.astro.
+ *
+ * This is v2 — the v1 attempt (PR #73) used a 2x2 layout with mini-glyphs
+ * that read as gestural rather than substantive. v2 dedicates a full-width
+ * row to each dimension so the graphics have room to breathe.
+ */
+---
+
+<figure class="v4-fdf">
+  <header class="v4-fdf-head">
+    <span class="v4-fdf-section-eyebrow">Framework · four dimensions</span>
+    <p class="v4-fdf-section-tagline">If the principles are where you're going, the dimensions are the levers, gears, and tools that get you there.</p>
+  </header>
+
+  <!-- ============================================================
+       01 · ACTORS
+       Two columns of named nodes (Human zone / AI zone) with faint
+       relationship lines crossing the gap. Structural claim: this is
+       a multi-actor system, not a single "the AI."
+       ============================================================ -->
+  <article class="v4-fdf-row v4-fdf-row--actors">
+    <aside class="v4-fdf-rail">
+      <span class="v4-fdf-eyebrow">01 / 04 · Actors</span>
+      <h3 class="v4-fdf-name">Who is participating?</h3>
+      <p class="v4-fdf-prompt">Two sides of the system. Naming them keeps the team from collapsing every AI into "the AI."</p>
+    </aside>
+
+    <div class="v4-fdf-body">
+      <div class="v4-fdf-graphic">
+        <svg viewBox="0 0 640 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Network of human-side and AI-side actors connected by relationships">
+          <!-- Zone labels -->
+          <text x="100" y="28" font-family="DM Mono, monospace" font-size="11" letter-spacing="0.18em" fill="var(--charcoal-soft)" text-anchor="middle">HUMAN SIDE</text>
+          <text x="540" y="28" font-family="DM Mono, monospace" font-size="11" letter-spacing="0.18em" fill="var(--gold-text)" text-anchor="middle">AI SIDE</text>
+
+          <!-- Zone divider rule (subtle vertical) -->
+          <line x1="320" y1="50" x2="320" y2="260" stroke="var(--cream-deep)" stroke-width="1" stroke-dasharray="2 4"/>
+
+          <!-- Relationship lines (drawn first so nodes sit on top) -->
+          <!-- customer <-> personal AI -->
+          <path d="M 160 80 Q 320 80 480 80" stroke="var(--charcoal-soft)" stroke-width="1" fill="none" opacity="0.55"/>
+          <!-- customer <-> customer-facing AI -->
+          <path d="M 160 80 Q 320 130 480 140" stroke="var(--charcoal-soft)" stroke-width="1" fill="none" opacity="0.4"/>
+          <!-- front-stage assoc <-> customer-facing AI -->
+          <path d="M 160 140 Q 320 140 480 140" stroke="var(--charcoal-soft)" stroke-width="1" fill="none" opacity="0.55"/>
+          <!-- front-stage assoc <-> employee-facing AI -->
+          <path d="M 160 140 Q 320 180 480 200" stroke="var(--charcoal-soft)" stroke-width="1" fill="none" opacity="0.4"/>
+          <!-- back-stage assoc <-> employee-facing AI -->
+          <path d="M 160 200 Q 320 200 480 200" stroke="var(--charcoal-soft)" stroke-width="1" fill="none" opacity="0.55"/>
+          <!-- supplier <-> supplier tools -->
+          <path d="M 160 260 Q 320 260 480 260" stroke="var(--charcoal-soft)" stroke-width="1" fill="none" opacity="0.55"/>
+          <!-- back-stage assoc <-> supplier tools (cross-link) -->
+          <path d="M 160 200 Q 320 240 480 260" stroke="var(--charcoal-soft)" stroke-width="1" fill="none" opacity="0.3"/>
+
+          <!-- HUMAN nodes (left column) -->
+          <g font-family="DM Sans, sans-serif" font-size="12.5" fill="var(--charcoal)">
+            <circle cx="100" cy="80" r="7" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+            <text x="118" y="84">Customer</text>
+
+            <circle cx="100" cy="140" r="7" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+            <text x="118" y="144">Front-stage associate</text>
+
+            <circle cx="100" cy="200" r="7" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+            <text x="118" y="204">Back-stage associate</text>
+
+            <circle cx="100" cy="260" r="7" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+            <text x="118" y="264">Supplier</text>
+          </g>
+
+          <!-- AI nodes (right column) -->
+          <g font-family="DM Sans, sans-serif" font-size="12.5" fill="var(--charcoal)">
+            <rect x="473" y="73" width="14" height="14" rx="2" fill="var(--gold-pale)" stroke="var(--gold)" stroke-width="1.5"/>
+            <text x="495" y="84">Customer's personal AI</text>
+
+            <rect x="473" y="133" width="14" height="14" rx="2" fill="var(--gold-pale)" stroke="var(--gold)" stroke-width="1.5"/>
+            <text x="495" y="144">Customer-facing AI</text>
+
+            <rect x="473" y="193" width="14" height="14" rx="2" fill="var(--gold-pale)" stroke="var(--gold)" stroke-width="1.5"/>
+            <text x="495" y="204">Employee-facing AI</text>
+
+            <rect x="473" y="253" width="14" height="14" rx="2" fill="var(--gold-pale)" stroke="var(--gold)" stroke-width="1.5"/>
+            <text x="495" y="264">Supplier's tools</text>
+          </g>
+        </svg>
+      </div>
+
+      <p class="v4-fdf-caption">A near-future scenario worth pushing on: an agent of the customer negotiating with an agent of the company — on behalf of a person who isn't directly in the loop.</p>
+    </div>
+  </article>
+
+  <!-- ============================================================
+       02 · INTERFACE
+       Wide horizontal spectrum with a gradient from charcoal (explicit)
+       to gold (ambient). Three labeled positions; examples below each.
+       Structural claim: continuous range, not three buckets.
+       ============================================================ -->
+  <article class="v4-fdf-row v4-fdf-row--interface">
+    <aside class="v4-fdf-rail">
+      <span class="v4-fdf-eyebrow">02 / 04 · Interface</span>
+      <h3 class="v4-fdf-name">What is the point of connection?</h3>
+      <p class="v4-fdf-prompt">A continuous range. Most teams default to explicit because chatbots are the available metaphor.</p>
+    </aside>
+
+    <div class="v4-fdf-body">
+      <div class="v4-fdf-graphic">
+        <svg viewBox="0 0 640 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Spectrum from explicit to ambient interface, with mix as the overlap zone">
+          <defs>
+            <linearGradient id="fdf-iface-grad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="var(--charcoal-mid)" stop-opacity="0.85"/>
+              <stop offset="50%" stop-color="var(--gold)" stop-opacity="0.55"/>
+              <stop offset="100%" stop-color="var(--gold)" stop-opacity="0.95"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Spectrum bar -->
+          <rect x="40" y="70" width="560" height="32" rx="2" fill="url(#fdf-iface-grad)"/>
+
+          <!-- Tick marks at the three positions -->
+          <line x1="80" y1="62" x2="80" y2="110" stroke="var(--charcoal)" stroke-width="1.5"/>
+          <line x1="320" y1="62" x2="320" y2="110" stroke="var(--charcoal)" stroke-width="1.5"/>
+          <line x1="560" y1="62" x2="560" y2="110" stroke="var(--gold-text)" stroke-width="1.5"/>
+
+          <!-- Position labels (above the bar) -->
+          <text x="80" y="50" font-family="Petrona, Georgia, serif" font-size="18" font-weight="700" fill="var(--charcoal)" text-anchor="middle">Explicit</text>
+          <text x="320" y="50" font-family="Petrona, Georgia, serif" font-size="18" font-weight="700" fill="var(--charcoal)" text-anchor="middle" font-style="italic">Mix</text>
+          <text x="560" y="50" font-family="Petrona, Georgia, serif" font-size="18" font-weight="700" fill="var(--gold-text)" text-anchor="middle">Ambient</text>
+
+          <!-- AI-presence axis label -->
+          <text x="40" y="135" font-family="DM Mono, monospace" font-size="10" letter-spacing="0.16em" fill="var(--charcoal-soft)">AI PRESENCE  →</text>
+          <text x="600" y="135" font-family="DM Mono, monospace" font-size="10" letter-spacing="0.16em" fill="var(--charcoal-soft)" text-anchor="end">FADES INTO THE ENVIRONMENT</text>
+
+          <!-- Examples row -->
+          <g font-family="DM Mono, monospace" font-size="10" letter-spacing="0.10em" fill="var(--charcoal-mid)" text-anchor="middle">
+            <text x="80" y="170">CHATBOT</text>
+            <text x="80" y="186">DASHBOARD</text>
+
+            <text x="320" y="170">VOICE-LED CONCIERGE</text>
+            <text x="320" y="186">WITH A VISIBLE TRANSCRIPT</text>
+
+            <text x="560" y="170">LICENSE-PLATE READER</text>
+            <text x="560" y="186">DOOR THAT GREETS BY NAME</text>
+          </g>
+        </svg>
+      </div>
+
+      <p class="v4-fdf-caption">Ambient and mix are where service design has the most to say — and where teams have done the least practice.</p>
+    </div>
+  </article>
+
+  <!-- ============================================================
+       03 · COLLABORATION
+       Four distinct mini-shapes in a horizontal row. Same vocabulary
+       as the deep-dive but compressed: just the shape and the name.
+       Structural claim: these are FOUR different shapes, not variations
+       on one.
+       ============================================================ -->
+  <article class="v4-fdf-row v4-fdf-row--collab">
+    <aside class="v4-fdf-rail">
+      <span class="v4-fdf-eyebrow">03 / 04 · Collaboration</span>
+      <h3 class="v4-fdf-name">How does the work get done?</h3>
+      <p class="v4-fdf-prompt">Four distinct patterns. Naming them opens the design space beyond the sequential default.</p>
+    </aside>
+
+    <div class="v4-fdf-body">
+      <div class="v4-fdf-graphic v4-fdf-collab-strip">
+
+        <!-- Sequential: zigzag -->
+        <div class="v4-fdf-collab-cell">
+          <svg viewBox="0 0 140 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sequential — turns alternate between human and AI">
+            <line x1="10" y1="20" x2="130" y2="20" stroke="var(--cream-deep)" stroke-width="1"/>
+            <line x1="10" y1="60" x2="130" y2="60" stroke="var(--cream-deep)" stroke-width="1"/>
+            <circle cx="22" cy="20" r="3.5" fill="var(--charcoal-mid)"/>
+            <line x1="24" y1="22" x2="52" y2="58" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+            <circle cx="54" cy="60" r="3.5" fill="var(--gold)"/>
+            <line x1="56" y1="58" x2="84" y2="22" stroke="var(--gold)" stroke-width="1.5"/>
+            <circle cx="86" cy="20" r="3.5" fill="var(--charcoal-mid)"/>
+            <line x1="88" y1="22" x2="116" y2="58" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+            <circle cx="118" cy="60" r="3.5" fill="var(--gold)"/>
+          </svg>
+          <span class="v4-fdf-collab-name">Sequential</span>
+        </div>
+
+        <!-- Parallel: two stacked tracks toward shared goal -->
+        <div class="v4-fdf-collab-cell">
+          <svg viewBox="0 0 140 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Parallel — both work toward a shared goal at different complexity levels">
+            <line x1="10" y1="20" x2="100" y2="20" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+            <circle cx="30" cy="20" r="2.5" fill="var(--charcoal-mid)"/>
+            <circle cx="60" cy="20" r="2.5" fill="var(--charcoal-mid)"/>
+            <circle cx="90" cy="20" r="2.5" fill="var(--charcoal-mid)"/>
+
+            <line x1="10" y1="60" x2="100" y2="60" stroke="var(--gold)" stroke-width="1.5"/>
+            <circle cx="30" cy="60" r="2.5" fill="var(--gold)"/>
+            <circle cx="60" cy="60" r="2.5" fill="var(--gold)"/>
+            <circle cx="90" cy="60" r="2.5" fill="var(--gold)"/>
+
+            <circle cx="118" cy="40" r="10" fill="var(--gold-pale)" stroke="var(--gold)" stroke-width="1.5"/>
+            <line x1="100" y1="20" x2="111" y2="34" stroke="var(--gold)" stroke-width="1"/>
+            <line x1="100" y1="60" x2="111" y2="46" stroke="var(--gold)" stroke-width="1"/>
+          </svg>
+          <span class="v4-fdf-collab-name">Parallel</span>
+        </div>
+
+        <!-- Independent: closed loop, no human -->
+        <div class="v4-fdf-collab-cell">
+          <svg viewBox="0 0 140 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Independent — AI operates alone in a closed loop">
+            <circle cx="70" cy="40" r="26" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <rect x="58" y="28" width="24" height="24" rx="3" fill="var(--gold-pale)" stroke="var(--gold)" stroke-width="1.5"/>
+            <text x="70" y="44" text-anchor="middle" font-family="DM Mono, monospace" font-size="8.5" fill="var(--gold-text)" letter-spacing="0.06em">AI</text>
+            <polygon points="92,40 96,46 100,40 96,34" fill="var(--gold)"/>
+          </svg>
+          <span class="v4-fdf-collab-name">Independent</span>
+        </div>
+
+        <!-- Orchestrated: constellation -->
+        <div class="v4-fdf-collab-cell">
+          <svg viewBox="0 0 140 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Orchestrated — multiple actors coordinated across a journey">
+            <path d="M 20 40 Q 50 14 70 22" fill="none" stroke="var(--charcoal-soft)" stroke-width="1"/>
+            <path d="M 70 22 Q 95 14 120 40" fill="none" stroke="var(--charcoal-soft)" stroke-width="1"/>
+            <path d="M 20 40 Q 50 66 70 58" fill="none" stroke="var(--charcoal-soft)" stroke-width="1"/>
+            <path d="M 70 58 Q 95 66 120 40" fill="none" stroke="var(--charcoal-soft)" stroke-width="1"/>
+
+            <circle cx="20" cy="40" r="7" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+            <rect x="63" y="15" width="14" height="14" rx="2" fill="var(--gold-pale)" stroke="var(--gold)" stroke-width="1.5"/>
+            <polygon points="70,52 78,60 70,68 62,60" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+            <circle cx="120" cy="40" r="7" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+          </svg>
+          <span class="v4-fdf-collab-name">Orchestrated</span>
+        </div>
+
+      </div>
+
+      <p class="v4-fdf-caption">Most teams describe AI work as sequential by default. Naming the other three opens the design space.</p>
+    </div>
+  </article>
+
+  <!-- ============================================================
+       04 · CONTROL
+       Five-step ordered scale, each step a small "human + AI" pairing
+       where the proportions shift. Connected by a horizontal axis with
+       ticks. Structural claim: this is an ORDERED scale, not a set.
+       ============================================================ -->
+  <article class="v4-fdf-row v4-fdf-row--control">
+    <aside class="v4-fdf-rail">
+      <span class="v4-fdf-eyebrow">04 / 04 · Control</span>
+      <h3 class="v4-fdf-name">How much autonomy does the AI have?</h3>
+      <p class="v4-fdf-prompt">An ordered five-step scale. "Use AI" is never a binary — every position has consequences for trust, liability, recovery, and brand.</p>
+    </aside>
+
+    <div class="v4-fdf-body">
+      <div class="v4-fdf-graphic">
+        <svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Five-step ordered scale from manual to autonomous; human share shrinks as AI share grows">
+
+          <!-- Background axis -->
+          <line x1="60" y1="200" x2="600" y2="200" stroke="var(--charcoal-soft)" stroke-width="1.5"/>
+          <!-- Ticks -->
+          <line x1="80" y1="196" x2="80" y2="208" stroke="var(--charcoal-soft)" stroke-width="1.5"/>
+          <line x1="200" y1="196" x2="200" y2="208" stroke="var(--charcoal-soft)" stroke-width="1.5"/>
+          <line x1="320" y1="196" x2="320" y2="208" stroke="var(--charcoal-soft)" stroke-width="1.5"/>
+          <line x1="440" y1="196" x2="440" y2="208" stroke="var(--charcoal-soft)" stroke-width="1.5"/>
+          <line x1="560" y1="196" x2="560" y2="208" stroke="var(--gold-text)" stroke-width="2"/>
+          <!-- Direction arrow at end -->
+          <polygon points="600,200 590,194 590,206" fill="var(--gold-text)"/>
+
+          <!-- Axis labels -->
+          <text x="60" y="232" font-family="DM Mono, monospace" font-size="10" letter-spacing="0.16em" fill="var(--charcoal-soft)">HUMAN DOES THE WORK</text>
+          <text x="600" y="232" font-family="DM Mono, monospace" font-size="10" letter-spacing="0.16em" fill="var(--gold-text)" text-anchor="end">AI DOES THE WORK</text>
+
+          <!-- Step 1: MANUAL — full human, no AI -->
+          <g>
+            <!-- Human bar: tall -->
+            <rect x="68" y="80" width="24" height="110" rx="2" fill="var(--charcoal-mid)"/>
+            <!-- AI bar: invisible / 0 -->
+            <line x1="95" y1="188" x2="119" y2="188" stroke="var(--cream-deep)" stroke-width="2"/>
+            <text x="80" y="68" font-family="DM Mono, monospace" font-size="9" letter-spacing="0.12em" fill="var(--charcoal-mid)" text-anchor="middle">01</text>
+            <text x="80" y="252" font-family="Petrona, Georgia, serif" font-size="14" font-weight="700" fill="var(--charcoal)" text-anchor="middle">Manual</text>
+          </g>
+
+          <!-- Step 2: ASSISTED — human reviews every output -->
+          <g>
+            <rect x="188" y="105" width="24" height="85" rx="2" fill="var(--charcoal-mid)"/>
+            <rect x="215" y="160" width="24" height="30" rx="2" fill="var(--gold)" opacity="0.85"/>
+            <text x="200" y="68" font-family="DM Mono, monospace" font-size="9" letter-spacing="0.12em" fill="var(--charcoal-mid)" text-anchor="middle">02</text>
+            <text x="213" y="252" font-family="Petrona, Georgia, serif" font-size="14" font-weight="700" fill="var(--charcoal)" text-anchor="middle">Assisted</text>
+          </g>
+
+          <!-- Step 3: MONITORED — AI runs continuously, human reviews on a schedule -->
+          <g>
+            <rect x="308" y="135" width="24" height="55" rx="2" fill="var(--charcoal-mid)"/>
+            <rect x="335" y="120" width="24" height="70" rx="2" fill="var(--gold)" opacity="0.85"/>
+            <text x="320" y="68" font-family="DM Mono, monospace" font-size="9" letter-spacing="0.12em" fill="var(--charcoal-mid)" text-anchor="middle">03</text>
+            <text x="333" y="252" font-family="Petrona, Georgia, serif" font-size="14" font-weight="700" fill="var(--charcoal)" text-anchor="middle">Monitored</text>
+          </g>
+
+          <!-- Step 4: AUTOMATED — AI acts, humans pulled in on exception -->
+          <g>
+            <rect x="428" y="160" width="24" height="30" rx="2" fill="var(--charcoal-mid)"/>
+            <rect x="455" y="100" width="24" height="90" rx="2" fill="var(--gold)" opacity="0.9"/>
+            <text x="440" y="68" font-family="DM Mono, monospace" font-size="9" letter-spacing="0.12em" fill="var(--charcoal-mid)" text-anchor="middle">04</text>
+            <text x="453" y="252" font-family="Petrona, Georgia, serif" font-size="14" font-weight="700" fill="var(--charcoal)" text-anchor="middle">Automated</text>
+          </g>
+
+          <!-- Step 5: AUTONOMOUS — AI alone unless severe failure -->
+          <g>
+            <line x1="548" y1="188" x2="572" y2="188" stroke="var(--cream-deep)" stroke-width="2"/>
+            <rect x="575" y="80" width="24" height="110" rx="2" fill="var(--gold)"/>
+            <text x="560" y="68" font-family="DM Mono, monospace" font-size="9" letter-spacing="0.12em" fill="var(--gold-text)" text-anchor="middle">05</text>
+            <text x="573" y="252" font-family="Petrona, Georgia, serif" font-size="14" font-weight="700" fill="var(--gold-text)" text-anchor="middle">Autonomous</text>
+          </g>
+        </svg>
+      </div>
+
+      <p class="v4-fdf-caption">Adapted from the U.S. military's human-in-the-loop / on-the-loop / out-of-the-loop taxonomy, translated into a five-step service design vocabulary.</p>
+    </div>
+  </article>
+
+  <figcaption class="v4-fdf-footer">
+    Four dimensions, one framework. Most existing AI vocabulary is interface-level; this is the set a service designer can actually turn.
+  </figcaption>
+</figure>
+
+<style>
+  .v4-fdf {
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .v4-fdf-head {
+    margin-bottom: 0.25rem;
+  }
+  .v4-fdf-section-eyebrow {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+  .v4-fdf-section-tagline {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 18px;
+    font-style: italic;
+    color: var(--charcoal, #2A2520);
+    margin: 6px 0 0 0;
+    max-width: none;
+    line-height: 1.4;
+  }
+
+  /* ====== Row (one per dimension) ====== */
+  .v4-fdf-row {
+    background: var(--cream, #F4EDE4);
+    border-left: 3px solid var(--gold, #C8943E);
+    border-radius: 4px;
+    padding: 2rem 2rem 2.25rem;
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) minmax(0, 2.4fr);
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  /* ====== Left rail (eyebrow + dimension name + prompt) ====== */
+  .v4-fdf-rail {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .v4-fdf-eyebrow {
+    font-family: var(--font-mono, 'DM Mono', monospace);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-text, #8A6820);
+    font-weight: 700;
+  }
+  .v4-fdf-name {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--charcoal, #2A2520);
+    line-height: 1.15;
+    margin: 0;
+  }
+  .v4-fdf-prompt {
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--charcoal-mid, #4A443D);
+    margin: 0;
+    max-width: 32ch;
+  }
+
+  /* ====== Right body (graphic + caption) ====== */
+  .v4-fdf-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .v4-fdf-graphic {
+    background: var(--warm-white, #FAF7F3);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    border-radius: 3px;
+    padding: 22px 24px;
+  }
+  .v4-fdf-graphic svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .v4-fdf-caption {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--charcoal-mid, #4A443D);
+    margin: 0;
+    max-width: none;
+  }
+
+  /* ====== Collaboration strip (four cells side by side) ====== */
+  .v4-fdf-collab-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    align-items: stretch;
+  }
+  .v4-fdf-collab-cell {
+    background: var(--cream, #F4EDE4);
+    border: 1px solid var(--cream-deep, #EBE1D4);
+    border-radius: 3px;
+    padding: 14px 12px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .v4-fdf-collab-cell svg {
+    width: 100%;
+    height: auto;
+    max-height: 84px;
+  }
+  .v4-fdf-collab-name {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--charcoal, #2A2520);
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .v4-fdf-footer {
+    font-family: var(--font-display, 'Petrona', Georgia, serif);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--charcoal-mid, #4A443D);
+    margin: 4px 0 0 0;
+    max-width: none;
+  }
+
+  /* ============ Tablet ============ */
+  @media (max-width: 980px) {
+    .v4-fdf-row {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      padding: 1.75rem 1.5rem 2rem;
+    }
+    .v4-fdf-name {
+      font-size: 24px;
+    }
+    .v4-fdf-prompt {
+      max-width: none;
+    }
+  }
+
+  /* ============ Mobile ============ */
+  @media (max-width: 640px) {
+    .v4-fdf {
+      gap: 1.5rem;
+    }
+    .v4-fdf-row {
+      padding: 1.5rem 1.25rem 1.75rem;
+    }
+    .v4-fdf-name {
+      font-size: 22px;
+    }
+    .v4-fdf-graphic {
+      padding: 14px 12px;
+    }
+    .v4-fdf-collab-strip {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

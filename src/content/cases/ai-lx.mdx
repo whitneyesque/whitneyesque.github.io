@@ -25,6 +25,7 @@ import BlueprintSlice from '../../components/BlueprintSlice.astro';
 import Figure from '../../components/Figure.astro';
 import InteractionTypesDiagram from '../../components/InteractionTypesDiagram.astro';
 import CollaborationModelsDiagram from '../../components/CollaborationModelsDiagram.astro';
+import FourDimensionsFramework from '../../components/FourDimensionsFramework.astro';
 
 <StatRow stats={[
   { value: '50', label: 'Designers, researchers, executives' },
@@ -103,18 +104,7 @@ The principles run high-level on purpose, so they apply across explicit, ambient
 
 If the principles are where you're going, the dimensions are the levers, gears, and tools that get you there. I built this framework specifically for this workshop because no existing taxonomy quite did the job. Most AI design vocabulary is interface-level (chatbot patterns, prompt engineering), and the team needed something a service designer could use to reason about an AI's role across an omnichannel journey.
 
-<Placeholder
-  kind="image"
-  size="in-body-figure"
-  ask="A clean diagram of the Four Dimensions of AI in Services framework — actors, interface, collaboration model, control model — laid out as a single image"
-  why="This is the centerpiece artifact and the one piece of original IP attributable to Whitney by name. The case earns one diagram; right now the four dimensions are described entirely in prose and lose visual shape. The dimensions are also the spine the critic recommended demoting principles/canvas/blueprint to evidence around."
-  alternatives={[
-    "A whiteboard / Miro screenshot of the four dimensions if one was captured during workshop development",
-    "Four small icon-style cards rendered as a 2×2 grid — same content, lighter visual lift",
-    "A photo of the four-dimensions slide from the workshop deck (pptx in raw-case-material)"
-  ]}
-  source="visual-director-recommendation"
-/>
+<FourDimensionsFramework />
 
 ### Actors: who is participating?
 
