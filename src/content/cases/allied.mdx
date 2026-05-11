@@ -24,6 +24,7 @@ import Placeholder from '../../components/Placeholder.astro';
 import BlueprintSlice from '../../components/BlueprintSlice.astro';
 import PullQuote from '../../components/PullQuote.astro';
 import Figure from '../../components/Figure.astro';
+import RefundPlusActorMap from '../../components/RefundPlusActorMap.astro';
 
 <StatRow variant="dark" stats={[
   { value: '9 months', label: 'Engagement length' },
@@ -39,17 +40,7 @@ Allied came to Harmonic Design with a sharp brief: turn a bootstrapped pilot int
 
 The complication was that no one inside Allied owned the whole picture. RefundPlus moves data and money across four kinds of actor: the lender who originated the loan, the dealer who sold the ancillary product, the provider who underwrites it, and Allied itself in the middle. Each one held part of the truth. None of them held all of it.
 
-<Placeholder
-  kind="image"
-  size="in-body-figure"
-  ask="Simple diagram of the four actors (lender, dealer, provider, Allied) and the data and money flows between them"
-  why="The prose names four actor types abstractly; one diagram lets the reader hold the whole system in mind before the case turns on its coordination problem"
-  alternatives={[
-    "Crop the actor swim lanes from the Experience Map or the service blueprint header",
-    "Skip; the prose carries the multi-actor framing well enough on its own"
-  ]}
-  source="visual-director-recommendation"
-/>
+<RefundPlusActorMap />
 
 ## What the service had grown into
 
