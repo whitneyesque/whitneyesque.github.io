@@ -38,25 +38,36 @@
 
       <div class="v4-cmd-glyph" aria-hidden="true">
         <svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg" role="img">
-          <!-- human → AI → human handoff baton -->
-          <circle cx="20" cy="40" r="14" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
-          <text x="20" y="44" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="var(--charcoal-mid)" letter-spacing="0.06em">YOU</text>
+          <!-- Two-lane zigzag — human ↔ AI alternation. Same structural
+               vocabulary as the Parallel card (human top / AI bottom lanes)
+               but the arrow zigzags between lanes instead of running both
+               in parallel toward a shared goal. -->
+          <text x="10" y="22" font-family="DM Mono, monospace" font-size="8" fill="var(--charcoal-soft)" letter-spacing="0.1em">HUMAN</text>
+          <line x1="44" y1="20" x2="170" y2="20" stroke="var(--cream-deep)" stroke-width="1"/>
 
-          <line x1="38" y1="40" x2="82" y2="40" stroke="var(--charcoal-soft)" stroke-width="1.5"/>
-          <polygon points="82,36 90,40 82,44" fill="var(--charcoal-soft)"/>
+          <text x="10" y="62" font-family="DM Mono, monospace" font-size="8" fill="var(--gold-text)" letter-spacing="0.1em">AI</text>
+          <line x1="44" y1="60" x2="170" y2="60" stroke="var(--gold-pale)" stroke-width="1"/>
 
-          <rect x="92" y="26" width="28" height="28" rx="3" fill="var(--gold-pale)" stroke="var(--gold)" stroke-width="1.5"/>
-          <text x="106" y="44" text-anchor="middle" font-family="DM Mono, monospace" font-size="9" fill="var(--gold-text)" letter-spacing="0.06em">AI</text>
+          <!-- Zigzag path: HUMAN ask → AI answer → HUMAN work → AI answer → HUMAN -->
+          <circle cx="56" cy="20" r="3.5" fill="var(--charcoal-mid)"/>
+          <line x1="58" y1="22" x2="85" y2="58" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+          <polygon points="83,54 87,60 81,60" fill="var(--charcoal-mid)"/>
 
-          <line x1="124" y1="40" x2="168" y2="40" stroke="var(--charcoal-soft)" stroke-width="1.5"/>
-          <polygon points="168,36 176,40 168,44" fill="var(--charcoal-soft)"/>
+          <circle cx="88" cy="60" r="3.5" fill="var(--gold)"/>
+          <line x1="90" y1="58" x2="117" y2="22" stroke="var(--gold)" stroke-width="1.5"/>
+          <polygon points="119,26 115,20 121,20" fill="var(--gold)"/>
 
-          <circle cx="186" cy="40" r="10" fill="var(--warm-white)" stroke="var(--charcoal-mid)" stroke-width="1.5" stroke-dasharray="2 2"/>
+          <circle cx="120" cy="20" r="3.5" fill="var(--charcoal-mid)"/>
+          <line x1="122" y1="22" x2="149" y2="58" stroke="var(--charcoal-mid)" stroke-width="1.5"/>
+          <polygon points="147,54 151,60 145,60" fill="var(--charcoal-mid)"/>
+
+          <circle cx="152" cy="60" r="3.5" fill="var(--gold)"/>
+          <line x1="154" y1="58" x2="166" y2="42" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="2 2"/>
         </svg>
       </div>
 
       <h4 class="v4-cmd-headline">Sequential</h4>
-      <p class="v4-cmd-desc">I ask, it answers, I work on the answer. Most teams default here because it's the chatbot metaphor scaled up.</p>
+      <p class="v4-cmd-desc">I ask, it answers, I work on the answer, I ask again. The work alternates between human and AI in turns. Most teams default here because it's the chatbot metaphor scaled up.</p>
     </article>
 
     <!-- 02 PARALLEL -->
@@ -89,10 +100,10 @@
       <h4 class="v4-cmd-headline">Parallel</h4>
       <p class="v4-cmd-desc">Both doing the same job at different complexity levels. AI handles the routine cases; the human handles the hard ones.</p>
 
-      <blockquote class="v4-cmd-pullout">
-        <p>"This is sort of like the John Henry. Human versus machine. We're both doing the same thing, but maybe they're doing the very routine, simple ones, and I'm doing the more complex, difficult ones."</p>
-        <cite>— Whitney Masulis</cite>
-      </blockquote>
+      <aside class="v4-cmd-note">
+        <span class="v4-cmd-note-label">Note:</span>
+        <span class="v4-cmd-note-text">This is sort of like the John Henry. Human versus machine. We're both doing the same thing, but maybe they're doing the very routine, simple ones, and I'm doing the more complex, difficult ones.</span>
+      </aside>
     </article>
 
     <!-- 03 INDEPENDENT -->
@@ -256,31 +267,32 @@
     max-width: none;
   }
 
-  .v4-cmd-pullout {
+  /* Note block on the Parallel card — replaces the previous pull-quote
+     treatment. Reads as an inline aside, not a quotation. "Note:" prefix
+     in mono uppercase, body text plain (no italic, no quote marks). */
+  .v4-cmd-note {
     margin: 6px 0 0 0;
-    padding: 14px 16px;
+    padding: 12px 14px;
     border-left: 2px solid var(--gold, #C8943E);
     background: rgba(200, 148, 62, 0.06);
     border-radius: 0 3px 3px 0;
-  }
-  .v4-cmd-pullout p {
-    font-family: var(--font-display, 'Petrona', Georgia, serif);
-    font-style: italic;
-    font-size: 15.5px;
-    line-height: 1.5;
-    color: var(--charcoal, #2A2520);
-    margin: 0;
-    max-width: none;
-  }
-  .v4-cmd-pullout cite {
     display: block;
-    margin-top: 8px;
+  }
+  .v4-cmd-note-label {
+    display: inline;
     font-family: var(--font-mono, 'DM Mono', monospace);
-    font-style: normal;
     font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--gold-text, #8A6820);
+    font-weight: 700;
+    margin-right: 8px;
+  }
+  .v4-cmd-note-text {
+    font-family: var(--font-body, 'DM Sans', sans-serif);
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--charcoal, #2A2520);
   }
 
   .v4-cmd-footer {
