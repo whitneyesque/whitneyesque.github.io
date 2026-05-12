@@ -20,6 +20,7 @@ import StatRow from '../../components/StatRow.astro';
 import InsightCallout from '../../components/InsightCallout.astro';
 import PullQuote from '../../components/PullQuote.astro';
 import Figure from '../../components/Figure.astro';
+import Placeholder from '../../components/Placeholder.astro';
 
 <StatRow variant="dark" stats={[
   { value: '12', label: 'Stakeholders across 8 kickoff sessions' },
@@ -27,6 +28,13 @@ import Figure from '../../components/Figure.astro';
   { value: '2', label: 'Provider archetypes' },
   { value: '1', label: 'Structural gap the patient sits in' },
 ]} />
+
+<Placeholder
+  kind="image"
+  size="in-body-figure"
+  ask="Stakeholder map of the twelve people in the eight kickoff sessions, anonymized (titles and reporting structures only, no names). Goal: a visual that lets the reader see the org shape (six geographies, two newly-restructured leadership functions, IC design teams scattered across time zones) before they read the prose."
+  why="Anchors the 'twelve stakeholders described five different engagements' claim with a visual establishing shot of the room I walked into, so the asks-paragraph below lands faster."
+/>
 
 ## In the first two weeks, <em>twelve stakeholders described five different engagements.</em>
 
@@ -106,6 +114,14 @@ The two provider archetypes are living in two different versions of the same bro
 
 The maps used the same visual vocabulary so the team could read them together: same emotional curve, same channel rows, same set of detail tables underneath. That parallelism is the move that exposed the structural finding below.
 
+<Placeholder
+  kind="image"
+  size="in-body-figure"
+  ask="Sub-journey maps that sit underneath the two big archetype maps. Whitney to send: which sub-journeys, what they show, and whether they belong as a grid of thumbnails or as a single composite. Likely candidates: prescription, initial setup / fitting, ongoing adherence, troubleshooting, insurance/compliance handoff."
+  why="The two big maps carry the structural-gap finding, but the sub-journeys are where the operational detail lives. Hiring managers reading at craft depth will want to see that the team mapped not just the overall arc but the moments inside it."
+/>
+
+
 ### The respiratory therapist: a dedicated guide shouldering emotional weight
 
 The respiratory therapists we spoke with were clinical professionals who derived genuine meaning from helping patients overcome fear and start therapy. They were also working at for-profit companies whose patients regularly accused them of putting profit before care. The setup model was evolving fast. Full-service in-person setup appointments common during the pandemic were being phased out and replaced by drop-shipped equipment, self-service instructions, and a respiratory therapist functioning as remote tech support. One participant told us the most frustrating part of her job was that she could no longer put her hands on the equipment a patient was struggling with.
@@ -118,10 +134,11 @@ The respiratory therapists we spoke with were clinical professionals who derived
 
 The physicians described being boxed in by four pressures at once. **Time:** one told us his practice was being asked to see five to six hundred new patients a week and was "literally not able to take care of them all." **Insurance:** the four-hour-a-night, twenty-one-day compliance rule shaped clinical decisions whether or not the physician thought it was clinically right. **Technology:** an electronic medical record that did not integrate with the equipment provider, a separate compliance reporting platform, and a patient messaging tool one physician described as "the bane of our existence" and another called "free uncompensated work." **Management:** decisions made above them about which equipment providers they could refer to. They wanted to provide individualized care. The system was optimizing for throughput and reimbursement.
 
-<Figure
-  src="/images/medical-physicians-boxed-in.png"
-  alt="Four-quadrant diagram titled 'Physicians Are Boxed In' showing Time, Technology, Insurance, and Management constraints around the physician at center."
-  caption="The four-quadrant frame from the insights deck."
+<Placeholder
+  kind="image"
+  size="in-body-figure"
+  ask="Redrawn 'Physicians Are Boxed In' four-quadrant diagram. The existing version from the insights deck is too rough for the case study. Needs to be remade clean: physician at center, four constraint quadrants (Time, Technology, Insurance, Management), each labeled with a one-line specific (e.g. Insurance: 'four-hour-a-night, twenty-one-day compliance rule')."
+  why="This is the visual that makes the 'artist forced to paint by numbers' framing legible at a glance. Without a clean version, the section relies entirely on prose and the visual undersells the structural read."
 />
 
 ### The patient sits in the gap
