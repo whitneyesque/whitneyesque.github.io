@@ -22,12 +22,26 @@ import PullQuote from '../../components/PullQuote.astro';
 import Figure from '../../components/Figure.astro';
 import Placeholder from '../../components/Placeholder.astro';
 
+<Placeholder
+  kind="section"
+  size="block"
+  ask="CaseDetails component: a tight, scannable metadata block displaying Client, Role, Team, Timeline, and Tags from frontmatter. Goal: hiring-manager-friendly at-a-glance project particulars before they read anything else. Component does not yet exist in /src/components/; needs to be built (or rolled into CaseLayout.astro as a default block for all cases)."
+  why="A hiring manager doing a 90-second portfolio scan should see the project particulars (client domain, role, timeline) immediately under the hero, without having to read prose to extract them. Convention should apply across all cases."
+/>
+
 <StatRow variant="dark" stats={[
   { value: '12', label: 'Stakeholders across 8 kickoff sessions' },
   { value: '5', label: 'Versions of the engagement' },
   { value: '2', label: 'Provider archetypes' },
   { value: '1', label: 'Structural gap the patient sits in' },
 ]} />
+
+<Placeholder
+  kind="image"
+  size="in-body-figure"
+  ask="ProcessTimeline component populated with the four phases of this engagement: (1) Stakeholder kickoff — 8 sessions, 12 stakeholders, weeks 1–2; (2) Provider research design + recruit recovery + execution — 10 interviews, in-person to remote pivot, weeks 3–8; (3) Synthesis — three iterations to design implications, weeks 8–11; (4) Opportunity workshop — two days with product, CX, research, week 12. Use src/components/ProcessTimeline.astro."
+  why="Cross-case convention: every case opens with a 'what the project included' graphic near the top, so the scope of the work is visible in the first 90 seconds before the reader commits to deeper reading. Currently the case asks the reader to infer scope from prose."
+/>
 
 <Placeholder
   kind="image"
