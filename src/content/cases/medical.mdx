@@ -22,13 +22,6 @@ import PullQuote from '../../components/PullQuote.astro';
 import Figure from '../../components/Figure.astro';
 import Placeholder from '../../components/Placeholder.astro';
 
-<Placeholder
-  kind="section"
-  size="block"
-  ask="CaseDetails component: a tight, scannable metadata block displaying Client, Role, Team, Timeline, and Tags from frontmatter. Goal: hiring-manager-friendly at-a-glance project particulars before they read anything else. Component does not yet exist in /src/components/; needs to be built (or rolled into CaseLayout.astro as a default block for all cases)."
-  why="A hiring manager doing a 90-second portfolio scan should see the project particulars (client domain, role, timeline) immediately under the hero, without having to read prose to extract them. Convention should apply across all cases."
-/>
-
 <StatRow variant="dark" stats={[
   { value: '12', label: 'Stakeholders across 8 kickoff sessions' },
   { value: '5', label: 'Versions of the engagement' },
