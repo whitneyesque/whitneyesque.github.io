@@ -1,0 +1,168 @@
+---
+title: 'How do you prototype <em>an AI service?</em>'
+client: 'Fortune 500 insurer · innovation team'
+year: 2026
+role: 'UX & service design lead'
+team: 'Solo SD lead embedded with innovation team, internal CX, data science'
+timeline: '4 months · joined eight months in'
+outcome: 'Concept funded for production beta · v2 interaction model adopted as service principle · user testing built into the next phase'
+tags:
+  - 'AgeTech'
+  - 'Prototyping AI'
+  - 'Service Blueprint'
+  - 'User Research'
+summary: 'Built and tested a functional AI prototype for a caregiving service. Mid-study I rebuilt the underlying interaction model. The client got the signal they needed to fund the beta.'
+specimen: '/images/specimen-rose.jpg'
+slug: 'agetech-v2'
+status: 'draft'
+---
+import StatRow from '../../components/StatRow.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import InsightCallout from '../../components/InsightCallout.astro';
+import BotanicalDivider from '../../components/BotanicalDivider.astro';
+import GPTConversation from '../../components/GPTConversation.astro';
+import InteractionModelComparison from '../../components/InteractionModelComparison.astro';
+import RulesObservations from '../../components/RulesObservations.astro';
+import SystemRulesExcerpt from '../../components/SystemRulesExcerpt.astro';
+import ConversationStackFailure from '../../components/ConversationStackFailure.astro';
+import QuestionnaireTiers from '../../components/QuestionnaireTiers.astro';
+import CaregivingPrototypeShowcase from '../../components/CaregivingPrototypeShowcase.astro';
+
+<StatRow variant="dark" stats={[
+  { value: '50M+', label: 'U.S. family caregivers' },
+  { value: '$7K', label: 'Avg. annual out-of-pocket' },
+  { value: '12', label: 'Caregivers tested across two structurally different versions' },
+  { value: '8 mo', label: 'Concept already in development when I joined' },
+]} />
+
+I built a functional AI prototype of an AgeTech caregiving service, tested it with twelve working family caregivers, and rebuilt the underlying interaction model mid-study. The client got the signal they needed to fund a production beta. *This case is about why the redesign was structural, not sequential.*
+
+## The problem the team needed to answer
+
+An innovation team inside a conservative Fortune 500 insurer had spent eight months developing a concept for an AI-powered caregiving service for employed family caregivers — people working full time while managing the care of an aging parent. Foundational research was done. Archetypes existed. Concept testing had landed positively. The question on the table was whether to invest in the early technology needed to run a beta.
+
+To answer that, the team needed signal closer to the actual experience. Whether people would engage with the AI. Whether the tone would feel useful rather than cold. Whether a forward-looking care forecast would mean anything to someone managing a parent's decline. I joined eight months in to design and build a prototype functional enough to generate that signal, then test it.
+
+## Three claims I had to pressure-test
+
+01. **The medium is the design problem.** A static mockup of an AI interface tells you nothing about whether people trust it, engage with it, or come back. Prototyping an AI service is different from prototyping a digital one.
+
+02. **Eight months of positive concept testing doesn't survive contact with a working caregiver.** People react warmly to ideas and brutally to interfaces. Only a functional prototype could tell us which one we had.
+
+03. **The forecast was meant to be the value, but it was structured as the destination.** Long pipelines that promise payoff at the end deliver disappointment before the value lands.
+
+## Building a prototype that behaves like the service
+
+I built a custom GPT using the client's enterprise OpenAI account. The forecast didn't need to be statistically accurate — the data science team would build the real model later — but it needed to be real enough to react to. I designed the questionnaire architecture, the modular knowledge file system, the system prompt, the behavioral rules, the crisis protocols, and a compassionate language framework that governed what the AI could and couldn't say.
+
+The questionnaire wasn't a flat question list. It had to do two things at once: collect enough to make the forecast feel real, and respect the limits of someone already at their limit.
+
+<QuestionnaireTiers />
+
+The compassionate language work came out of testing the prototype with friends and colleagues before showing it to a caregiver. One tester hit the words *vulnerable* and *decline* and stopped — she wasn't ready to hear them. Another didn't identify as a caregiver yet even though she was managing her parent's finances. Two boundaries got hard-coded into the system: the GPT could not give medical advice, and it could not use clinical language that named what someone was afraid of before they were ready to name it themselves.
+
+<GPTConversation
+  header="Caregiving onboarding · prototype"
+  messages={[
+    {
+      role: 'Coach',
+      speaker: 'ai',
+      text: "Got it, thanks. Before we go further, can you tell me a little about who you're caring for, and how this past week has been?"
+    },
+    {
+      role: 'Caregiver',
+      speaker: 'user',
+      text: "My dad. We can't get him to stop driving. He hides the keys."
+    },
+    {
+      role: 'Coach',
+      speaker: 'ai',
+      text: "<strong>Driving</strong> is one of the most common conflict points when an older parent is showing early cognitive change. Was there a specific moment that brought it up today, or has it been building for a while?"
+    },
+    {
+      role: 'Caregiver',
+      speaker: 'user',
+      text: "It's been building. I just don't know how to take the keys without making him feel like he's lost everything."
+    }
+  ]}
+/>
+
+## What the first cohort showed
+
+We ran twelve caregivers in March 2026, all employed full-time and actively caring for an aging family member. Client privacy policy meant participants couldn't use the GPT directly — they watched it on a shared screen and dictated to a facilitator, which I name here because the signal was strong enough to act on but it's not the same as private use.
+
+The v1 system was a sequential planning interview. Six phases: welcome, care receiver questionnaire, caregiver questionnaire, forecast generation, situational guidance, return. The architecture was a linear pipeline.
+
+It failed in two ways at once.
+
+**People were spent before they got to the value.** By the time participants reached the forecast, they had given a lot and received nothing. One participant said it out loud at the end of the questionnaire, before the forecast even rendered:
+
+<PullQuote attribution="v1 participant">
+I just gave you all that information.
+</PullQuote>
+
+The disappointment was already in the room.
+
+**The conversational format had a structural problem.** During one mode the GPT presented a numbered list of ten yes/no screening questions. The user worked through them. A second numbered list appeared further down the thread. By that point the first list had scrolled off screen. When the user said "1," they were responding to the second list, but the GPT interpreted it against the first and pulled a condition that didn't apply.
+
+<ConversationStackFailure />
+
+Then the last cohort 1 session pointed at something deeper. The participant's mother was in the final stage of dementia and probably had only months to live. About fifteen minutes in, the system asked her to describe her mother's personality. She answered: *"Because she is end-stage it's hard to describe. She's not coherent and is muttering a lot to herself. She isn't herself."* The system absorbed it gracefully and continued. A question about who else was involved. Another about what had changed recently. Each one took her further from what she actually needed in that moment. We aborted and ran her through a hypothetical earlier-stage version.
+
+v1 had no graceful path for someone in the late stages of caregiving. The design assumed a user looking ahead at a journey, not a user already most of the way through one. That assumption needed to change before any version of this service shipped.
+
+## Rebuilding the interaction model mid-study
+
+Seven participants in, it was clear the flow was failing in a way facilitation tweaks weren't going to fix. I couldn't stop the study cleanly — the remaining cohort 1 sessions were already on the calendar — so seven finished on v1 while I built v2 in the off hours. The remaining five ran on v2. The split turned out useful: a clean comparison between two structurally different versions, tested with comparable participants, in the same study.
+
+The diagnosis was that the failure lived underneath the flow. The questions were mostly fine. The forecast structure was mostly fine. What was wrong was the underlying assumption that the right way to deliver an AI caregiving service was to interview the caregiver. Re-sequencing v1 would have produced a slightly less frustrating version of the same wrong thing.
+
+**v1 asked. v2 helped.**
+
+<InteractionModelComparison />
+
+The new version replaced the six-phase pipeline with eight task-shaped modes, each designed to deliver an actionable artifact within about ten minutes. The Dispatcher: triage what needs attention first. The Checkup: scan for gaps. The Planner: build a coordination system. The Money Map: model what care will cost. The Translator: build a doctor prep sheet or a hard message to a sibling. The Rehearsal Studio: practice a difficult conversation. The Family Sync: align everyone on the same picture. The Pressure Valve: process the emotional weight when nothing else can move yet.
+
+The forecast still existed, but it moved from being the destination of a long pipeline to being a global action available at any point. A caregiver could complete two modes, type *forecast*, and get the same comprehensive output v1 had built toward — but only after the system had earned the right to ask for the additional inputs it needed.
+
+<CaregivingPrototypeShowcase />
+
+Five non-negotiable rules governed every mode, each one operationalized from a specific v1 observation.
+
+<RulesObservations />
+
+The conceptual rules only mattered if they survived translation into language the GPT could actually run against.
+
+<SystemRulesExcerpt />
+
+## What the second cohort showed
+
+The difference was immediate. Participants leaned in. In almost every session we had to tell them we needed to move on because they kept wanting to ask the AI more questions. Several said they learned something they hadn't known before. Nobody asked what they were getting in exchange for sharing so much personal information — the interaction felt worth it to them, so the value exchange resolved itself.
+
+## The unplanned session that earned the next phase
+
+After the study was over and we had presented our findings, the executive stakeholder — the person who would ultimately decide whether the concept justified further investment — asked to try the redesigned prototype. He used his own family's caregiving experience from several years earlier, working through it as the person he was at the time.
+
+Within minutes he stopped evaluating and started using it. He moved through one of the modes, asked for a forecast, then started asking follow-up questions: what kind of doctor to look for, what to do if his mother-in-law wouldn't let anyone into her appointments, whether the tool could handle situations beyond memory loss. We had to tell him we needed to wrap up.
+
+<PullQuote attribution="Note from the session">
+We can't get him to stop.
+</PullQuote>
+
+He also exposed the forecast's biggest content problem. His mother-in-law had shown early signs of confusion around time and money; at the time the family hadn't known whether that was the start of cognitive decline or a temporary response to losing her husband. The forecast didn't make that distinction. It took her ambiguous early signals and projected a five-year trajectory of progressive deterioration: escalating costs, increasing dependency, eventual facility care.
+
+His reaction was immediate: *This would have freaked us out at the time. It felt like the tool was making a big assumption about a diagnosis.* He was right. Forecasts have to acknowledge ambiguity in the inputs, not paper over it. I flagged it as a content problem the next phase has to solve at the model level.
+
+<BotanicalDivider />
+
+## Project outcome
+
+<StatRow variant="light" stats={[
+  { value: 'Beta funded', label: 'Concept moved from testing to a two-month production beta — AI, forecast model, human care-guide calls, task management' },
+  { value: 'Adopted as principle', label: 'v2 interaction model (modal, artifact-first, value before intake) is now a service-wide design principle' },
+  { value: 'Testing built in', label: 'When the client suggested evaluating the next GPT internally, I argued for continued user testing. The next phase has it' },
+]} />
+
+The prototype didn't just earn the next phase — it changed the shape of what the next phase looks like.
+
+*If you're building an AI service and need someone who can do this kind of testing, [let's talk](/contact).*
