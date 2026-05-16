@@ -931,9 +931,29 @@ p + p { margin-top: var(--sp-2); }
   transition: color .2s;
 }
 .case-back-top:hover { color: var(--cream); }
+
+/* P0 #1: mono-caps triage strip above the title.
+   Format: CLIENT · YEAR · N MIN READ. Sits between the back link and the
+   display title; gives the page a single line of high-density signal before
+   the eye lands on the headline. */
+.case-meta-strip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(244, 237, 228, .7);
+  margin: 0 0 var(--sp-3);
+}
+
+/* P3 #13: title-band reads as the loudest single object on the page at
+   desktop scale. Previous spec capped at 56px (the global h1 clamp) which
+   wasn't dominant at 1440/1920. Push the upper end and steepen the ramp. */
 .case-title {
   color: var(--cream);
   margin-bottom: var(--sp-3);
+  font-size: clamp(44px, 6.2vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
 }
 .case-title em { color: var(--gold-light); }
 .case-summary {

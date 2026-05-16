@@ -25,13 +25,27 @@ const {
 const canonicalURL = `https://whitneymasulis.com/cases/${slug}.html`;
 const pageTitle = `${title} — Whitney Masulis`;
 
-const allPublished = await getCollection('cases', entry => entry.data.status === 'published');
-const ordered = allPublished
+const allCases = await getCollection('cases');
+const ordered = allCases
+  .filter(entry => entry.data.status === 'published')
   .map(entry => ({ slug: entry.slug, title: entry.data.title, year: entry.data.year }))
   .sort((a, b) => b.year - a.year || a.slug.localeCompare(b.slug));
 const currentIndex = ordered.findIndex(c => c.slug === slug);
 const prev = currentIndex > 0 ? ordered[currentIndex - 1] : null;
 const next = currentIndex >= 0 && currentIndex < ordered.length - 1 ? ordered[currentIndex + 1] : null;
+
+// P0 #1: compute read time from the case body for the mono-caps metadata strip.
+// Strip frontmatter + import lines + JSX-ish tags + markdown punctuation, then count words.
+const currentEntry = allCases.find(e => e.slug === slug);
+const rawBody = currentEntry?.body ?? '';
+const prose = rawBody
+  .replace(/^---[\s\S]*?---/, '')
+  .replace(/^\s*import[^\n]*\n/gm, '')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/[#*_`>\-=|{}\[\]()]/g, ' ');
+const wordCount = prose.split(/\s+/).filter(Boolean).length;
+const readMinutes = Math.max(1, Math.round(wordCount / 225));
+const clientCaps = (client || '').toUpperCase();
 ---
 <BaseLayout
   title={pageTitle}
@@ -55,6 +69,8 @@ const next = currentIndex >= 0 && currentIndex < ordered.length - 1 ? ordered[cu
       )}
       <div class="case-hero-inner">
         <a href="/work.html" class="case-back-top">← Work</a>
+        {/* P0 #1: mono-caps metadata strip — first triage tell, above the title */}
+        <p class="case-meta-strip">{clientCaps} · {year} · {readMinutes} MIN READ</p>
         <h1 class="case-title" set:html={title} />
         <p class="case-summary">{summary}</p>
 
